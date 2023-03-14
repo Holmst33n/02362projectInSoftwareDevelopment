@@ -29,6 +29,8 @@ import java.util.List;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
+//Testtesttest
+
 /**
  * ...
  *
