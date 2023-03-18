@@ -21,6 +21,7 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import dk.dtu.compute.se.pisd.roborally.Exception.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -233,15 +234,45 @@ public class GameController {
     }
 
     // TODO Assignment V2
+//    public void moveForward(@NotNull Player player) {
+//        Space space = player.getSpace();
+//        if (space != null){
+//            Heading heading = player.getHeading();
+//            Space space1 = board.getNeighbour(space, heading);
+//            if(space1 != null) {
+//                player.setSpace(space1);
+//            }
+//        }
+//    }
+
     public void moveForward(@NotNull Player player) {
-        Space space = player.getSpace();
-        if (space != null){
+        if (player.board == board) {
+            Space space = player.getSpace();
             Heading heading = player.getHeading();
-            Space space1 = board.getNeighbour(space, heading);
-            if(space1 != null) {
-                player.setSpace(space1);
+
+            Space target = board.getNeighbour(space, heading);
+            if (target != null) {
+                try {
+                    moveToSpace(player, target, heading);
+                } catch (ImpossibleMoveException e) {
+
+                }
             }
         }
+    }
+
+    private void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
+
+        Player other = space.getPlayer();
+        if(other != null) {
+            Space target = board.getNeighbour(space, heading);
+            if(target != null) {
+                moveToSpace(other, target, heading);
+            } else {
+                throw new ImpossibleMoveException(player, space, heading);
+            }
+        }
+        player.setSpace(space);
     }
 
     // TODO Assignment V2
