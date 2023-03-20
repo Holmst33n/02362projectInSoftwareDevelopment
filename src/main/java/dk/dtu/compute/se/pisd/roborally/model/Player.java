@@ -45,7 +45,7 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
-    private int capturedCheckpoints;
+    private int capturedCheckpoints = 0;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
