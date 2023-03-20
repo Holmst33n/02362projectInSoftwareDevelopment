@@ -201,7 +201,7 @@ public class GameController {
     }
 
      public void executeCommandOptionAndContinue(@NotNull Command option) {
-        // Det her er kopiereret for executeNextStep(); og det er rigtig dårlig stil
+        // Det her er kopiereret fra executeNextStep(); og det er rigtig dårlig stil
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
@@ -242,6 +242,9 @@ public class GameController {
                 player.setSpace(space1);
             }
         }
+        if (space.getCheckpoint()){
+            player.setCapturedCheckpoints(player.getCapturedCheckpoints()+1);
+        }
     }
 
     // TODO Assignment V2
@@ -255,6 +258,9 @@ public class GameController {
                     player.setSpace(space1);
                 }
             }
+        }
+        if (space.getCheckpoint()){
+            player.setCapturedCheckpoints(player.getCapturedCheckpoints()+1);
         }
     }
 
