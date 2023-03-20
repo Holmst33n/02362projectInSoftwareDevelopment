@@ -44,6 +44,8 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
+
+    //DOES NOT WORK AS INTENDED YET
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         // TODO Assignment V1: method should be implemented by the students:
         //   - the current player should be moved to the given space
