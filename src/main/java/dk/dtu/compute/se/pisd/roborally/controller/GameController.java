@@ -272,9 +272,6 @@ public class GameController {
 
                 }
             }
-            if (space.getCheckpoint()) {
-                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
-            }
         }
     }
 
@@ -290,6 +287,9 @@ public class GameController {
             }
         }
         player.setSpace(space);
+        if (space.getCheckpoint()) {
+            player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
+        }
     }
 
     // TODO Assignment V2
@@ -302,9 +302,6 @@ public class GameController {
                 if (space1 != null) {
                     player.setSpace(space1);
                 }
-            }
-            if (space.getCheckpoint()) {
-                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
             }
         }
     }
