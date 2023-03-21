@@ -298,9 +298,10 @@ public class GameController {
             Space space = player.getSpace();
             if (space != null) {
                 Heading heading = player.getHeading();
-                Space space1 = board.getNeighbour(space, heading);
-                if (space1 != null) {
-                    player.setSpace(space1);
+                Space target = board.getNeighbour(space, heading);
+                try {
+                    moveToSpace(player, target, heading);
+                } catch (ImpossibleMoveException e) {
                 }
             }
         }
