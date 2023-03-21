@@ -43,12 +43,36 @@ public class Space extends Subject {
 
     private Player player;
 
-    public Space(Board board, int x, int y, boolean checkpoint) {
+    public Heading getWallHeading() {
+        return wallHeading;
+    }
+
+    private Heading wallHeading;
+
+    public boolean isHasWalls() {
+        return hasWalls;
+    }
+
+    private boolean hasWalls;
+
+    /**
+     * @author Johan Holmsteen, s224568
+     * @param board
+     * @param x
+     * @param y
+     * @param checkpoint
+     * @param hasWalls
+     */
+    public Space(Board board, int x, int y, boolean checkpoint, boolean hasWalls) {
         this.board = board;
         this.x = x;
         this.y = y;
         this.checkpoint = checkpoint;
         player = null;
+        this.hasWalls = hasWalls;
+        if (hasWalls){
+            this.wallHeading = Heading.SOUTH;
+        }
     }
 
     /**

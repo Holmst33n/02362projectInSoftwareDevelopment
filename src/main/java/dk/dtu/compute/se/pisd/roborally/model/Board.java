@@ -66,6 +66,7 @@ public class Board extends Subject {
      * @param height
      * @param boardName
      * @author Mikkel Nørgaard
+     * @author Johan Holmsteen s224568
      */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
@@ -75,12 +76,15 @@ public class Board extends Subject {
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
                 //EDIT THIS ONCE WE HAVE PREDEFINED MAPS
-                if(y == 1 && x == 6 || y == 7 && x == 7){
-                    Space space = new Space(this, x, y, true);
+                if(y == 1 && x == 6 || y == 7 && x == 7){ // creates checkpoints
+                    Space space = new Space(this, x, y, true, false);
                     spaces[x][y] = space;
                 }
+                if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
+                    Space space = new Space(this, x, y,false,true);
+                }
                 else {
-                    Space space = new Space(this, x, y, false);
+                    Space space = new Space(this, x, y, false, false);
                     spaces[x][y] = space;
                 }
             }

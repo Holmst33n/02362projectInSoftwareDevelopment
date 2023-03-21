@@ -278,17 +278,26 @@ public class GameController {
     private void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
 
         Player other = space.getPlayer();
-        if(other != null) {
+        if (other != null) {
             Space target = board.getNeighbour(space, heading);
-            if(target != null) {
-                moveToSpace(other, target, heading);
-            } else {
-                throw new ImpossibleMoveException(player, space, heading);
+            if (target != null && !target.isHasWalls()) {
+                if (space.getWallHeading() == player.getHeading()) {
+                    throw new ImpossibleMoveException(player, space, heading);
+                } else {
+                    moveToSpace(other, target, heading);
+                }
             }
-        }
-        player.setSpace(space);
-        if (space.getCheckpoint()) {
-            player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
+            if (target != null && target.isHasWalls()) {
+                if (target.getWallHeading() == player.getHeading().opposite()) {
+                    throw new ImpossibleMoveException(player, space, heading);
+                } else {
+                    moveToSpace(other, target, heading);
+                }
+            }
+            player.setSpace(space);
+            if (space.getCheckpoint()) {
+                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
+            }
         }
     }
 
