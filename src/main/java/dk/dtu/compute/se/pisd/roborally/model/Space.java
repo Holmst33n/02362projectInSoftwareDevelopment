@@ -39,13 +39,34 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+    private boolean checkpoint;
+
     private Player player;
 
-    public Space(Board board, int x, int y) {
+    public Space(Board board, int x, int y, boolean checkpoint) {
         this.board = board;
         this.x = x;
         this.y = y;
+        this.checkpoint = checkpoint;
         player = null;
+    }
+
+    /**
+     * Sets checkpoint
+     * @param checkpoint
+     * @author Mikkel Nørgaard
+     */
+    public void setCheckpoint(boolean checkpoint){
+        this.checkpoint = checkpoint;
+    }
+
+    /**
+     * Gets checkpoint
+     * @return checkpoint
+     * @author Mikkel Nørgaard
+     */
+    public boolean getCheckpoint(){
+        return checkpoint;
     }
 
     public Player getPlayer() {
@@ -73,6 +94,14 @@ public class Space extends Subject {
         // also need to update when some player attributes change, the player can
         // notify the space of these changes by calling this method.
         notifyChange();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public Collection<FieldAction> getActions() {
