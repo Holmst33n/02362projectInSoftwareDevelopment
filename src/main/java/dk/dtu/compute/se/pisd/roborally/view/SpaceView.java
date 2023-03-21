@@ -46,7 +46,12 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
+    /**
+     * Initializes the spaces. Gives them the color blue if the space is a checkpoint; if not, they are
+     * colored black and white in a checkerboard pattern.
+     * @param space
+     * @author Mikkel Nørgaard
+     */
     public SpaceView(@NotNull Space space) {
         this.space = space;
 
@@ -59,11 +64,16 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: black;");
+        if(space.getCheckpoint()){
+            this.setStyle("-fx-background-color: blue;");
+        } else if(!space.getCheckpoint()) {
+            if ((space.x + space.y) % 2 == 0) {
+                this.setStyle("-fx-background-color: white;");
+            } else {
+                this.setStyle("-fx-background-color: black;");
+            }
         }
+
 
         // updatePlayer();
 

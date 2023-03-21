@@ -45,6 +45,8 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
+
+    //DOES NOT WORK AS INTENDED YET
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         // TODO Assignment V1: method should be implemented by the students:
         //   - the current player should be moved to the given space
@@ -54,7 +56,20 @@ public class GameController {
         //   - the counter of moves in the game should be increased by one
         //     if and when the player is moved (the counter and the status line
         //     message needs to be implemented at another place)
+        if(space.getPlayer() == null) {     //Tjekker om der allerede står en spiller på feltet
+            Player currentPlayer = board.getCurrentPlayer();    //Sætter currentPlayer
+            if(currentPlayer != null) {     //Tjekker om spilleren eksisterer
+                space.setPlayer(currentPlayer);     //Sætter spilleren som har klikket til at stå på feltet
 
+                int currentPlayerNumber = board.getPlayerNumber(currentPlayer);         //Finder spilleren med turens nummer
+                int nextPlayerNumber = (currentPlayerNumber + 1) % board.getPlayersNumber();    //Sætter nextPlayerNumber til at være currentPlayerNumber+1, men kører x gange (hvor x = antal spillere)
+
+                Player nextPlayer = board.getPlayer(nextPlayerNumber);      //Sætter nextPlayer ud fra nextPlayerNumber som vi lige har fundet
+                board.setCurrentPlayer(nextPlayer);     //Sætter currentPlayer til at være næste spiller
+
+                board.setCounter(board.getCounter()+1); //Opdaterer vores counter, så den tælles op med 1 efter hver tur
+            }
+        }
     }
 
     // XXX: V2
@@ -202,7 +217,7 @@ public class GameController {
     }
 
      public void executeCommandOptionAndContinue(@NotNull Command option) {
-        // Det her er kopiereret for executeNextStep(); og det er rigtig dårlig stil
+        // Det her er kopiereret fra executeNextStep(); og det er rigtig dårlig stil
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
@@ -257,6 +272,9 @@ public class GameController {
 
                 }
             }
+            if (space.getCheckpoint()) {
+                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
+            }
         }
     }
 
@@ -276,17 +294,22 @@ public class GameController {
 
     // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
-        Space space = player.getSpace();
-        if (space != null){
-            for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
+            Space space = player.getSpace();
+            if (space != null) {
                 Heading heading = player.getHeading();
                 Space space1 = board.getNeighbour(space, heading);
                 if (space1 != null) {
                     player.setSpace(space1);
                 }
             }
+            if (space.getCheckpoint()) {
+                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
+            }
         }
     }
+
+
 
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
