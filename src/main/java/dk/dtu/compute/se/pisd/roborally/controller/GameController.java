@@ -272,9 +272,9 @@ public class GameController {
 
                 }
             }
-        }
-        if (space.getCheckpoint()){
-            player.setCapturedCheckpoints(player.getCapturedCheckpoints()+1);
+            if (space.getCheckpoint()) {
+                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
+            }
         }
     }
 
