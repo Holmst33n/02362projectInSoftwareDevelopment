@@ -287,7 +287,7 @@ public class GameController {
             }
         }
         player.setSpace(space);
-        if (space.getCheckpoint()) {
+        if (space.isCheckpoint()) {
             player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
         }
     }
