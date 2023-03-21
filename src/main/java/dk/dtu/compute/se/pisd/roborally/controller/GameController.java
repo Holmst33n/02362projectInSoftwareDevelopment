@@ -299,6 +299,9 @@ public class GameController {
                 player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
             }
         }
+        else {
+            throw new ImpossibleMoveException(player, space, heading);
+        }
     }
 
     // TODO Assignment V2
