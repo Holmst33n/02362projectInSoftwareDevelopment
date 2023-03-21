@@ -46,7 +46,12 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
+    /**
+     * Initializes the spaces. Gives them the color blue if the space is a checkpoint; if not, they are
+     * colored black and white in a checkerboard pattern.
+     * @param space
+     * @author Mikkel Nørgaard
+     */
     public SpaceView(@NotNull Space space) {
         this.space = space;
 
@@ -59,11 +64,16 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: black;");
+        if(space.getCheckpoint()){
+            this.setStyle("-fx-background-color: blue;");
+        } else if(!space.getCheckpoint()) {
+            if ((space.x + space.y) % 2 == 0) {
+                this.setStyle("-fx-background-color: white;");
+            } else {
+                this.setStyle("-fx-background-color: black;");
+            }
         }
+
 
         // updatePlayer();
 
@@ -91,9 +101,23 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @author Johan Holmsteen S224568
+     *
+     */
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
+            Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            gc.setStroke(Color.RED);
+            gc.setLineWidth(5);
+            gc.setLineCap(StrokeLineCap.ROUND);
+
+            gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+            this.getChildren().add(canvas);
             updatePlayer();
         }
     }

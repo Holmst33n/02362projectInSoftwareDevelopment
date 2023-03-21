@@ -57,6 +57,16 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    //counter som vi bruger til at tælle spillernes tur
+    private int Counter;
+
+    /**
+     * Initializes the board, and makes specifik spaces checkpoints.
+     * @param width
+     * @param height
+     * @param boardName
+     * @author Mikkel Nørgaard
+     */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -64,8 +74,15 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                Space space = new Space(this, x, y);
-                spaces[x][y] = space;
+                //EDIT THIS ONCE WE HAVE PREDEFINED MAPS
+                if(y == 1 && x == 6 || y == 7 && x == 7){
+                    Space space = new Space(this, x, y, true);
+                    spaces[x][y] = space;
+                }
+                else {
+                    Space space = new Space(this, x, y, false);
+                    spaces[x][y] = space;
+                }
             }
         }
         this.stepMode = false;
@@ -200,6 +217,11 @@ public class Board extends Subject {
         return getSpace(x, y);
     }
 
+    /**
+     * Status message in the bottom of the game to display turns taken, which player has the turn and checkpoints passed.
+     * @return String
+     * @author Mikkel Nørgaard
+     */
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
@@ -208,7 +230,20 @@ public class Board extends Subject {
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
-                ", Player = " + getCurrentPlayer().getName();
+                ", Player = " + getCurrentPlayer().getName() +
+                ", Turns = " + getCounter() + //Viser vores counter i bunden af spil-vinduet ved siden af hvilken spillers tur det er
+                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCapturedCheckpoints();
+    }
+
+    //Getter til at få antallet af ture
+    public int getCounter() {
+        return Counter;
+    }
+
+    //Setter til at sætte antallet af ture
+    public void setCounter(int counter) {
+        Counter = counter;
+        notifyChange(); //Sørger for at spillet ved der er sket en ændring og opdaterer det
     }
 
 

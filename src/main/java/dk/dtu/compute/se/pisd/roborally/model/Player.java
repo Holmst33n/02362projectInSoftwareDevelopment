@@ -45,6 +45,8 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
+    private int capturedCheckpoints = 0;
+
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
@@ -64,6 +66,14 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+    }
+
+    public int getCapturedCheckpoints() {
+        return capturedCheckpoints;
+    }
+
+    public void setCapturedCheckpoints(int capturedCheckpoints) {
+        this.capturedCheckpoints = capturedCheckpoints;
     }
 
     public String getName() {
