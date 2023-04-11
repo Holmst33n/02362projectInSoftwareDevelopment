@@ -171,6 +171,10 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+
+                    // --> execute action on fields!
+                    // --> derefter skal vi her tjekke for om spillerne er på checkpoints
+
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -280,27 +284,11 @@ public class GameController {
         Player other = space.getPlayer();
         if (other != null) {
             Space target = board.getNeighbour(space, heading);
-            if (target != null && !target.isHasWalls()) {
-                if (space.getWallHeading() == player.getHeading()) {
-                    throw new ImpossibleMoveException(player, space, heading);
-                } else {
-                    moveToSpace(other, target, heading);
-                }
+            if(target != null){
+                moveToSpace(other, target, heading);
+            } else{
+                throw new ImpossibleMoveException(player, space, heading);
             }
-            if (target != null && target.isHasWalls()) {
-                if (target.getWallHeading() == player.getHeading().opposite()) {
-                    throw new ImpossibleMoveException(player, space, heading);
-                } else {
-                    moveToSpace(other, target, heading);
-                }
-            }
-            player.setSpace(space);
-            if (space.getCheckpoint()) {
-                player.setCapturedCheckpoints(player.getCapturedCheckpoints() + 1);
-            }
-        }
-        else {
-            throw new ImpossibleMoveException(player, space, heading);
         }
     }
 

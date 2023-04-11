@@ -80,8 +80,9 @@ public class Board extends Subject {
                     Space space = new Space(this, x, y, true, false);
                     spaces[x][y] = space;
                 }
-                if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
+                else if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
                     Space space = new Space(this, x, y,false,true);
+                    spaces[x][y] = space;
                 }
                 else {
                     Space space = new Space(this, x, y, false, false);
@@ -203,6 +204,11 @@ public class Board extends Subject {
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
         int x = space.x;
         int y = space.y;
+
+        if(space.isHasWalls() && heading == space.getWallHeading()){
+            return null;
+        }
+
         switch (heading) {
             case SOUTH:
                 y = (y + 1) % height;
@@ -218,7 +224,15 @@ public class Board extends Subject {
                 break;
         }
 
-        return getSpace(x, y);
+        Space tempSpace = getSpace(x,y);
+
+        if(tempSpace.isHasWalls() && heading == tempSpace.getWallHeading().opposite()){
+            return null;
+        }
+
+        else{
+            return getSpace(x, y);
+        }
     }
 
     /**
