@@ -89,7 +89,7 @@ public class Space extends Subject {
      * @return checkpoint
      * @author Mikkel Nørgaard
      */
-    public boolean getCheckpoint(){
+    public boolean isCheckpoint(){
         return checkpoint;
     }
 
