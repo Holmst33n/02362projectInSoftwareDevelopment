@@ -284,14 +284,15 @@ public class GameController {
     private void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
 
         Player other = space.getPlayer();
-        if (other != null) {
+        if(other != null) {
             Space target = board.getNeighbour(space, heading);
-            if(target != null){
+            if(target != null) {
                 moveToSpace(other, target, heading);
-            } else{
+            } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
         }
+        player.setSpace(space);
     }
 
     // TODO Assignment V2
