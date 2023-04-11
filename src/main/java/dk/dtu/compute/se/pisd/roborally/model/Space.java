@@ -135,4 +135,6 @@ public class Space extends Subject {
     public Collection<Heading> getWalls() {
         return null;
     }
+
+
 }

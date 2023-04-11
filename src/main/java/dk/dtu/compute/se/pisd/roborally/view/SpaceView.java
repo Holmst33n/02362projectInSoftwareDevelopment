@@ -65,9 +65,9 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if (space.getCheckpoint()) {
+        if (space.isCheckpoint()) {
             this.setStyle("-fx-background-color: blue;");
-        } else if (!space.getCheckpoint()) {
+        } else if (!space.isCheckpoint()) {
             if ((space.x + space.y) % 2 == 0) {
                 this.setStyle("-fx-background-color: white;");
             } else {
