@@ -1,0 +1,14 @@
+package dk.dtu.compute.se.pisd.roborally.model;
+
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+
+/**
+ * Simple interface that can support an action on a field (Space).
+ * This can eg. be the Conveyor Belts that move the players.
+ *
+ * @author Ekkart Kindler, ekki@dtu.dk
+ */
+
+public interface FieldAction {
+    boolean doAction(GameController gameController, Space space);
+}

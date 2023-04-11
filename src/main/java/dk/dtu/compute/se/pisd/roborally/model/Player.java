@@ -46,6 +46,7 @@ public class Player extends Subject {
     private Heading heading = SOUTH;
 
     private int capturedCheckpoints = 0;
+    private boolean hasCheckpoint1, hasCheckpoint2, hasCheckpoint3, hasCheckpoint4;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -74,6 +75,38 @@ public class Player extends Subject {
 
     public void setCapturedCheckpoints(int capturedCheckpoints) {
         this.capturedCheckpoints = capturedCheckpoints;
+    }
+
+    public void setHasCheckpoint(int checkpoint){
+        switch(checkpoint){
+            case 1:
+                hasCheckpoint1 = true;
+                break;
+            case 2:
+                hasCheckpoint2 = true;
+                break;
+            case 3:
+                hasCheckpoint3 = true;
+                break;
+            case 4:
+                hasCheckpoint4 = true;
+                break;
+        }
+    }
+
+    public boolean hasCheckpoint(int checkpoint){
+        switch(checkpoint){
+            case 1:
+                return hasCheckpoint1;
+            case 2:
+                return hasCheckpoint2;
+            case 3:
+                return hasCheckpoint3;
+            case 4:
+                return hasCheckpoint4;
+            default:
+                return false;
+        }
     }
 
     public String getName() {
