@@ -220,20 +220,19 @@ public class Board extends Subject {
                 break;
         }
 
-        /*if(space.isHasWalls() && heading == space.getWallHeading()){
+        if(space.isHasWalls() && heading == space.getWallHeading()){
             return null;
-        }*/
+        }
 
-        /*Space tempSpace = getSpace(x,y);
+        Space tempSpace = getSpace(x,y);
+
         if(tempSpace.isHasWalls() && heading == tempSpace.getWallHeading().opposite()){
             return null;
-        }*/
+        }
 
-        /*else{
+        else{
             return getSpace(x, y);
-        }*/
-
-        return getSpace(x, y);
+        }
     }
 
     /**
