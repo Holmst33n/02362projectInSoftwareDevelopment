@@ -22,9 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * ...
@@ -39,8 +40,7 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
-    private boolean checkpoint;
-
+    public Collection<FieldAction> actions = new ArrayList<>();
     private Player player;
 
     public Heading getWallHeading() {
@@ -60,37 +60,17 @@ public class Space extends Subject {
      * @param board
      * @param x
      * @param y
-     * @param checkpoint
      * @param hasWalls
      */
-    public Space(Board board, int x, int y, boolean checkpoint, boolean hasWalls) {
+    public Space(Board board, int x, int y, boolean hasWalls) {
         this.board = board;
         this.x = x;
         this.y = y;
-        this.checkpoint = checkpoint;
         player = null;
         this.hasWalls = hasWalls;
         if (hasWalls){
             this.wallHeading = Heading.SOUTH;
         }
-    }
-
-    /**
-     * Sets checkpoint
-     * @param checkpoint
-     * @author Mikkel Nørgaard
-     */
-    public void setCheckpoint(boolean checkpoint){
-        this.checkpoint = checkpoint;
-    }
-
-    /**
-     * Gets checkpoint
-     * @return checkpoint
-     * @author Mikkel Nørgaard
-     */
-    public boolean isCheckpoint(){
-        return checkpoint;
     }
 
     public Player getPlayer() {
@@ -129,10 +109,21 @@ public class Space extends Subject {
     }
 
     public Collection<FieldAction> getActions() {
-        return null;
+        return actions;
+    }
+
+    public void addAction(FieldAction action) {
+        this.actions.add(action);
+
+        if(action instanceof Checkpoint) {
+            this.board.setCheckpoint((Checkpoint) action);
+        }
+        notifyChange();
     }
 
     public Collection<Heading> getWalls() {
         return null;
     }
+
+
 }

@@ -45,8 +45,7 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
-    private int capturedCheckpoints = 0;
-    private boolean hasCheckpoint1, hasCheckpoint2, hasCheckpoint3, hasCheckpoint4;
+    private int currentCheckpoint;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -69,43 +68,14 @@ public class Player extends Subject {
         }
     }
 
-    public int getCapturedCheckpoints() {
-        return capturedCheckpoints;
+    public int getCurrentCheckpoint() {
+        return currentCheckpoint;
     }
 
-    public void setCapturedCheckpoints(int capturedCheckpoints) {
-        this.capturedCheckpoints = capturedCheckpoints;
-    }
+    public void setCurrentCheckpoint(int currentCheckpoint) {
+        //check if the current checkpoint is supposed to be after the last checkpoint the player was on
+        if(currentCheckpoint == (this.currentCheckpoint +1)) {
 
-    public void setHasCheckpoint(int checkpoint){
-        switch(checkpoint){
-            case 1:
-                hasCheckpoint1 = true;
-                break;
-            case 2:
-                hasCheckpoint2 = true;
-                break;
-            case 3:
-                hasCheckpoint3 = true;
-                break;
-            case 4:
-                hasCheckpoint4 = true;
-                break;
-        }
-    }
-
-    public boolean hasCheckpoint(int checkpoint){
-        switch(checkpoint){
-            case 1:
-                return hasCheckpoint1;
-            case 2:
-                return hasCheckpoint2;
-            case 3:
-                return hasCheckpoint3;
-            case 4:
-                return hasCheckpoint4;
-            default:
-                return false;
         }
     }
 

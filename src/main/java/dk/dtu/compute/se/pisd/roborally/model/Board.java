@@ -49,6 +49,8 @@ public class Board extends Subject {
 
     private final List<Player> players = new ArrayList<>();
 
+    private List<Checkpoint> checkpoints = new ArrayList<Checkpoint>();
+
     private Player current;
 
     private Phase phase = INITIALISATION;
@@ -56,6 +58,8 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
+
+    private boolean hasWalls;
 
     //counter som vi bruger til at tælle spillernes tur
     private int Counter;
@@ -74,20 +78,9 @@ public class Board extends Subject {
         this.height = height;
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
-                //EDIT THIS ONCE WE HAVE PREDEFINED MAPS
-                if(y == 1 && x == 6 || y == 7 && x == 7){ // creates checkpoints
-                    Space space = new Space(this, x, y, true, false);
-                    spaces[x][y] = space;
-                }
-                else if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
-                    Space space = new Space(this, x, y,false,true);
-                    spaces[x][y] = space;
-                }
-                else {
-                    Space space = new Space(this, x, y, false, false);
-                    spaces[x][y] = space;
-                }
+            for (int y = 0; y < height; y++) {
+                Space space = new Space(this, x, y, hasWalls);
+                spaces[x][y] = space;
             }
         }
         this.stepMode = false;
@@ -250,7 +243,7 @@ public class Board extends Subject {
         return "Phase: " + getPhase().name() +
                 ", Player = " + getCurrentPlayer().getName() +
                 ", Turns = " + getCounter() + //Viser vores counter i bunden af spil-vinduet ved siden af hvilken spillers tur det er
-                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCapturedCheckpoints();
+                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCurrentCheckpoint();
     }
 
     //Getter til at få antallet af ture
@@ -262,6 +255,15 @@ public class Board extends Subject {
     public void setCounter(int counter) {
         Counter = counter;
         notifyChange(); //Sørger for at spillet ved der er sket en ændring og opdaterer det
+    }
+
+    //Checkpoints
+    public List<Checkpoint> getCheckpoints() {
+        return this.checkpoints;
+    }
+
+    public void setCheckpoint(Checkpoint checkpoint) {
+        this.checkpoints.add(checkpoint);
     }
 
 

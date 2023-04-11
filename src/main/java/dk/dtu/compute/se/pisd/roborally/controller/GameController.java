@@ -35,6 +35,8 @@ public class GameController {
 
     final public Board board;
 
+    private boolean won = false;
+
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -344,6 +346,16 @@ public class GameController {
     public void notImplemented() {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
+    }
+
+    /**
+     * method to show that a player has won
+     * @param player
+     * @author Mikkel Brunstedt Nørgaard
+     */
+    public void playerHasWon(Player player){
+        String winmessage = "Spiller "+player.getName()+" vandt.";
+        //mangler logik til at vise denne
     }
 
 }

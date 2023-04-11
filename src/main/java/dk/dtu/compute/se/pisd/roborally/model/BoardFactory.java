@@ -12,4 +12,5 @@ public class BoardFactory {
     public Board createBoard() {
        return new Board(8,8, "firstBoard");
     }
+
 }
