@@ -79,14 +79,23 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if(y == 1 && x == 6 || y == 7 && x == 7){ // creates checkpoints
+                if(y == 1 && x == 6 || y == 7 && x == 7){ //creates 2 fields with walls; this is to be removed when we have BoardFactory working.
                     Space space = new Space(this, x, y, true);
                     spaces[x][y] = space;
                 }
-                else if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
+
+                else if(y == 1 && x == 1){ //creates 2 fields with checkpoints; this is to be removed when we have BoardFactory working.
                     Space space = new Space(this, x, y,false);
                     spaces[x][y] = space;
+                    Checkpoint checkpoint = new Checkpoint(1);
+                    space.addAction(checkpoint);
+                } else if(y == 6 && x == 2){
+                    Space space = new Space(this, x, y,false);
+                    spaces[x][y] = space;
+                    Checkpoint checkpoint = new Checkpoint(2);
+                    space.addAction(checkpoint);
                 }
+
                 else {
                     Space space = new Space(this, x, y, false);
                     spaces[x][y] = space;
