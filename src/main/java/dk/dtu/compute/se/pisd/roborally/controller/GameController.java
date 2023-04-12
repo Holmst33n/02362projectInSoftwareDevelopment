@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.Exception.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.FieldAction;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -169,6 +170,26 @@ public class GameController {
                     }
                     executeCommand(currentPlayer, command);
                 }
+                if (board.getPhase() == Phase.ACTIVATION) {
+                    if (board.getPlayerNumber(currentPlayer) + 1 < board.getPlayersNumber()) {
+                        board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
+                    } else {
+
+                        for (Player player : board.getPlayers()) {
+                            for (FieldAction action : player.getSpace().getActions()) {
+                                if (won)
+                                    break;
+
+                                action.doAction(this, player.getSpace());
+                            }
+                        }
+
+                        step++;
+                        makeProgramFieldsVisible(step);
+                        board.setStep(step);
+                        board.setCurrentPlayer(board.getPlayer(0));
+                    }
+                }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
@@ -223,7 +244,7 @@ public class GameController {
     }
 
      public void executeCommandOptionAndContinue(@NotNull Command option) {
-        // Det her er kopiereret fra executeNextStep(); og det er rigtig dårlig stil
+        // Det her er kopieret fra executeNextStep(); og det er rigtig dårlig stil
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
