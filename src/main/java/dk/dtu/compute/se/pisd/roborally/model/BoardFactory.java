@@ -1,5 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+
 /**
  * This class acts as a factory to create our board
  *
@@ -10,6 +12,6 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 public class BoardFactory {
     public Board createBoard() {
-       return new Board(8,8, "firstBoard");
+        return LoadBoard.loadBoard("");
     }
 }
