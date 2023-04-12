@@ -204,6 +204,7 @@ public class Board extends Subject {
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
         int x = space.x;
         int y = space.y;
+        Space tempSpace = getSpace(x,y);
 
         switch (heading) {
             case SOUTH:
@@ -223,8 +224,6 @@ public class Board extends Subject {
         if(space.isHasWalls() && heading == space.getWallHeading()){
             return null;
         }
-
-        Space tempSpace = getSpace(x,y);
 
         if(tempSpace.isHasWalls() && heading == tempSpace.getWallHeading().opposite()){
             return null;
