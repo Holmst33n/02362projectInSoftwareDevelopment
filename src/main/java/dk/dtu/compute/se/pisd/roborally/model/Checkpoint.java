@@ -3,7 +3,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 
 /**
- * @author Mikkel Brunstedt Nørgaard
+ * @author Mikkel Brunstedt Nørgaard s224562
  */
 
 public record Checkpoint(int checkpointNumber) implements FieldAction {

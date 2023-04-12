@@ -49,7 +49,7 @@ public class SpaceView extends StackPane implements ViewObserver {
      * colored black and white in a checkerboard pattern.
      *
      * @param space
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public SpaceView(@NotNull Space space) {
         this.space = space;

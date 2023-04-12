@@ -11,12 +11,6 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 
 public interface FieldAction {
 
-    /**
-     * doAction method which we implement in the Checkpoint record
-     * @param gameController
-     * @param space
-     * @return
-     * @author Mikkel Brunstedt Nørgaard s224562
-     */
+    //doAction method, will be implemented in Checkpoint, Gear, Antenna etc
     boolean doAction(GameController gameController, Space space);
 }

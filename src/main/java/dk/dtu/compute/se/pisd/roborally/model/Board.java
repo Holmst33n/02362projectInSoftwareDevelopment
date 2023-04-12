@@ -69,7 +69,7 @@ public class Board extends Subject {
      * @param width
      * @param height
      * @param boardName
-     * @author Mikkel Nørgaard s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      * @author Johan Holmsteen s224568
      */
     public Board(int width, int height, @NotNull String boardName) {
@@ -253,7 +253,7 @@ public class Board extends Subject {
     /**
      * Status message in the bottom of the game to display turns taken, which player has the turn and checkpoints passed.
      * @return String
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
@@ -264,26 +264,25 @@ public class Board extends Subject {
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
                 ", Player = " + getCurrentPlayer().getName() +
-                ", Turns = " + getCounter() + //Viser vores counter i bunden af spil-vinduet ved siden af hvilken spillers tur det er
-                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCurrentCheckpoint();
+                ", Turns = " + getCounter() + //shows our turn-counter in the bottom of the game window
+                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCurrentCheckpoint(); //shows how many checkpoints the current player has visited
     }
 
-    //Getter til at få antallet af ture
+    //getter to get amount of turns
     public int getCounter() {
         return Counter;
     }
 
-    //Setter til at sætte antallet af ture
+    //setter to set the amount of turns
     public void setCounter(int counter) {
         Counter = counter;
-        notifyChange(); //Sørger for at spillet ved der er sket en ændring og opdaterer det
+        notifyChange(); //notifies the view that there has been an update
     }
 
     //Checkpoints
     public List<Checkpoint> getCheckpoints() {
         return this.checkpoints;
     }
-
     public void setCheckpoint(Checkpoint checkpoint) {
         this.checkpoints.add(checkpoint);
     }

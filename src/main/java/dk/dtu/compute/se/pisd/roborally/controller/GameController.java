@@ -371,7 +371,7 @@ public class GameController {
     /**
      * method to show that a player has won
      * @param player
-     * @author Mikkel Brunstedt Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void playerHasWon(Player player){
         String winmessage = player.getName()+" vandt.";
