@@ -69,7 +69,7 @@ public class Board extends Subject {
      * @param width
      * @param height
      * @param boardName
-     * @author Mikkel Nørgaard
+     * @author Mikkel Nørgaard s224562
      * @author Johan Holmsteen s224568
      */
     public Board(int width, int height, @NotNull String boardName) {

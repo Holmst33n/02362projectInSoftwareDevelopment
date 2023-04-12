@@ -331,8 +331,6 @@ public class GameController {
         }
     }
 
-
-
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Space space = player.getSpace();
@@ -376,7 +374,8 @@ public class GameController {
      * @author Mikkel Brunstedt Nørgaard
      */
     public void playerHasWon(Player player){
-        String winmessage = "Spiller "+player.getName()+" vandt.";
+        String winmessage = player.getName()+" vandt.";
+        System.out.println(winmessage);
         //mangler logik til at vise denne
     }
 

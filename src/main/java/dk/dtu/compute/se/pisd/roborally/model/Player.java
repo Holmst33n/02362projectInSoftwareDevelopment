@@ -45,7 +45,7 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
-    private int currentCheckpoint;
+    private int currentCheckpoint = 0;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -68,14 +68,19 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * getter and setter to see which checkpoint a player is currently at.
+     * @return
+     * @author Mikkel Brunstedt Nørgaard s224562
+     */
     public int getCurrentCheckpoint() {
         return currentCheckpoint;
     }
 
-    public void setCurrentCheckpoint(int currentCheckpoint) {
+    public void setCurrentCheckpoint(int checkpointNumber) {
         //check if the current checkpoint is supposed to be after the last checkpoint the player was on
-        if(currentCheckpoint == (this.currentCheckpoint +1)) {
-
+        if(checkpointNumber == (this.currentCheckpoint + 1)) {
+            currentCheckpoint++;
         }
     }
 

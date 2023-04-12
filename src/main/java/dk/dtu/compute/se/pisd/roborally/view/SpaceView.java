@@ -63,12 +63,15 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
+        //makes every second space white, and every other space black (checkerboard pattern)
         if ((space.x + space.y) % 2 == 0) {
             this.setStyle("-fx-background-color: white;");
         } else {
             this.setStyle("-fx-background-color: black;");
         }
 
+
+        // turns any field that has a checkpoint action blue
         for(FieldAction action : space.getActions()){
             if (action instanceof Checkpoint){
                 this.setStyle("-fx-background-color: blue;");
