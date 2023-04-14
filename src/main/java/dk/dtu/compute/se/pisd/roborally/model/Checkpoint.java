@@ -19,7 +19,6 @@ public record Checkpoint(int checkpointNumber) implements FieldAction {
         Player player = space.getPlayer();
         if (player != null) {
             player.setCurrentCheckpoint(this.checkpointNumber);
-            System.out.println("Player" + space.getPlayer().getName() + " has reached checkpoint");
             if (player.getCurrentCheckpoint() >= gameController.board.getCheckpoints().size()) {
                 gameController.playerHasWon(player);
             }
