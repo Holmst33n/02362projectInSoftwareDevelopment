@@ -370,6 +370,7 @@ public class GameController {
 
     /**
      * method to show that a player has won
+     * is called if a player has reached all checkpoints in the correct order
      * @param player
      * @author Mikkel Brunstedt Nørgaard s224562
      */
