@@ -121,12 +121,12 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
             if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
                 if(!space.getActions().isEmpty()) {
-                    FieldAction[] actionHeadings = space.getActions().toArray(new FieldAction[0]);
+                    FieldAction[] actions = space.getActions().toArray(new FieldAction[0]);
                     gc.save(); // Save the current transformation state
                     gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2); // Translate to the center of the space
-                    for (int i = 0; i<actionHeadings.length; i++) {
-                        if(actionHeadings[i] instanceof ConveyorBelt) {
-                            ConveyorBelt conveyorBelt = (ConveyorBelt) actionHeadings[i];
+                    for (int i = 0; i<actions.length; i++) {
+                        if(actions[i] instanceof ConveyorBelt) {
+                            ConveyorBelt conveyorBelt = (ConveyorBelt) actions[i];
                             switch (conveyorBelt.getHeading()) {
                                 case SOUTH:
                                     gc.rotate(90);
