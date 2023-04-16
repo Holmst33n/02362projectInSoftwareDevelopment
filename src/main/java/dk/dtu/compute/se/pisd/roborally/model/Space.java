@@ -22,9 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.model.SpaceTemplate;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,21 +46,19 @@ public class Space extends Subject {
 
     private Player player;
 
-    public Heading getWallHeading() {
+    public List<Heading> getWallHeading() {
+        wallHeading = spaceTemplate.walls;
         return wallHeading;
     }
 
-    private Heading wallHeading;
-
-    public boolean isHasWalls() {
-        return hasWalls;
-    }
+    private List<Heading> wallHeading;
 
     private boolean hasWalls;
 
-    private Collection<Heading> walls;
+    private SpaceTemplate spaceTemplate;
 
-    private Collection<FieldAction> fieldAction;
+    private ConveyorBelt conveyorBelt;
+
 
     /**
      * @param board
@@ -75,10 +74,7 @@ public class Space extends Subject {
         this.y = y;
         this.checkpoint = checkpoint;
         player = null;
-        this.hasWalls = hasWalls;
-        if (hasWalls) {
-            this.wallHeading = Heading.SOUTH;
-        }
+        this.spaceTemplate = new SpaceTemplate(); // initialize spaceTemplate with a new object
     }
 
     /**
@@ -121,6 +117,14 @@ public class Space extends Subject {
         }
     }
 
+    public boolean isHasWalls() {
+        return hasWalls;
+    }
+
+    public void setHasWalls(boolean hasWalls) {
+        this.hasWalls = hasWalls;
+    }
+
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
@@ -137,10 +141,11 @@ public class Space extends Subject {
     }
 
     public Collection<FieldAction> getActions() {
-        return fieldAction;
+        return spaceTemplate.actions;
     }
 
     public Collection<Heading> getWalls() {
-        return walls;
+        return spaceTemplate.walls;
     }
+
 }

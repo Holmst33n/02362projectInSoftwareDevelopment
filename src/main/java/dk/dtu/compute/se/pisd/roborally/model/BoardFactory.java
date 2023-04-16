@@ -12,6 +12,6 @@ import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 
 public class BoardFactory {
     public Board createBoard() {
-        return LoadBoard.loadBoard("");
+        return LoadBoard.loadBoard("defaultboard");
     }
 }

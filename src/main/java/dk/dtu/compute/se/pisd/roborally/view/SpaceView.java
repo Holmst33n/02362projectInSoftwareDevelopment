@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -32,6 +34,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
+
+import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 
 /**
  * ...
@@ -45,6 +51,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 50;  // 60; // 75;
 
     public final Space space;
+
+
 
     /**
      * Initializes the spaces. Gives them the color blue if the space is a checkpoint; if not, they are
@@ -65,15 +73,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if (space.isCheckpoint()) {
-            this.setStyle("-fx-background-color: blue;");
-        } else if (!space.isCheckpoint()) {
-            if ((space.x + space.y) % 2 == 0) {
-                this.setStyle("-fx-background-color: white;");
-            } else {
-                this.setStyle("-fx-background-color: black;");
-            }
-        }
 
 
         // updatePlayer();
@@ -108,16 +107,67 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         this.getChildren().clear();
-
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
         if (subject == this.space) {
-
-            if (space.isHasWalls()) {
-                Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-                GraphicsContext gc = canvas.getGraphicsContext2D();
-                gc.setStroke(Color.RED);
-                gc.setLineWidth(5);
-                gc.setLineCap(StrokeLineCap.ROUND);
-                gc.strokeLine(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+            if (space.isCheckpoint()) {
+                this.setStyle("-fx-background-color: blue;");
+            } else if (!space.isCheckpoint()) {
+                if ((space.x + space.y) % 2 == 0) {
+                    this.setStyle("-fx-background-color: white;");
+                } else {
+                    this.setStyle("-fx-background-color: black;");
+                }
+            }
+            if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
+                if(!space.getActions().isEmpty()) {
+                    FieldAction[] actionHeadings = space.getActions().toArray(new FieldAction[0]);
+                    gc.save(); // Save the current transformation state
+                    gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2); // Translate to the center of the space
+                    for (int i = 0; i<actionHeadings.length; i++) {
+                        if(actionHeadings[i] instanceof ConveyorBelt) {
+                            ConveyorBelt conveyorBelt = (ConveyorBelt) actionHeadings[i];
+                            switch (conveyorBelt.getHeading()) {
+                                case SOUTH:
+                                    gc.rotate(90);
+                                    break;
+                                case WEST:
+                                    gc.rotate(180);
+                                    break;
+                                case NORTH:
+                                    gc.rotate(270);
+                                    break;
+                                case EAST:
+                                    break;
+                            }
+                            gc.setFill(Color.LIGHTGRAY);
+                            gc.fillPolygon(new double[]{0, -18, 18}, new double[]{18, -18, -18}, 3);
+                        }
+                    }
+                    gc.restore(); // Restore the previous transformation state
+                }
+                if(!space.getWalls().isEmpty()){
+                    Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+                    gc.setStroke(Color.RED);
+                    gc.setLineWidth(5);
+                    gc.setLineCap(StrokeLineCap.ROUND);
+                    for(int i = 0; i <wallHeadings.length; i++) {
+                        switch (wallHeadings[i]) {
+                            case SOUTH:
+                                gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+                                break;
+                            case WEST:
+                                gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
+                                break;
+                            case NORTH:
+                                gc.strokeLine(2, 2, SPACE_WIDTH-2, 2);
+                                break;
+                            case EAST:
+                                gc.strokeLine(SPACE_WIDTH-2, 2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+                                break;
+                        }
+                    }
+                }
                 this.getChildren().add(canvas);
             }
             updatePlayer();

@@ -75,19 +75,21 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for(int y = 0; y < height; y++) {
-                //EDIT THIS ONCE WE HAVE PREDEFINED MAPS
-                if(y == 1 && x == 6 || y == 7 && x == 7){ // creates checkpoints
-                    Space space = new Space(this, x, y, true, false);
-                    spaces[x][y] = space;
-                }
-                else if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
-                    Space space = new Space(this, x, y,false,true);
-                    spaces[x][y] = space;
-                }
-                else {
-                    Space space = new Space(this, x, y, false, false);
-                    spaces[x][y] = space;
-                }
+                Space space = new Space(this, x, y, false, false);
+                spaces[x][y] = space;
+//                //EDIT THIS ONCE WE HAVE PREDEFINED MAPS
+//                if(y == 1 && x == 6 || y == 7 && x == 7){ // creates checkpoints
+//                    Space space = new Space(this, x, y, true, false);
+//                    spaces[x][y] = space;
+//                }
+//                else if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
+//                    Space space = new Space(this, x, y,false,true);
+//                    spaces[x][y] = space;
+//                }
+//                else {
+//                    Space space = new Space(this, x, y, false, false);
+//                    spaces[x][y] = space;
+//
             }
         }
         this.stepMode = false;
@@ -204,8 +206,6 @@ public class Board extends Subject {
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
         int x = space.x;
         int y = space.y;
-        Space tempSpace = getSpace(x,y);
-
         switch (heading) {
             case SOUTH:
                 y = (y + 1) % height;
@@ -220,15 +220,19 @@ public class Board extends Subject {
                 x = (x + 1) % width;
                 break;
         }
-
-        if(space.isHasWalls() && heading == space.getWallHeading()){
+        Space tempSpace = getSpace(x,y);
+        if(!space.getWalls().isEmpty()) {
+            space.setHasWalls(true);
+        }
+        if(!tempSpace.getWalls().isEmpty()) {
+            tempSpace.setHasWalls(true);
+        }
+        if(space.isHasWalls() && space.getWallHeading().contains(heading)){
             return null;
         }
-
-        if(tempSpace.isHasWalls() && heading == tempSpace.getWallHeading().opposite()){
+        if(tempSpace.isHasWalls() && tempSpace.getWallHeading().contains(heading.opposite())){
             return null;
         }
-
         else{
             return getSpace(x, y);
         }
