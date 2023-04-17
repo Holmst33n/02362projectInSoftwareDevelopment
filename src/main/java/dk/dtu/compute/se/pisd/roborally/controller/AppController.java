@@ -87,7 +87,8 @@ public class AppController implements Observer {
             List<String> jsonFiles = new ArrayList<>();
             for (File file : listOfFiles) {
                 if (file.isFile() && file.getName().endsWith(".json")) {
-                    jsonFiles.add(file.getName());
+                    String fileNameWithoutExtension = file.getName().replaceAll("\\.json$", "");
+                    jsonFiles.add(fileNameWithoutExtension);
                 }
             }
 
@@ -98,7 +99,8 @@ public class AppController implements Observer {
             Optional<String> boardResult = choseBoardDialog.showAndWait();
 
             if (boardResult.isPresent()) {
-                Board board = BoardFactory.createBoard(boardResult.toString());
+                String fileNameWithoutExtension = boardResult.get().replaceAll("\\.json$", "");
+                Board board = BoardFactory.createBoard(fileNameWithoutExtension);
                 gameController = new GameController(board);
                 int no = result.get();
                 for (int i = 0; i < no; i++) {
