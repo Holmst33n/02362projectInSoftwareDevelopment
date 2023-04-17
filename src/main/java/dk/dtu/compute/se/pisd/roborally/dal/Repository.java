@@ -60,6 +60,16 @@ class Repository implements IRepository {
 	private static final String PLAYER_POSITION_Y = "positionY";
 
 	private static final String PLAYER_HEADING = "heading";
+	private static final String COMMANDCARD_GAMEID = "gameID";
+	private static final String COMMANDCARD_PLAYERID = "playerID";
+	private static final String COMMANDCARD_COMMANDCARDID = "commandcardID";
+	private static final String COMMANDCARD_TYPE = "Type";
+	private static final String COMMANDCARD_NUMBER = "Number";
+
+
+
+
+
 
 	private Connector connector;
 	
@@ -291,7 +301,28 @@ class Repository implements IRepository {
 
 		rs.close();
 	}
-	
+
+//	private void createCommandCardsInDB(Board game, Command cards) throws SQLException {
+//		PreparedStatement ps = getSelectCommandCardsStatementU();
+//		ps.setInt(1, game.getGameId());
+//
+//		ResultSet rs = ps.executeQuery();
+//		for (int i = 0; i < cards.getOptions().size(); i++) {
+//			Command card = cards.getOptions().get(i);
+//			rs.moveToInsertRow();
+//			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
+//			rs.updateInt(COMMANDCARD_PLAYERID, i);
+//			rs.updateString(COMMANDCARD_COMMANDCARDID, card.);
+//			rs.updateString(PLAYER_COLOUR, player.getColor());
+//			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
+//			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
+//			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+//			rs.insertRow();
+//		}
+//
+//		rs.close();
+//
+//	}
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -405,6 +436,28 @@ class Repository implements IRepository {
 		}
 		return select_players_stmt;
 	}
+
+	private static final String SQL_SELECT_COMMANDCARDS =
+			"SELECT * FROM Commandcards WHERE gameID = ?";
+
+	private PreparedStatement select_commandcards_stmt = null;
+
+	private PreparedStatement getSelectCommandCardsStatementU() {
+		if (select_commandcards_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_commandcards_stmt = connection.prepareStatement(
+						SQL_SELECT_COMMANDCARDS,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return select_commandcards_stmt;
+	}
+
 
 	private static final String SQL_SELECT_PLAYERS_ASC =
 			"SELECT * FROM Player WHERE gameID = ? ORDER BY playerID ASC";

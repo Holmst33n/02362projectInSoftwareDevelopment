@@ -29,4 +29,16 @@ CREATE TABLE IF NOT EXISTS Player (
   FOREIGN KEY (gameID) REFERENCES Game(gameID)
 );;
 
+CREATE TABLE IF NOT EXISTS CommandCards (
+ gameID int NOT NULL,
+ playerID tinyint NOT NULL,
+
+ commandID varchar(255),
+ type varchar(31),
+ number int,
+
+ PRIMARY KEY (gameID, playerID, type, number),
+ FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)
+);;
+
 SET FOREIGN_KEY_CHECKS = 1;;
