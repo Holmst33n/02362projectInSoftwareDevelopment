@@ -6,7 +6,9 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
  * @author Mikkel Brunstedt Nørgaard s224562
  */
 
-public record Checkpoint(int checkpointNumber) implements FieldAction {
+public class Checkpoint implements FieldAction {
+
+    private int checkpointNumber;
 
     /**
      * doAction method which is called every time each player has taken their turn
@@ -19,7 +21,7 @@ public record Checkpoint(int checkpointNumber) implements FieldAction {
         Player player = space.getPlayer();
         if (player != null) {
             player.setCurrentCheckpoint(this.checkpointNumber);
-            if (player.getCurrentCheckpoint() >= gameController.board.getCheckpoints().size()) {
+            if (player.getCurrentCheckpoint() >= space.getCheckpointNumber(space)) {
                 gameController.playerHasWon(player);
             }
         }

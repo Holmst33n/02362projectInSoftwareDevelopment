@@ -22,9 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * ...
@@ -38,15 +39,18 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
+    private List<Heading> walls = new ArrayList<>();
 
+    private boolean checkpoint;
     public Collection<FieldAction> actions = new ArrayList<>();
     private Player player;
 
-    public Heading getWallHeading() {
+    public List<Heading> getWallHeading() {
+        wallHeading = walls;
         return wallHeading;
     }
 
-    private Heading wallHeading;
+    private List<Heading> wallHeading;
 
     public boolean isHasWalls() {
         return hasWalls;
@@ -59,25 +63,19 @@ public class Space extends Subject {
      * @param board
      * @param x
      * @param y
-     * @param checkpoint
-     * @param hasWalls
      */
     public Space(Board board, int x, int y, boolean hasWalls) {
         this.board = board;
         this.x = x;
         this.y = y;
-        this.checkpoint = checkpoint;
+ //       this.hasWalls = hasWalls;
         player = null;
-        this.hasWalls = hasWalls;
-        if (hasWalls){
-            this.wallHeading = Heading.SOUTH;
-        }
     }
 
     /**
      * Sets checkpoint
      * @param checkpoint
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void setCheckpoint(boolean checkpoint){
         this.checkpoint = checkpoint;
@@ -131,17 +129,8 @@ public class Space extends Subject {
         return actions;
     }
 
-    public void addAction(FieldAction action) {
-        this.actions.add(action);
-
-        if(action instanceof Checkpoint) {
-            this.board.setCheckpoint((Checkpoint) action);
-        }
-        notifyChange();
-    }
-
     public Collection<Heading> getWalls() {
-        return null;
+        return walls;
     }
 
     public ConveyorBelt getConveyorBelt(){
@@ -156,4 +145,17 @@ public class Space extends Subject {
         return conveyorBelt;
     }
 
+    public void setHasWalls(boolean hasWalls) {
+        this.hasWalls = hasWalls;
+    }
+
+    public int getCheckpointNumber(Space space){
+        int checkpointNumber = 0;
+        for(FieldAction action : space.getActions()){
+            if(action instanceof Checkpoint){
+                checkpointNumber++;
+            }
+        }
+        return checkpointNumber;
+    }
 }

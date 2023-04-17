@@ -49,7 +49,6 @@ public class Board extends Subject {
 
     private final List<Player> players = new ArrayList<>();
 
-    private List<Checkpoint> checkpoints = new ArrayList<Checkpoint>();
 
     private Player current;
 
@@ -66,9 +65,6 @@ public class Board extends Subject {
 
     /**
      * Initializes the board, and makes specifik spaces checkpoints.
-     * @param width
-     * @param height
-     * @param boardName
      * @author Mikkel Brunstedt Nørgaard s224562
      * @author Johan Holmsteen s224568
      */
@@ -79,39 +75,38 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if(y == 1 && x == 6 || y == 7 && x == 7){ //creates 2 fields with walls; this is to be removed when we have BoardFactory working.
-                    Space space = new Space(this, x, y, true);
-                    spaces[x][y] = space;
-                }
-
-                else if(y == 1 && x == 1){ //creates 2 fields with checkpoints; this is to be removed when we have BoardFactory working.
-                    Space space = new Space(this, x, y,false);
-                    spaces[x][y] = space;
-                    Checkpoint checkpoint = new Checkpoint(1);
-                    space.addAction(checkpoint);
-                } else if(y == 6 && x == 2){
-                    Space space = new Space(this, x, y,false);
-                    spaces[x][y] = space;
-                    Checkpoint checkpoint = new Checkpoint(2);
-                    space.addAction(checkpoint);
-                }
-                else if(y == 3 && x == 3){
-                    Space space = new Space(this, x, y,false);
-                    spaces[x][y] = space;
-                    ConveyorBelt conveyorBelt = new ConveyorBelt();
-                    conveyorBelt.setHeading(Heading.SOUTH);
-                    space.addAction((FieldAction) conveyorBelt);
-                }
-
-                else {
+//                if(y == 1 && x == 6 || y == 7 && x == 7){ //creates 2 fields with walls; this is to be removed when we have BoardFactory working.
+//                    Space space = new Space(this, x, y, true);
+//                    spaces[x][y] = space;
+//                }
+//
+//                else if(y == 1 && x == 1){ //creates 2 fields with checkpoints; this is to be removed when we have BoardFactory working.
+//                    Space space = new Space(this, x, y,false);
+//                    spaces[x][y] = space;
+//                    Checkpoint checkpoint = new Checkpoint(1);
+//                    space.addAction(checkpoint);
+//                } else if(y == 6 && x == 2){
+//                    Space space = new Space(this, x, y,false);
+//                    spaces[x][y] = space;
+//                    Checkpoint checkpoint = new Checkpoint(2);
+//                    space.addAction(checkpoint);
+//                }
+//                else if(y == 3 && x == 3){
+//                    Space space = new Space(this, x, y,false);
+//                    spaces[x][y] = space;
+//                    ConveyorBelt conveyorBelt = new ConveyorBelt();
+//                    conveyorBelt.setHeading(Heading.SOUTH);
+//                    space.addAction((FieldAction) conveyorBelt);
+//                }
+//
+//                else {
                     Space space = new Space(this, x, y, false);
                     spaces[x][y] = space;
                 }
             }
-        }
+//        }
         this.stepMode = false;
     }
-
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
@@ -226,7 +221,6 @@ public class Board extends Subject {
     public Space getNeighbour(@NotNull Space space, @NotNull Heading heading) {
         int x = space.x;
         int y = space.y;
-
         switch (heading) {
             case SOUTH:
                 y = (y + 1) % height;
@@ -241,17 +235,19 @@ public class Board extends Subject {
                 x = (x + 1) % width;
                 break;
         }
-
-        if(space.isHasWalls() && heading == space.getWallHeading()){
-            return null;
-        }
-
         Space tempSpace = getSpace(x,y);
-
-        if(tempSpace.isHasWalls() && heading == tempSpace.getWallHeading().opposite()){
+        if(!space.getWalls().isEmpty()) {
+            space.setHasWalls(true);
+        }
+        if(!tempSpace.getWalls().isEmpty()) {
+            tempSpace.setHasWalls(true);
+        }
+        if(space.isHasWalls() && space.getWallHeading().contains(heading)){
             return null;
         }
-
+        if(tempSpace.isHasWalls() && tempSpace.getWallHeading().contains(heading.opposite())){
+            return null;
+        }
         else{
             return getSpace(x, y);
         }
@@ -285,14 +281,5 @@ public class Board extends Subject {
         Counter = counter;
         notifyChange(); //notifies the view that there has been an update
     }
-
-    //Checkpoints
-    public List<Checkpoint> getCheckpoints() {
-        return this.checkpoints;
-    }
-    public void setCheckpoint(Checkpoint checkpoint) {
-        this.checkpoints.add(checkpoint);
-    }
-
-
+    
 }

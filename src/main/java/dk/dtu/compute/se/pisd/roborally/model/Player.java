@@ -80,7 +80,7 @@ public class Player extends Subject {
     public void setCurrentCheckpoint(int checkpointNumber) {
         //check if the current checkpoint is supposed to be after the last checkpoint the player was on
         if(checkpointNumber == (this.currentCheckpoint + 1)) {
-            currentCheckpoint++;
+            this.currentCheckpoint++;
             //remove this printline when this message is shown in the view instead
             System.out.println(space.getPlayer().getName() + " has reached checkpoint " + currentCheckpoint);
         }

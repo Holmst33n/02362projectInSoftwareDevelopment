@@ -22,9 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
@@ -80,7 +78,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         // This space view should listen to changes of the space
         space.attach(this);
-        updateView(this.space);
         update(space);
     }
 
@@ -109,34 +106,58 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         this.getChildren().clear();
-        //makes every second space white, and every other space black (checkerboard pattern)
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: black;");
-        }
-
-        // turns any field that has a checkpoint action blue
-        for(FieldAction action : space.getActions()){
-            if (action instanceof Checkpoint) {
-                this.setStyle("-fx-background-color: blue;");
-            } else if(action instanceof ConveyorBelt) {
-                drawConveyorBelt(space.getConveyorBelt());
-            }
-        }
-
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
         if (subject == this.space) {
+            if (space.isCheckpoint()) {
+                this.setStyle("-fx-background-color: blue;");
+            } else if (!space.isCheckpoint()) {
+                if ((space.x + space.y) % 2 == 0) {
+                    this.setStyle("-fx-background-color: white;");
+                } else {
+                    this.setStyle("-fx-background-color: black;");
+                }
+            }
+            for(FieldAction action : space.getActions()){
+                if (action instanceof Checkpoint) {
+                    this.setStyle("-fx-background-color: blue;");
+                } else if(action instanceof ConveyorBelt) {
+                    drawConveyorBelt(space.getConveyorBelt());
+                }
+            }
+            drawWalls();
+            updatePlayer();
+        }
+    }
 
-            if (space.isHasWalls()) {
-                Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-                GraphicsContext gc = canvas.getGraphicsContext2D();
+    private void drawWalls(){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
+            if(!space.getWalls().isEmpty()){
                 gc.setStroke(Color.RED);
                 gc.setLineWidth(5);
                 gc.setLineCap(StrokeLineCap.ROUND);
-                gc.strokeLine(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-                this.getChildren().add(canvas);
+                Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+
+                for(int i = 0; i <wallHeadings.length; i++) {
+                    switch (wallHeadings[i]) {
+                        case SOUTH:
+                            gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+                            break;
+                        case WEST:
+                            gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
+                            break;
+                        case NORTH:
+                            gc.strokeLine(2, 2, SPACE_WIDTH-2, 2);
+                            break;
+                        case EAST:
+                            gc.strokeLine(SPACE_WIDTH-2, 2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+                            break;
+                    }
+                }
             }
-            updatePlayer();
+            this.getChildren().add(canvas);
         }
     }
 

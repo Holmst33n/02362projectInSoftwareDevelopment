@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GameController {
 
-    final public Board  board;
+    final public Board board;
 
     private boolean won = false;
 
@@ -179,7 +179,6 @@ public class GameController {
                             for (FieldAction action : player.getSpace().getActions()) {
                                 if (won)
                                     break;
-
                                 action.doAction(this, player.getSpace());
                             }
                         }
@@ -218,19 +217,19 @@ public class GameController {
     }
 
     private void executeActions(Player player) {
-        if(!player.getSpace().getActions().isEmpty()) {
-            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
-            for(int i = 0; i < actions.length; i++) {
-                if(actions[i] instanceof ConveyorBelt) {
-                    try {
-                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
-                    } catch (ImpossibleMoveException e) {
-
-                    }
-                }
-
-            }
-        }
+//        if(!player.getSpace().getActions().isEmpty()) {
+//            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
+//            for(int i = 0; i < actions.length; i++) {
+//                if(actions[i] instanceof ConveyorBelt) {
+//                    try {
+//                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
+//                    } catch (ImpossibleMoveException e) {
+//
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
     // XXX: V2
@@ -399,7 +398,7 @@ public class GameController {
     public void playerHasWon(Player player){
         String winmessage = player.getName()+" vandt.";
         System.out.println(winmessage);
-        //mangler logik til at vise denne
+        //still need logic to show this winmessage properly. message is printed 3 times, to be solved.
     }
 
 }
