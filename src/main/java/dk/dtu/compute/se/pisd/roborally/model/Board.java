@@ -99,7 +99,7 @@ public class Board extends Subject {
                     Space space = new Space(this, x, y,false);
                     spaces[x][y] = space;
                     ConveyorBelt conveyorBelt = new ConveyorBelt();
-                    conveyorBelt.setHeading(Heading.NORTH);
+                    conveyorBelt.setHeading(Heading.SOUTH);
                     space.addAction((FieldAction) conveyorBelt);
                 }
 

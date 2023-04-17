@@ -63,21 +63,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        //makes every second space white, and every other space black (checkerboard pattern)
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: black;");
-        }
-
-
-        // turns any field that has a checkpoint action blue
-        for(FieldAction action : space.getActions()){
-            if (action instanceof Checkpoint) {
-                this.setStyle("-fx-background-color: blue;");
-            }
-        }
-
         // updatePlayer();
 
         // This space view should listen to changes of the space
@@ -111,6 +96,21 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         this.getChildren().clear();
+        //makes every second space white, and every other space black (checkerboard pattern)
+        if ((space.x + space.y) % 2 == 0) {
+            this.setStyle("-fx-background-color: white;");
+        } else {
+            this.setStyle("-fx-background-color: black;");
+        }
+
+        // turns any field that has a checkpoint action blue
+        for(FieldAction action : space.getActions()){
+            if (action instanceof Checkpoint) {
+                this.setStyle("-fx-background-color: blue;");
+            } else if(action instanceof ConveyorBelt) {
+                drawConveyorBelt(space.getConveyorBelt());
+            }
+        }
 
         if (subject == this.space) {
 
@@ -125,5 +125,31 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
             updatePlayer();
         }
+    }
+
+    private void drawConveyorBelt(ConveyorBelt conveyorBelt){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.save();
+        gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2);
+
+        switch (conveyorBelt.getHeading()){
+            case SOUTH:
+                break;
+            case WEST:
+                gc.rotate(90);
+                break;
+            case NORTH:
+                gc.rotate(180);
+                break;
+            case EAST:
+                gc.rotate(270);
+                break;
+        }
+        gc.setFill(Color.LIGHTGRAY);
+        gc.fillPolygon(new double[]{0, -18, 18}, new double[]{18, -18, -18},3);
+
+        gc.restore();
+        this.getChildren().add(canvas);
     }
 }
