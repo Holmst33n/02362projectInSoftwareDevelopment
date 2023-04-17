@@ -19,12 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-package dk.dtu.compute.se.pisd.roborally.controller;
+package dk.dtu.compute.se.pisd.roborally.model;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-public class ConveyorBelt extends FieldAction {
+public class ConveyorBelt implements FieldAction {
 
     private Heading heading;
 
@@ -47,8 +44,23 @@ public class ConveyorBelt extends FieldAction {
 
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO needs to be implemented
-        return false;
+        Player player = space.getPlayer();
+        Space nextSpace = space.board.getNeighbour(space, this.heading);
+
+        if(nextSpace.getPlayer() != null) {
+            return false;
+            //here we can implement that a player can move another player while being pushed by a conveyor belt
+        } else {
+            player.setSpace(nextSpace);
+
+            for (dk.dtu.compute.se.pisd.roborally.model.FieldAction action : nextSpace.actions){
+                if (action instanceof ConveyorBelt){
+                    action.doAction(gameController, player.getSpace());
+                }
+            }
+
+            return true;
+        }
     }
 
 }

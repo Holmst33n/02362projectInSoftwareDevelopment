@@ -95,6 +95,13 @@ public class Board extends Subject {
                     Checkpoint checkpoint = new Checkpoint(2);
                     space.addAction(checkpoint);
                 }
+                else if(y == 3 && x == 3){
+                    Space space = new Space(this, x, y,false);
+                    spaces[x][y] = space;
+                    ConveyorBelt conveyorBelt = new ConveyorBelt();
+                    conveyorBelt.setHeading(Heading.NORTH);
+                    space.addAction((FieldAction) conveyorBelt);
+                }
 
                 else {
                     Space space = new Space(this, x, y, false);
