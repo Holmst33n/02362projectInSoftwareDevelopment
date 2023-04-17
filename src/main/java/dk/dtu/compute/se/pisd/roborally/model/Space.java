@@ -26,6 +26,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.SpaceTemplate;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class Space extends Subject {
     private Player player;
 
     public List<Heading> getWallHeading() {
-        wallHeading = spaceTemplate.walls;
+        wallHeading = walls;
         return wallHeading;
     }
 
@@ -58,6 +59,12 @@ public class Space extends Subject {
     private SpaceTemplate spaceTemplate;
 
     private ConveyorBelt conveyorBelt;
+
+    private List<FieldAction> actions = new ArrayList<>();
+
+    private List<Heading> walls = new ArrayList<>();
+
+
 
 
     /**
@@ -74,7 +81,6 @@ public class Space extends Subject {
         this.y = y;
         this.checkpoint = checkpoint;
         player = null;
-        this.spaceTemplate = new SpaceTemplate(); // initialize spaceTemplate with a new object
     }
 
     /**
@@ -141,11 +147,11 @@ public class Space extends Subject {
     }
 
     public Collection<FieldAction> getActions() {
-        return spaceTemplate.actions;
+        return actions;
     }
 
     public Collection<Heading> getWalls() {
-        return spaceTemplate.walls;
+        return walls;
     }
 
 }

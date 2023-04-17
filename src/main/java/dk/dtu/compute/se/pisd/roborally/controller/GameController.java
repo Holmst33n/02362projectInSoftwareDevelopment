@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GameController {
 
-    final public Board board;
+    final public Board  board;
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -197,7 +197,7 @@ public class GameController {
     private void executeActions(Player player) {
         if(!player.getSpace().getActions().isEmpty()) {
             FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
-            for(int i = 0; i < player.getSpace().getActions().size(); i++) {
+            for(int i = 0; i < actions.length; i++) {
                 if(actions[i] instanceof ConveyorBelt) {
                     try {
                         moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
@@ -249,6 +249,11 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+
+//                    --> execute action on fields!
+                    executeActions(currentPlayer);
+//                    --> check checkpoints for alle spillere
+//                    checkCheckpoints();
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -267,6 +272,7 @@ public class GameController {
             assert false;
         }
     }
+
 
     // TODO Assignment V2
 //    public void moveForward(@NotNull Player player) {
