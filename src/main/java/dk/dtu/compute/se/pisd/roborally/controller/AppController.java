@@ -105,9 +105,9 @@ public class AppController implements Observer {
     }
 
     public void loadGame() {
-        // XXX needs to be implememted eventually
-        // for now, we just create a new game
-        RepositoryAccess.getRepository().loadGameFromDB(1);
+        Board board = RepositoryAccess.getRepository().loadGameFromDB(1);
+        gameController = new GameController(board);
+        roboRally.createBoardView(gameController);
     }
 
     /**
