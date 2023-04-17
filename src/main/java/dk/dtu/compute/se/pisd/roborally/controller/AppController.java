@@ -26,6 +26,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.GameInDB;
 import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
@@ -105,9 +106,17 @@ public class AppController implements Observer {
     }
 
     public void loadGame() {
-        Board board = RepositoryAccess.getRepository().loadGameFromDB(1);
-        gameController = new GameController(board);
-        roboRally.createBoardView(gameController);
+        List<GameInDB> savedGames = RepositoryAccess.getRepository().getGames();
+        ChoiceDialog<Object> dialog = new ChoiceDialog<>(savedGames);
+        dialog.setTitle("Choose saved game:");
+        Optional<Object> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            GameInDB selectedGame = (GameInDB) result.get();
+            Board board = RepositoryAccess.getRepository().loadGameFromDB(selectedGame.id);
+            gameController = new GameController(board);
+            roboRally.createBoardView(gameController);
+        }
     }
 
     /**
