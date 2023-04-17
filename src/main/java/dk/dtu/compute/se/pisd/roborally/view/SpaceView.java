@@ -73,9 +73,9 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         // turns any field that has a checkpoint action blue
         for(FieldAction action : space.getActions()){
-            if (action instanceof Checkpoint){
+            if (action instanceof Checkpoint) {
                 this.setStyle("-fx-background-color: blue;");
-
+            }
         }
 
         // updatePlayer();
