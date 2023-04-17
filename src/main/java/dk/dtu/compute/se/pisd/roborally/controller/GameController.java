@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GameController {
 
-    final public Board board;
+    final public Board  board;
 
     private boolean won = false;
 
@@ -194,7 +194,7 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
-
+                    executeActions(currentPlayer);
                     // --> execute action on fields!
                     // --> derefter skal vi her tjekke for om spillerne er på checkpoints
 
@@ -214,6 +214,22 @@ public class GameController {
         } else {
             // this should not happen
             assert false;
+        }
+    }
+
+    private void executeActions(Player player) {
+        if(!player.getSpace().getActions().isEmpty()) {
+            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
+            for(int i = 0; i < actions.length; i++) {
+                if(actions[i] instanceof ConveyorBelt) {
+                    try {
+                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
+                    } catch (ImpossibleMoveException e) {
+
+                    }
+                }
+
+            }
         }
     }
 
@@ -256,6 +272,11 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+
+//                    --> execute action on fields!
+                    executeActions(currentPlayer);
+//                    --> check checkpoints for alle spillere
+//                    checkCheckpoints();
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -274,6 +295,7 @@ public class GameController {
             assert false;
         }
     }
+
 
     // TODO Assignment V2
 //    public void moveForward(@NotNull Player player) {
@@ -302,7 +324,7 @@ public class GameController {
         }
     }
 
-    private void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
+    public void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
 
         Player other = space.getPlayer();
         if(other != null) {
