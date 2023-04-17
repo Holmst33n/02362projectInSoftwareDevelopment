@@ -122,6 +122,10 @@ public class Board extends Subject {
         }
     }
 
+    public String getBoardName() {
+        return boardName;
+    }
+
     public int getPlayersNumber() {
         return players.size();
     }

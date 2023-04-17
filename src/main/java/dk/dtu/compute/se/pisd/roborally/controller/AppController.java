@@ -26,6 +26,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.BoardFactory;
@@ -53,9 +55,6 @@ public class AppController implements Observer {
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
     final private RoboRally roboRally;
-
-    private Board board;
-
     private GameController gameController;
 
     public AppController(@NotNull RoboRally roboRally) {
@@ -98,16 +97,17 @@ public class AppController implements Observer {
     }
 
     public void saveGame() {
-        // XXX needs to be implemented eventually
-
+        if(gameController.board.getGameId() == null) {
+            RepositoryAccess.getRepository().createGameInDB(gameController.board);
+        } else {
+            RepositoryAccess.getRepository().updateGameInDB(gameController.board);
+        }
     }
 
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
-        }
+        RepositoryAccess.getRepository().loadGameFromDB(1);
     }
 
     /**
