@@ -121,23 +121,24 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
             if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
                 if(!space.getActions().isEmpty()) {
-                    FieldAction[] actions = space.getActions().toArray(new FieldAction[0]);
                     gc.save(); // Save the current transformation state
                     gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2); // Translate to the center of the space
+                    FieldAction[] actions = space.getActions().toArray(new FieldAction[0]);
+
                     for (int i = 0; i<actions.length; i++) {
                         if(actions[i] instanceof ConveyorBelt) {
                             ConveyorBelt conveyorBelt = (ConveyorBelt) actions[i];
                             switch (conveyorBelt.getHeading()) {
                                 case SOUTH:
-                                    gc.rotate(90);
                                     break;
                                 case WEST:
-                                    gc.rotate(180);
+                                    gc.rotate(90);
                                     break;
                                 case NORTH:
-                                    gc.rotate(270);
+                                    gc.rotate(180);
                                     break;
                                 case EAST:
+                                    gc.rotate(270);
                                     break;
                             }
                             gc.setFill(Color.LIGHTGRAY);
@@ -147,10 +148,11 @@ public class SpaceView extends StackPane implements ViewObserver {
                     gc.restore(); // Restore the previous transformation state
                 }
                 if(!space.getWalls().isEmpty()){
-                    Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
                     gc.setStroke(Color.RED);
                     gc.setLineWidth(5);
                     gc.setLineCap(StrokeLineCap.ROUND);
+                    Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+
                     for(int i = 0; i <wallHeadings.length; i++) {
                         switch (wallHeadings[i]) {
                             case SOUTH:
