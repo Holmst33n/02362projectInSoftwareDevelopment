@@ -41,6 +41,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -79,21 +81,38 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            BoardFactory boardFactory = new BoardFactory();
-            Board board = boardFactory.createBoard(); //navn som parameter
-            gameController = new GameController(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board.addPlayer(player);
-                player.setSpace(board.getSpace(i % board.width, i));
+
+            File folder = new File("src/main/resources/boards");
+            File[] listOfFiles = folder.listFiles();
+            List<String> jsonFiles = new ArrayList<>();
+            for (File file : listOfFiles) {
+                if (file.isFile() && file.getName().endsWith(".json")) {
+                    jsonFiles.add(file.getName());
+                }
             }
 
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
-            gameController.startProgrammingPhase();
+            ChoiceDialog<String> choseBoardDialog = new ChoiceDialog<>(null, jsonFiles);
+            choseBoardDialog.setTitle("Choose a board");
+            choseBoardDialog.setHeaderText("Choose a board from the list below");
+            choseBoardDialog.setContentText("Board:");
+            Optional<String> boardResult = choseBoardDialog.showAndWait();
 
-            roboRally.createBoardView(gameController);
+            if (boardResult.isPresent()) {
+                Board board = BoardFactory.createBoard(boardResult.toString());
+                gameController = new GameController(board);
+                int no = result.get();
+                for (int i = 0; i < no; i++) {
+                    Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
+                    board.addPlayer(player);
+                    player.setSpace(board.getSpace(i % board.width, i));
+                }
+
+                // XXX: V2
+                // board.setCurrentPlayer(board.getPlayer(0));
+                gameController.startProgrammingPhase();
+
+                roboRally.createBoardView(gameController);
+            }
         }
     }
 
