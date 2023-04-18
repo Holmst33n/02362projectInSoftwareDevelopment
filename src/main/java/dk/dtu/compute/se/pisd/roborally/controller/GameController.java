@@ -179,7 +179,11 @@ public class GameController {
                             for (FieldAction action : player.getSpace().getActions()) {
                                 if (won)
                                     break;
-                                action.doAction(this, player.getSpace());
+                                if(action instanceof ConveyorBelt) {
+                                    action.doAction(this, player.getSpace());
+                                } if(action instanceof Checkpoint) {
+                                    action.doAction(this, player.getSpace());
+                                }
                             }
                         }
 
@@ -193,7 +197,9 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+                    //executes actions on fields
                     executeActions(currentPlayer);
+
                     // --> execute action on fields!
                     // --> derefter skal vi her tjekke for om spillerne er på checkpoints
 
@@ -217,19 +223,19 @@ public class GameController {
     }
 
     private void executeActions(Player player) {
-//        if(!player.getSpace().getActions().isEmpty()) {
-//            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
-//            for(int i = 0; i < actions.length; i++) {
-//                if(actions[i] instanceof ConveyorBelt) {
-//                    try {
-//                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
-//                    } catch (ImpossibleMoveException e) {
-//
-//                    }
-//                }
-//
-//            }
-//        }
+        if(!player.getSpace().getActions().isEmpty()) {
+            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
+            for(int i = 0; i < actions.length; i++) {
+                if(actions[i] instanceof ConveyorBelt) {
+                    try {
+                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
+                    } catch (ImpossibleMoveException e) {
+
+                    }
+                }
+
+            }
+        }
     }
 
     // XXX: V2
@@ -397,7 +403,7 @@ public class GameController {
      */
     public void playerHasWon(Player player){
         String winmessage = player.getName()+" vandt.";
-        System.out.println(winmessage);
+        //System.out.println(winmessage);
         //still need logic to show this winmessage properly. message is printed 3 times, to be solved.
     }
 
