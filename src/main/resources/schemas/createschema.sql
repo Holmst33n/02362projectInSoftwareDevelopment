@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS CommandCards (
  playerID tinyint NOT NULL,
 
  commandID varchar(255),
- type varchar(31),
- number int,
+ type varchar(31) NOT NULL,
+ number int NOT NULL,
 
  PRIMARY KEY (gameID, playerID, type, number),
  FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)
