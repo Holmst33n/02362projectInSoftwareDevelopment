@@ -22,9 +22,6 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.fileaccess.model.SpaceTemplate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,9 +39,10 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
+    private List<Heading> walls = new ArrayList<>();
 
     private boolean checkpoint;
-
+    public Collection<FieldAction> actions = new ArrayList<>();
     private Player player;
 
     public List<Heading> getWallHeading() {
@@ -54,52 +52,41 @@ public class Space extends Subject {
 
     private List<Heading> wallHeading;
 
+    public boolean isHasWalls() {
+        return hasWalls;
+    }
+
     private boolean hasWalls;
 
-    private SpaceTemplate spaceTemplate;
-
-    private ConveyorBelt conveyorBelt;
-
-    private List<FieldAction> actions = new ArrayList<>();
-
-    private List<Heading> walls = new ArrayList<>();
-
-
-
-
     /**
+     * @author Johan Holmsteen, s224568
      * @param board
      * @param x
      * @param y
-     * @param checkpoint
-     * @param hasWalls
-     * @author Johan Holmsteen, s224568
      */
-    public Space(Board board, int x, int y, boolean checkpoint, boolean hasWalls) {
+    public Space(Board board, int x, int y, boolean hasWalls) {
         this.board = board;
         this.x = x;
         this.y = y;
-        this.checkpoint = checkpoint;
+ //       this.hasWalls = hasWalls;
         player = null;
     }
 
     /**
      * Sets checkpoint
-     *
      * @param checkpoint
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
-    public void setCheckpoint(boolean checkpoint) {
+    public void setCheckpoint(boolean checkpoint){
         this.checkpoint = checkpoint;
     }
 
     /**
      * Gets checkpoint
-     *
      * @return checkpoint
      * @author Mikkel Nørgaard
      */
-    public boolean isCheckpoint() {
+    public boolean isCheckpoint(){
         return checkpoint;
     }
 
@@ -121,14 +108,6 @@ public class Space extends Subject {
             }
             notifyChange();
         }
-    }
-
-    public boolean isHasWalls() {
-        return hasWalls;
-    }
-
-    public void setHasWalls(boolean hasWalls) {
-        this.hasWalls = hasWalls;
     }
 
     void playerChanged() {
@@ -154,4 +133,29 @@ public class Space extends Subject {
         return walls;
     }
 
+    public ConveyorBelt getConveyorBelt(){
+
+        ConveyorBelt conveyorBelt = null;
+
+        for (FieldAction action : this.actions) {
+            if(action instanceof ConveyorBelt){
+                conveyorBelt = (ConveyorBelt) action;
+            }
+        }
+        return conveyorBelt;
+    }
+
+    public void setHasWalls(boolean hasWalls) {
+        this.hasWalls = hasWalls;
+    }
+
+    public int getCheckpointNumber(Space space){
+        int checkpointNumber = 0;
+        for(FieldAction action : space.getActions()){
+            if(action instanceof Checkpoint){
+                checkpointNumber++;
+            }
+        }
+        return checkpointNumber;
+    }
 }

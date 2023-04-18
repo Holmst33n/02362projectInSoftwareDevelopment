@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.Exception.ImpossibleMoveException;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.model.FieldAction;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,7 +34,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GameController {
 
-    final public Board  board;
+    final public Board board;
+
+    private boolean won = false;
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -167,15 +170,38 @@ public class GameController {
                     }
                     executeCommand(currentPlayer, command);
                 }
+                if (board.getPhase() == Phase.ACTIVATION) {
+                    if (board.getPlayerNumber(currentPlayer) + 1 < board.getPlayersNumber()) {
+                        board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
+                    } else {
+
+                        for (Player player : board.getPlayers()) {
+                            for (FieldAction action : player.getSpace().getActions()) {
+                                if (won)
+                                    break;
+                                if(action instanceof ConveyorBelt) {
+                                    action.doAction(this, player.getSpace());
+                                } if(action instanceof Checkpoint) {
+                                    action.doAction(this, player.getSpace());
+                                }
+                            }
+                        }
+
+                        step++;
+                        makeProgramFieldsVisible(step);
+                        board.setStep(step);
+                        board.setCurrentPlayer(board.getPlayer(0));
+                    }
+                }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
+                    //executes actions on fields
                     executeActions(currentPlayer);
+
                     // --> execute action on fields!
                     // --> derefter skal vi her tjekke for om spillerne er på checkpoints
-
-                    step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -237,7 +263,7 @@ public class GameController {
     }
 
      public void executeCommandOptionAndContinue(@NotNull Command option) {
-        // Det her er kopiereret fra executeNextStep(); og det er rigtig dårlig stil
+        // Det her er kopieret fra executeNextStep(); og det er rigtig dårlig stil
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
@@ -330,8 +356,6 @@ public class GameController {
         }
     }
 
-
-
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Space space = player.getSpace();
@@ -367,6 +391,18 @@ public class GameController {
     public void notImplemented() {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
+    }
+
+    /**
+     * method to show that a player has won
+     * is called if a player has reached all checkpoints in the correct order
+     * @param player
+     * @author Mikkel Brunstedt Nørgaard s224562
+     */
+    public void playerHasWon(Player player){
+        String winmessage = player.getName()+" vandt.";
+        //System.out.println(winmessage);
+        //still need logic to show this winmessage properly. message is printed 3 times, to be solved.
     }
 
 }

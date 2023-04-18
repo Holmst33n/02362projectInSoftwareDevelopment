@@ -22,11 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
@@ -34,10 +30,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
-
-import static dk.dtu.compute.se.pisd.roborally.model.Heading.*;
 
 /**
  * ...
@@ -52,14 +44,12 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
-
     /**
      * Initializes the spaces. Gives them the color blue if the space is a checkpoint; if not, they are
      * colored black and white in a checkerboard pattern.
      *
      * @param space
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public SpaceView(@NotNull Space space) {
         this.space = space;
@@ -73,6 +63,15 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
+        if (space.isCheckpoint()) {
+            this.setStyle("-fx-background-color: blue;");
+        } else if (!space.isCheckpoint()) {
+            if ((space.x + space.y) % 2 == 0) {
+                this.setStyle("-fx-background-color: white;");
+            } else {
+                this.setStyle("-fx-background-color: black;");
+            }
+        }
 
 
         // updatePlayer();
@@ -119,60 +118,72 @@ public class SpaceView extends StackPane implements ViewObserver {
                     this.setStyle("-fx-background-color: black;");
                 }
             }
-            if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
-                if(!space.getActions().isEmpty()) {
-                    gc.save(); // Save the current transformation state
-                    gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2); // Translate to the center of the space
-                    FieldAction[] actions = space.getActions().toArray(new FieldAction[0]);
-
-                    for (int i = 0; i<actions.length; i++) {
-                        if(actions[i] instanceof ConveyorBelt) {
-                            ConveyorBelt conveyorBelt = (ConveyorBelt) actions[i];
-                            switch (conveyorBelt.getHeading()) {
-                                case SOUTH:
-                                    break;
-                                case WEST:
-                                    gc.rotate(90);
-                                    break;
-                                case NORTH:
-                                    gc.rotate(180);
-                                    break;
-                                case EAST:
-                                    gc.rotate(270);
-                                    break;
-                            }
-                            gc.setFill(Color.LIGHTGRAY);
-                            gc.fillPolygon(new double[]{0, -18, 18}, new double[]{18, -18, -18}, 3);
-                        }
-                    }
-                    gc.restore(); // Restore the previous transformation state
+            for(FieldAction action : space.getActions()){
+                if (action instanceof Checkpoint) {
+                    this.setStyle("-fx-background-color: blue;");
+                } else if(action instanceof ConveyorBelt) {
+                    drawConveyorBelt(space.getConveyorBelt());
                 }
-                if(!space.getWalls().isEmpty()){
-                    gc.setStroke(Color.RED);
-                    gc.setLineWidth(5);
-                    gc.setLineCap(StrokeLineCap.ROUND);
-                    Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
-
-                    for(int i = 0; i <wallHeadings.length; i++) {
-                        switch (wallHeadings[i]) {
-                            case SOUTH:
-                                gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
-                                break;
-                            case WEST:
-                                gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
-                                break;
-                            case NORTH:
-                                gc.strokeLine(2, 2, SPACE_WIDTH-2, 2);
-                                break;
-                            case EAST:
-                                gc.strokeLine(SPACE_WIDTH-2, 2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
-                                break;
-                        }
-                    }
-                }
-                this.getChildren().add(canvas);
             }
+            drawWalls();
             updatePlayer();
         }
+    }
+
+    private void drawWalls(){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
+            if(!space.getWalls().isEmpty()){
+                gc.setStroke(Color.RED);
+                gc.setLineWidth(5);
+                gc.setLineCap(StrokeLineCap.ROUND);
+                Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+
+                for(int i = 0; i <wallHeadings.length; i++) {
+                    switch (wallHeadings[i]) {
+                        case SOUTH:
+                            gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+                            break;
+                        case WEST:
+                            gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
+                            break;
+                        case NORTH:
+                            gc.strokeLine(2, 2, SPACE_WIDTH-2, 2);
+                            break;
+                        case EAST:
+                            gc.strokeLine(SPACE_WIDTH-2, 2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+                            break;
+                    }
+                }
+            }
+            this.getChildren().add(canvas);
+        }
+    }
+
+    private void drawConveyorBelt(ConveyorBelt conveyorBelt){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.save();
+        gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2);
+
+        switch (conveyorBelt.getHeading()){
+            case SOUTH:
+                break;
+            case WEST:
+                gc.rotate(90);
+                break;
+            case NORTH:
+                gc.rotate(180);
+                break;
+            case EAST:
+                gc.rotate(270);
+                break;
+        }
+        gc.setFill(Color.LIGHTGRAY);
+        gc.fillPolygon(new double[]{0, -18, 18}, new double[]{18, -18, -18},3);
+
+        gc.restore();
+        this.getChildren().add(canvas);
     }
 }

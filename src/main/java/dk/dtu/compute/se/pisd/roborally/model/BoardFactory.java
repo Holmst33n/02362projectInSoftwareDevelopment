@@ -14,4 +14,5 @@ public class BoardFactory {
     public static Board createBoard(String boardname) {
         return LoadBoard.loadBoard(boardname);
     }
+
 }

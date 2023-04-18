@@ -49,6 +49,7 @@ public class Board extends Subject {
 
     private final List<Player> players = new ArrayList<>();
 
+
     private Player current;
 
     private Phase phase = INITIALISATION;
@@ -57,15 +58,14 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    private boolean hasWalls;
+
     //counter som vi bruger til at tælle spillernes tur
     private int Counter;
 
     /**
      * Initializes the board, and makes specifik spaces checkpoints.
-     * @param width
-     * @param height
-     * @param boardName
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      * @author Johan Holmsteen s224568
      */
     public Board(int width, int height, @NotNull String boardName) {
@@ -74,24 +74,37 @@ public class Board extends Subject {
         this.height = height;
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y++) {
-                Space space = new Space(this, x, y, false, false);
-                spaces[x][y] = space;
-//                //EDIT THIS ONCE WE HAVE PREDEFINED MAPS
-//                if(y == 1 && x == 6 || y == 7 && x == 7){ // creates checkpoints
-//                    Space space = new Space(this, x, y, true, false);
+            for (int y = 0; y < height; y++) {
+//                if(y == 1 && x == 6 || y == 7 && x == 7){ //creates 2 fields with walls; this is to be removed when we have BoardFactory working.
+//                    Space space = new Space(this, x, y, true);
 //                    spaces[x][y] = space;
 //                }
-//                else if(y == 1 && x == 1 || y == 6 && x == 2){ // creates walls
-//                    Space space = new Space(this, x, y,false,true);
-//                    spaces[x][y] = space;
-//                }
-//                else {
-//                    Space space = new Space(this, x, y, false, false);
-//                    spaces[x][y] = space;
 //
+//                else if(y == 1 && x == 1){ //creates 2 fields with checkpoints; this is to be removed when we have BoardFactory working.
+//                    Space space = new Space(this, x, y,false);
+//                    spaces[x][y] = space;
+//                    Checkpoint checkpoint = new Checkpoint(1);
+//                    space.addAction(checkpoint);
+//                } else if(y == 6 && x == 2){
+//                    Space space = new Space(this, x, y,false);
+//                    spaces[x][y] = space;
+//                    Checkpoint checkpoint = new Checkpoint(2);
+//                    space.addAction(checkpoint);
+//                }
+//                else if(y == 3 && x == 3){
+//                    Space space = new Space(this, x, y,false);
+//                    spaces[x][y] = space;
+//                    ConveyorBelt conveyorBelt = new ConveyorBelt();
+//                    conveyorBelt.setHeading(Heading.SOUTH);
+//                    space.addAction((FieldAction) conveyorBelt);
+//                }
+//
+//                else {
+                    Space space = new Space(this, x, y, false);
+                    spaces[x][y] = space;
+                }
             }
-        }
+//        }
         this.stepMode = false;
     }
 
@@ -144,6 +157,8 @@ public class Board extends Subject {
             return null;
         }
     }
+
+    public List<Player> getPlayers() {return players;}
 
     public Player getCurrentPlayer() {
         return current;
@@ -245,7 +260,7 @@ public class Board extends Subject {
     /**
      * Status message in the bottom of the game to display turns taken, which player has the turn and checkpoints passed.
      * @return String
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
@@ -256,20 +271,19 @@ public class Board extends Subject {
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
                 ", Player = " + getCurrentPlayer().getName() +
-                ", Turns = " + getCounter() + //Viser vores counter i bunden af spil-vinduet ved siden af hvilken spillers tur det er
-                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCapturedCheckpoints();
+                ", Turns = " + getCounter() + //shows our turn-counter in the bottom of the game window
+                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCurrentCheckpoint(); //shows how many checkpoints the current player has visited
     }
 
-    //Getter til at få antallet af ture
+    //getter to get amount of turns
     public int getCounter() {
         return Counter;
     }
 
-    //Setter til at sætte antallet af ture
+    //setter to set the amount of turns
     public void setCounter(int counter) {
         Counter = counter;
-        notifyChange(); //Sørger for at spillet ved der er sket en ændring og opdaterer det
+        notifyChange(); //notifies the view that there has been an update
     }
-
-
+    
 }

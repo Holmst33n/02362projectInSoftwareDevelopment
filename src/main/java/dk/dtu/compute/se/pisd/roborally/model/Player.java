@@ -45,7 +45,7 @@ public class Player extends Subject {
     private Space space;
     private Heading heading = SOUTH;
 
-    private int capturedCheckpoints = 0;
+    private int currentCheckpoint = 0;
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
@@ -68,12 +68,22 @@ public class Player extends Subject {
         }
     }
 
-    public int getCapturedCheckpoints() {
-        return capturedCheckpoints;
+    /**
+     * getter and setter to see which checkpoint a player is currently at.
+     * @return
+     * @author Mikkel Brunstedt Nørgaard s224562
+     */
+    public int getCurrentCheckpoint() {
+        return currentCheckpoint;
     }
 
-    public void setCapturedCheckpoints(int capturedCheckpoints) {
-        this.capturedCheckpoints = capturedCheckpoints;
+    public void setCurrentCheckpoint(int checkpointNumber) {
+        //check if the current checkpoint is supposed to be after the last checkpoint the player was on
+        if(checkpointNumber == (this.currentCheckpoint + 1)) {
+            this.currentCheckpoint++;
+            //remove this printline when message is shown in the view instead
+            System.out.println(space.getPlayer().getName() + " has reached checkpoint " + currentCheckpoint);
+        }
     }
 
     public String getName() {
