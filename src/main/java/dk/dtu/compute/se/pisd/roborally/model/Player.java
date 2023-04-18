@@ -86,6 +86,10 @@ public class Player extends Subject {
         }
     }
 
+    public void setCurrentCheckpointDB(int checkpointNumber){
+        currentCheckpoint = checkpointNumber;
+    }
+
     public String getName() {
         return name;
     }

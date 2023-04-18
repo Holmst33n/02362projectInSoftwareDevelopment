@@ -60,6 +60,9 @@ class Repository implements IRepository {
 	private static final String PLAYER_POSITION_Y = "positionY";
 
 	private static final String PLAYER_HEADING = "heading";
+
+	private static final String PLAYER_CHECKPOINT_NUMBER = "checkpointNumber";
+
 	private static final String COMMANDCARD_GAMEID = "gameID";
 	private static final String COMMANDCARD_PLAYERID = "playerID";
 	private static final String COMMANDCARD_COMMANDCARDID = "commandcardID";
@@ -296,6 +299,7 @@ class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(PLAYER_CHECKPOINT_NUMBER, player.getCurrentCheckpoint());
 			rs.insertRow();
 		}
 
@@ -343,7 +347,8 @@ class Repository implements IRepository {
 				player.setSpace(game.getSpace(x,y));
 				int heading = rs.getInt(PLAYER_HEADING);
 				player.setHeading(Heading.values()[heading]);
-
+				int checkpointNumber = rs.getInt(PLAYER_CHECKPOINT_NUMBER);
+				player.setCurrentCheckpointDB(checkpointNumber);
 				// TODO  should also load players program and hand here
 			} else {
 				// TODO error handling
@@ -497,7 +502,4 @@ class Repository implements IRepository {
 		}
 		return select_games_stmt;
 	}
-
-
-
 }
