@@ -302,27 +302,27 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
-//	private void createCommandCardsInDB(Board game, Command cards) throws SQLException {
-//		PreparedStatement ps = getSelectCommandCardsStatementU();
-//		ps.setInt(1, game.getGameId());
-//
-//		ResultSet rs = ps.executeQuery();
-//		for (int i = 0; i < cards.getOptions().size(); i++) {
-//			Command card = cards.getOptions().get(i);
-//			rs.moveToInsertRow();
-//			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
-//			rs.updateInt(COMMANDCARD_PLAYERID, i);
-//			rs.updateString(COMMANDCARD_COMMANDCARDID, card.);
-//			rs.updateString(PLAYER_COLOUR, player.getColor());
-//			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
-//			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
-//			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
-//			rs.insertRow();
-//		}
-//
-//		rs.close();
-//
-//	}
+/*	private void createCommandCardsInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectCommandCardsStatementU();
+		ps.setInt(1, game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+		for (int i = 0; i < game.getOptions().size(); i++) {
+			Command card = cards.getOptions().get(i);
+			rs.moveToInsertRow();
+			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
+			rs.updateInt(COMMANDCARD_PLAYERID, i);
+			rs.updateString(COMMANDCARD_COMMANDCARDID, card.);
+			rs.updateString(PLAYER_COLOUR, player.getColor());
+			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
+			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
+			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.insertRow();
+		}
+
+		rs.close();
+
+	}*/
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
