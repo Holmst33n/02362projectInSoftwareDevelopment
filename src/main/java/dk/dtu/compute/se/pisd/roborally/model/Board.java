@@ -49,7 +49,6 @@ public class Board extends Subject {
 
     private final List<Player> players = new ArrayList<>();
 
-
     private Player current;
 
     private Phase phase = INITIALISATION;
@@ -58,9 +57,6 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
-    private boolean hasWalls;
-
-    //counter som vi bruger til at tælle spillernes tur
     private int Counter;
 
     /**
@@ -75,36 +71,10 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-//                if(y == 1 && x == 6 || y == 7 && x == 7){ //creates 2 fields with walls; this is to be removed when we have BoardFactory working.
-//                    Space space = new Space(this, x, y, true);
-//                    spaces[x][y] = space;
-//                }
-//
-//                else if(y == 1 && x == 1){ //creates 2 fields with checkpoints; this is to be removed when we have BoardFactory working.
-//                    Space space = new Space(this, x, y,false);
-//                    spaces[x][y] = space;
-//                    Checkpoint checkpoint = new Checkpoint(1);
-//                    space.addAction(checkpoint);
-//                } else if(y == 6 && x == 2){
-//                    Space space = new Space(this, x, y,false);
-//                    spaces[x][y] = space;
-//                    Checkpoint checkpoint = new Checkpoint(2);
-//                    space.addAction(checkpoint);
-//                }
-//                else if(y == 3 && x == 3){
-//                    Space space = new Space(this, x, y,false);
-//                    spaces[x][y] = space;
-//                    ConveyorBelt conveyorBelt = new ConveyorBelt();
-//                    conveyorBelt.setHeading(Heading.SOUTH);
-//                    space.addAction((FieldAction) conveyorBelt);
-//                }
-//
-//                else {
                     Space space = new Space(this, x, y);
                     spaces[x][y] = space;
                 }
             }
-//        }
         this.stepMode = false;
     }
 
@@ -263,12 +233,6 @@ public class Board extends Subject {
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public String getStatusMessage() {
-        // this is actually a view aspect, but for making assignment V1 easy for
-        // the students, this method gives a string representation of the current
-        // status of the game
-
-        // XXX: V1 add the move count to the status message
-        // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
                 ", Player = " + getCurrentPlayer().getName() +
                 ", Turns = " + getCounter() + //shows our turn-counter in the bottom of the game window
