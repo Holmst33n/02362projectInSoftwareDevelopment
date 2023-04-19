@@ -64,11 +64,10 @@ public class Space extends Subject {
      * @param x
      * @param y
      */
-    public Space(Board board, int x, int y, boolean hasWalls) {
+    public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
- //       this.hasWalls = hasWalls;
         player = null;
     }
 
@@ -84,7 +83,7 @@ public class Space extends Subject {
     /**
      * Gets checkpoint
      * @return checkpoint
-     * @author Mikkel Nørgaard
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public boolean isCheckpoint(){
         return checkpoint;
@@ -134,9 +133,7 @@ public class Space extends Subject {
     }
 
     public ConveyorBelt getConveyorBelt(){
-
         ConveyorBelt conveyorBelt = null;
-
         for (FieldAction action : this.actions) {
             if(action instanceof ConveyorBelt){
                 conveyorBelt = (ConveyorBelt) action;

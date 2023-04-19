@@ -100,7 +100,7 @@ public class Board extends Subject {
 //                }
 //
 //                else {
-                    Space space = new Space(this, x, y, false);
+                    Space space = new Space(this, x, y);
                     spaces[x][y] = space;
                 }
             }
