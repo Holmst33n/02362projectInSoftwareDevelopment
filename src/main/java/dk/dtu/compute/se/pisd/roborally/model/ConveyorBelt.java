@@ -58,11 +58,11 @@ public class ConveyorBelt implements FieldAction {
         } else {
             player.setSpace(nextSpace);
 
-            for (FieldAction action : nextSpace.actions){
-                if (action instanceof ConveyorBelt){
-                    action.doAction(gameController, player.getSpace());
-                }
-            }
+//            for (FieldAction action : nextSpace.actions){
+//                if (action instanceof ConveyorBelt){
+//                    action.doAction(gameController, player.getSpace());
+//                }
+//            }
 
             return true;
         }

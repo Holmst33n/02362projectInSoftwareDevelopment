@@ -175,17 +175,7 @@ public class GameController {
                         board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
                     } else {
 
-                        for (Player player : board.getPlayers()) {
-                            for (FieldAction action : player.getSpace().getActions()) {
-                                if (won)
-                                    break;
-                                if(action instanceof ConveyorBelt) {
-                                    action.doAction(this, player.getSpace());
-                                } if(action instanceof Checkpoint) {
-                                    action.doAction(this, player.getSpace());
-                                }
-                            }
-                        }
+                        executeActions();
 
                         step++;
                         makeProgramFieldsVisible(step);
@@ -198,7 +188,6 @@ public class GameController {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     //executes actions on fields
-                    executeActions(currentPlayer);
 
                     // --> execute action on fields!
                     // --> derefter skal vi her tjekke for om spillerne er på checkpoints
@@ -220,18 +209,16 @@ public class GameController {
         }
     }
 
-    private void executeActions(Player player) {
-        if(!player.getSpace().getActions().isEmpty()) {
-            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
-            for(int i = 0; i < actions.length; i++) {
-                if(actions[i] instanceof ConveyorBelt) {
-                    try {
-                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
-                    } catch (ImpossibleMoveException e) {
-
-                    }
+    private void executeActions() {
+        for (Player player : board.getPlayers()) {
+            for (FieldAction action : player.getSpace().getActions()) {
+                if (won)
+                    break;
+                if(action instanceof ConveyorBelt) {
+                    action.doAction(this, player.getSpace());
+                } if(action instanceof Checkpoint) {
+                    action.doAction(this, player.getSpace());
                 }
-
             }
         }
     }
@@ -277,7 +264,7 @@ public class GameController {
                 } else {
 
 //                    --> execute action on fields!
-                    executeActions(currentPlayer);
+                    executeActions();
 //                    --> check checkpoints for alle spillere
 //                    checkCheckpoints();
                     step++;
@@ -299,18 +286,6 @@ public class GameController {
         }
     }
 
-
-    // TODO Assignment V2
-//    public void moveForward(@NotNull Player player) {
-//        Space space = player.getSpace();
-//        if (space != null){
-//            Heading heading = player.getHeading();
-//            Space space1 = board.getNeighbour(space, heading);
-//            if(space1 != null) {
-//                player.setSpace(space1);
-//            }
-//        }
-//    }
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -341,7 +316,6 @@ public class GameController {
         player.setSpace(space);
     }
 
-    // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
         for (int i = 0; i < 3; i++) {
             Space space = player.getSpace();
@@ -356,7 +330,6 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null){
