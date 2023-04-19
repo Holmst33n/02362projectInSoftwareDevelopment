@@ -94,6 +94,7 @@ public class Player extends Subject {
         return name;
     }
 
+    //setName could be used if players wanted to name their robots, rather than them being called "Player 1", "Player 2" etc.
     public void setName(String name) {
         if (name != null && !name.equals(this.name)) {
             this.name = name;
