@@ -88,21 +88,54 @@ public class SpaceView extends StackPane implements ViewObserver {
         update(space);
     }
 
+    /**
+     * Updates the player view; shows an image instead of the simple colored triange. Depending on player number, an image is picked.
+     * @author Ekki
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     private void updatePlayer() {
-
         Player player = space.getPlayer();
-        if (player != null) {
-            Polygon arrow = new Polygon(0.0, 0.0,
-                    10.0, 20.0,
-                    20.0, 0.0);
-            try {
-                arrow.setFill(Color.valueOf(player.getColor()));
-            } catch (Exception e) {
-                arrow.setFill(Color.MEDIUMPURPLE);
+        String imagePath = "";
+        if(player != null){
+            String playerName = player.getName();
+            switch(playerName) {
+                case "Player 1":
+                    imagePath = "/images/player1.png";
+                    break;
+                case "Player 2":
+                    imagePath = "/images/player2.png";
+                    break;
+                case "Player 3":
+                    imagePath = "/images/player3.png";
+                    break;
+                case "Player 4":
+                    imagePath = "/images/player4.png";
+                    break;
+                case "Player 5":
+                    imagePath = "/images/player5.png";
+                    break;
+                case "Player 6":
+                    imagePath = "/images/player6.png";
+                    break;
+                case "Player 7":
+                    imagePath = "/images/player7.png";
+                    break;
+                case "Player 8":
+                    imagePath = "/images/player8.png";
+                    break;
             }
+        }
 
-            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
-            this.getChildren().add(arrow);
+        if(imagePath != null) {
+            InputStream imageStream = getClass().getResourceAsStream(imagePath);
+            Image img = new Image(imageStream);
+            ImageView imageView = new ImageView(img);
+            imageView.setFitHeight(SPACE_HEIGHT * 0.75);
+            imageView.setFitWidth(SPACE_WIDTH * 0.75);
+
+            StackPane stack = new StackPane();
+            stack.getChildren().addAll(imageView);
+            this.getChildren().add(stack);
         }
     }
 
@@ -115,15 +148,12 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().clear();
         String imagePath = "/images/blank.PNG";
         if (subject == this.space) {
-
-                InputStream imageStream = getClass().getResourceAsStream(imagePath);
-                Image img = new Image(imageStream);
-                ImageView imageView = new ImageView(img);
-                imageView.setFitHeight(SPACE_HEIGHT);
-                imageView.setFitWidth(SPACE_WIDTH);
-                this.getChildren().add(imageView);
-
-
+            InputStream imageStream = getClass().getResourceAsStream(imagePath);
+            Image img = new Image(imageStream);
+            ImageView imageView = new ImageView(img);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            imageView.setFitWidth(SPACE_WIDTH);
+            this.getChildren().add(imageView);
 
             for(FieldAction action : space.getActions()){
                 if (action instanceof Checkpoint) {
@@ -186,19 +216,16 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
 
             if (imagePath != null) {
-                InputStream imageStream = getClass().getResourceAsStream(imagePath);
-                Image img = new Image(imageStream);
-                ImageView imageView = new ImageView(img);
-                imageView.setFitHeight(SPACE_HEIGHT);
-                imageView.setFitWidth(SPACE_WIDTH);
-
-                StackPane stack = new StackPane();
-                stack.getChildren().addAll( imageView);
-                this.getChildren().add(stack);
+                drawImage(imagePath, 1, 1);
             }
         }
     }
 
+    /**
+     * Draw gears; used in the updateView to show checkpoints.
+     * @param checkpoint
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     private void drawCheckpoint(Checkpoint checkpoint){
         this.setStyle("-fx-background-color: blue;");
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
@@ -244,5 +271,17 @@ public class SpaceView extends StackPane implements ViewObserver {
 
         gc.restore();
         this.getChildren().add(canvas);
+    }
+
+    private void drawImage(String imagePath, int scaleY, int scaleX){
+        InputStream imageStream = getClass().getResourceAsStream(imagePath);
+        Image img = new Image(imageStream);
+        ImageView imageView = new ImageView(img);
+        imageView.setFitHeight(SPACE_HEIGHT*scaleY);
+        imageView.setFitWidth(SPACE_WIDTH*scaleX);
+
+        StackPane stack = new StackPane();
+        stack.getChildren().addAll(imageView);
+        this.getChildren().add(stack);
     }
 }
