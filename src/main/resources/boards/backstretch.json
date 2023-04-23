@@ -556,8 +556,8 @@
           }
         }
       ],
-      "x": 6,
-      "y": 0
+      "x": 2,
+      "y": 2
     },
     {
       "walls": [],
@@ -569,8 +569,21 @@
           }
         }
       ],
-      "x": 7,
-      "y": 0
+      "x": 6,
+      "y": 2
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.Gear",
+          "INSTANCE": {
+            "direction": "counterclockwise"
+          }
+        }
+      ],
+      "x": 6,
+      "y": 7
     }
   ]
 }
