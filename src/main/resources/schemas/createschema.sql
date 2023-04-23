@@ -33,10 +33,10 @@ CREATE TABLE IF NOT EXISTS Player (
 CREATE TABLE IF NOT EXISTS CommandCards (
  gameID int NOT NULL,
  playerID tinyint NOT NULL,
+
+ commandcardID varchar(255),
  type varchar(31) NOT NULL,
  number int NOT NULL,
-
- commandID varchar(255),
 
  PRIMARY KEY (gameID, playerID, type, number),
  FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)

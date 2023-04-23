@@ -158,4 +158,30 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    public CommandCardField[] getProgram() {
+        return program;
+    }
+
+    public CommandCardField[] getCards() {
+        return cards;
+    }
+
+    public void setProgram(CommandCardField[] program) {
+        this.program = program;
+    }
+
+    public void setCards(CommandCardField[] cards) {
+        this.cards = cards;
+    }
+
+    public void setProgramField(CommandCardField card, int i) {
+        this.program[i] = card;
+
+    }
+
+    public void setCardField(CommandCardField card, int i) {
+        this.cards[i] = card;
+    }
+
+
 }
