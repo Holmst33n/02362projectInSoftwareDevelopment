@@ -173,31 +173,31 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @author Mikkel Brunstedt Nørgaard, s224562
      */
     private void drawWalls() {
-            Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
-            StackPane stack = new StackPane();
+        Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+        StackPane stack = new StackPane();
 
-            if (wallHeadings != null) {
-                Map<Heading, String> imagePathMap = new HashMap<>();
-                imagePathMap.put(Heading.SOUTH, "/images/wallsouth.png");
-                imagePathMap.put(Heading.WEST, "/images/wallwest.png");
-                imagePathMap.put(Heading.NORTH, "/images/wallnorth.png");
-                imagePathMap.put(Heading.EAST, "/images/walleast.png");
+        if (wallHeadings != null) {
+            Map<Heading, String> imagePathMap = new HashMap<>();
+            imagePathMap.put(Heading.SOUTH, "/images/wallsouth.png");
+            imagePathMap.put(Heading.WEST, "/images/wallwest.png");
+            imagePathMap.put(Heading.NORTH, "/images/wallnorth.png");
+            imagePathMap.put(Heading.EAST, "/images/walleast.png");
 
-                for (Heading heading : wallHeadings) {
-                    String imagePath = imagePathMap.get(heading);
+            for (Heading heading : wallHeadings) {
+                String imagePath = imagePathMap.get(heading);
 
-                    if (imagePath != null) {
-                        InputStream imageStream = getClass().getResourceAsStream(imagePath);
-                        Image img = new Image(imageStream);
-                        ImageView imageView = new ImageView(img);
-                        imageView.setFitHeight(SPACE_HEIGHT);
-                        imageView.setFitWidth(SPACE_WIDTH);
+                if (imagePath != null) {
+                    InputStream imageStream = getClass().getResourceAsStream(imagePath);
+                    Image img = new Image(imageStream);
+                    ImageView imageView = new ImageView(img);
+                    imageView.setFitHeight(SPACE_HEIGHT);
+                    imageView.setFitWidth(SPACE_WIDTH);
 
-                        stack.getChildren().addAll(imageView);
-                    }
+                    stack.getChildren().addAll(imageView);
                 }
-                this.getChildren().add(stack);
             }
+            this.getChildren().add(stack);
+        }
     }
 
     /**
