@@ -206,11 +206,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (!space.getActions().isEmpty()) {
             String imagePath = null;
             if (direction.equals("clockwise")) {
-                imagePath = "/images/clockwise.png";
+                imagePath = "/images/clockwise.JPG";
             } else if (direction.equals("counterclockwise")) {
-                imagePath = "/images/counterclockwise.png";
+                imagePath = "/images/counterclockwise.JPG";
             }
-
             if (imagePath != null) {
                 drawImage(imagePath, 1, 1);
             }
@@ -265,29 +264,19 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @author Joes Hasselriis Nicolaisen s??????
      */
     private void drawConveyorBelt(ConveyorBelt conveyorBelt){
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.save();
-        gc.translate(SPACE_WIDTH / 2, SPACE_HEIGHT / 2);
+        String imagePath = "/images/conveyor.JPG";
+        if(imagePath != null) {
+            InputStream imageStream = getClass().getResourceAsStream(imagePath);
+            Image img = new Image(imageStream);
+            ImageView imageView = new ImageView(img);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            imageView.setFitWidth(SPACE_WIDTH);
 
-        switch (conveyorBelt.getHeading()){
-            case SOUTH:
-                break;
-            case WEST:
-                gc.rotate(90);
-                break;
-            case NORTH:
-                gc.rotate(180);
-                break;
-            case EAST:
-                gc.rotate(270);
-                break;
+            StackPane stack = new StackPane();
+            stack.getChildren().addAll(imageView);
+            imageView.setRotate(((90 * conveyorBelt.getHeading().ordinal()) % 360)+180);
+            this.getChildren().add(stack);
         }
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillPolygon(new double[]{0, -18, 18}, new double[]{18, -18, -18},3);
-
-        gc.restore();
-        this.getChildren().add(canvas);
     }
 
     private void drawImage(String imagePath, int scaleY, int scaleX){
