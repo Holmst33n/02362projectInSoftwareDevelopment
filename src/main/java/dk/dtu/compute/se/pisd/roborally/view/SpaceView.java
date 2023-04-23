@@ -124,18 +124,19 @@ public class SpaceView extends StackPane implements ViewObserver {
                     imagePath = "/images/player8.png";
                     break;
             }
-        }
 
-        if(imagePath != null) {
-            InputStream imageStream = getClass().getResourceAsStream(imagePath);
-            Image img = new Image(imageStream);
-            ImageView imageView = new ImageView(img);
-            imageView.setFitHeight(SPACE_HEIGHT * 0.75);
-            imageView.setFitWidth(SPACE_WIDTH * 0.75);
+            if(imagePath != null) {
+                InputStream imageStream = getClass().getResourceAsStream(imagePath);
+                Image img = new Image(imageStream);
+                ImageView imageView = new ImageView(img);
+                imageView.setFitHeight(SPACE_HEIGHT * 0.75);
+                imageView.setFitWidth(SPACE_WIDTH * 0.75);
 
-            StackPane stack = new StackPane();
-            stack.getChildren().addAll(imageView);
-            this.getChildren().add(stack);
+                StackPane stack = new StackPane();
+                stack.getChildren().addAll(imageView);
+                imageView.setRotate((90 * player.getHeading().ordinal()) % 360);
+                this.getChildren().add(stack);
+            }
         }
     }
 
@@ -148,12 +149,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.getChildren().clear();
         String imagePath = "/images/blank.PNG";
         if (subject == this.space) {
-            InputStream imageStream = getClass().getResourceAsStream(imagePath);
-            Image img = new Image(imageStream);
-            ImageView imageView = new ImageView(img);
-            imageView.setFitHeight(SPACE_HEIGHT);
-            imageView.setFitWidth(SPACE_WIDTH);
-            this.getChildren().add(imageView);
+            drawImage(imagePath, 1, 1);
 
             for(FieldAction action : space.getActions()){
                 if (action instanceof Checkpoint) {
@@ -227,18 +223,39 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @author Mikkel Brunstedt Nørgaard, s224562
      */
     private void drawCheckpoint(Checkpoint checkpoint){
-        this.setStyle("-fx-background-color: blue;");
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.save();
-        int number = checkpoint.getCheckpointNumber();
-        if(!space.getActions().isEmpty()){
-            gc.setStroke(Color.WHITE);
-            gc.setLineWidth(2);
-            for(int i = 0; i <= number; i++) {
-                gc.strokeLine(3*(i+3), 9, 3*(i+3), 15);
+        String imagePath = "";
+        if(checkpoint != null){
+            int checkpointNumber = checkpoint.getCheckpointNumber();
+            switch(checkpointNumber) {
+                case 0:
+                    imagePath = "/images/checkpoint1.png";
+                    break;
+                case 1:
+                    imagePath = "/images/checkpoint2.png";
+                    break;
+                case 2:
+                    imagePath = "/images/checkpoint3.png";
+                    break;
+                case 3:
+                    imagePath = "/images/checkpoint4.png";
+                    break;
+                case 4:
+                    imagePath = "/images/checkpoint5.png";
+                    break;
+                case 5:
+                    imagePath = "/images/checkpoint6.png";
+                    break;
+                case 6:
+                    imagePath = "/images/checkpoint7.png";
+                    break;
+                case 7:
+                    imagePath = "/images/checkpoint8.png";
+                    break;
             }
-        this.getChildren().add(canvas);
+
+            if(imagePath != null) {
+                drawImage(imagePath, 1, 1);
+            }
         }
     }
 
