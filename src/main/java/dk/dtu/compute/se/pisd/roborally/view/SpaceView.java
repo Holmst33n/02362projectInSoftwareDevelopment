@@ -113,8 +113,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         this.getChildren().clear();
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
         String imagePath = "/images/blank.PNG";
         if (subject == this.space) {
 
@@ -126,18 +124,6 @@ public class SpaceView extends StackPane implements ViewObserver {
                 this.getChildren().add(imageView);
 
 
-
-
-
-
-
-
-
-//                if ((space.x + space.y) % 2 == 0) {
-//                    this.setStyle("-fx-background-color: white;");
-//                } else {
-//                    this.setStyle("-fx-background-color: black;");
-//                }
 
             for(FieldAction action : space.getActions()){
                 if (action instanceof Checkpoint) {
@@ -191,8 +177,6 @@ public class SpaceView extends StackPane implements ViewObserver {
      */
     private void drawGear(Gear gear){
         String direction = gear.getDirection();
-        String imagePathBG = "/images/blank.PNG";
-
         if (!space.getActions().isEmpty()) {
             String imagePath = null;
             if (direction.equals("clockwise")) {
@@ -208,16 +192,8 @@ public class SpaceView extends StackPane implements ViewObserver {
                 imageView.setFitHeight(SPACE_HEIGHT);
                 imageView.setFitWidth(SPACE_WIDTH);
 
-                InputStream imageStreamBG = getClass().getResourceAsStream(imagePath);
-                Image imgBG = new Image(imageStreamBG);
-                ImageView imageViewBG = new ImageView(imgBG);
-                imageViewBG.setFitHeight(SPACE_HEIGHT);
-                imageViewBG.setFitWidth(SPACE_WIDTH);
-                this.getChildren().add(imageViewBG);
-
-
                 StackPane stack = new StackPane();
-                stack.getChildren().addAll(imageViewBG, imageView);
+                stack.getChildren().addAll( imageView);
                 this.getChildren().add(stack);
             }
         }
