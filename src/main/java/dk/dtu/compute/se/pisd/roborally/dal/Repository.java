@@ -115,6 +115,7 @@ class Repository implements IRepository {
 				// statement.close();
 
 				createPlayersInDB(game);
+				createCommandCardsInDB(game);
 				/* TOODO this method needs to be implemented first
 				createCardFieldsInDB(game);
 				 */
@@ -306,27 +307,46 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
-/*	private void createCommandCardsInDB(Board game) throws SQLException {
-		PreparedStatement ps = getSelectCommandCardsStatementU();
-		ps.setInt(1, game.getGameId());
+private void createCommandCardsInDB(Board game) throws SQLException {
+	PreparedStatement ps = getSelectCommandCardsStatementU();
+	ps.setInt(1, game.getGameId());
 
-		ResultSet rs = ps.executeQuery();
-		for (int i = 0; i < game.getOptions().size(); i++) {
-			Command card = cards.getOptions().get(i);
+	ResultSet rs = ps.executeQuery();
+	for (int i = 0; i < game.getPlayersNumber(); i++) {
+		Player player = game.getPlayer(i);
+		for (int j = 0; j < player.getProgram().length; j++) {
 			rs.moveToInsertRow();
 			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
 			rs.updateInt(COMMANDCARD_PLAYERID, i);
-			rs.updateString(COMMANDCARD_COMMANDCARDID, card.);
-			rs.updateString(PLAYER_COLOUR, player.getColor());
-			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
-			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
-			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(COMMANDCARD_TYPE, 0);
+			rs.updateInt(COMMANDCARD_NUMBER, j);
+			if (player.getProgramField(j).getCard() != null) {
+				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getProgramField(j).getCard().command.ordinal());
+			}
+//			else {
+//				rs.updateInt(COMMANDCARD_COMMANDCARDID, null);
+//			}
 			rs.insertRow();
 		}
 
-		rs.close();
+		for (int j = 0; j < player.getCards().length; j++) {
+			rs.moveToInsertRow();
+			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
+			rs.updateInt(COMMANDCARD_PLAYERID, i);
+			rs.updateInt(COMMANDCARD_TYPE, 1);
+			rs.updateInt(COMMANDCARD_NUMBER, j);
+			if (player.getCardField(j).getCard() != null) {
+				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getCardField(j).getCard().command.ordinal());
+			}
+//			else {
+//				rs.updateInt(COMMANDCARD_COMMANDCARDID, null);
+//			}
+			rs.insertRow();
+		}
+	}
+	rs.close();
+}
 
-	}*/
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
