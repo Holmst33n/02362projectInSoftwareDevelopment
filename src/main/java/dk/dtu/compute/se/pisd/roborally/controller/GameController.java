@@ -51,31 +51,22 @@ public class GameController {
 
     //DOES NOT WORK AS INTENDED YET
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
-        // TODO Assignment V1: method should be implemented by the students:
-        //   - the current player should be moved to the given space
-        //     (if it is free()
-        //   - and the current player should be set to the player
-        //     following the current player
-        //   - the counter of moves in the game should be increased by one
-        //     if and when the player is moved (the counter and the status line
-        //     message needs to be implemented at another place)
-        if(space.getPlayer() == null) {     //Tjekker om der allerede står en spiller på feltet
-            Player currentPlayer = board.getCurrentPlayer();    //Sætter currentPlayer
-            if(currentPlayer != null) {     //Tjekker om spilleren eksisterer
-                space.setPlayer(currentPlayer);     //Sætter spilleren som har klikket til at stå på feltet
+        if(space.getPlayer() == null) {     //checks if a player is already on the space (defensive programming)
+            Player currentPlayer = board.getCurrentPlayer();    //sets currentPlayer
+            if(currentPlayer != null) {     //checks if the player exists (defensive programming)
+                space.setPlayer(currentPlayer);     //sets the currentPlayer on the space
 
-                int currentPlayerNumber = board.getPlayerNumber(currentPlayer);         //Finder spilleren med turens nummer
-                int nextPlayerNumber = (currentPlayerNumber + 1) % board.getPlayersNumber();    //Sætter nextPlayerNumber til at være currentPlayerNumber+1, men kører x gange (hvor x = antal spillere)
+                int currentPlayerNumber = board.getPlayerNumber(currentPlayer);         //finds the player who has the turn
+                int nextPlayerNumber = (currentPlayerNumber + 1) % board.getPlayersNumber();    //changes nextPlayerNumber to be the next player in line
 
-                Player nextPlayer = board.getPlayer(nextPlayerNumber);      //Sætter nextPlayer ud fra nextPlayerNumber som vi lige har fundet
-                board.setCurrentPlayer(nextPlayer);     //Sætter currentPlayer til at være næste spiller
+                Player nextPlayer = board.getPlayer(nextPlayerNumber);      //sets next player depending on nextPlayerNumber
+                board.setCurrentPlayer(nextPlayer);     //hands the turn over to nextPlayer
 
-                board.setCounter(board.getCounter()+1); //Opdaterer vores counter, så den tælles op med 1 efter hver tur
+                board.setCounter(board.getCounter()+1);    //updates our counter once per turn;
             }
         }
     }
 
-    // XXX: V2
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -98,14 +89,12 @@ public class GameController {
         }
     }
 
-    // XXX: V2
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
     }
 
-    // XXX: V2
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -114,7 +103,6 @@ public class GameController {
         board.setStep(0);
     }
 
-    // XXX: V2
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -125,7 +113,6 @@ public class GameController {
         }
     }
 
-    // XXX: V2
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
@@ -136,26 +123,22 @@ public class GameController {
         }
     }
 
-    // XXX: V2
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
-    // XXX: V2
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
     }
 
-    // XXX: V2
     private void continuePrograms() {
         do {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
-    // XXX: V2
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -174,19 +157,7 @@ public class GameController {
                     if (board.getPlayerNumber(currentPlayer) + 1 < board.getPlayersNumber()) {
                         board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
                     } else {
-
-                        for (Player player : board.getPlayers()) {
-                            for (FieldAction action : player.getSpace().getActions()) {
-                                if (won)
-                                    break;
-                                if(action instanceof ConveyorBelt) {
-                                    action.doAction(this, player.getSpace());
-                                } if(action instanceof Checkpoint) {
-                                    action.doAction(this, player.getSpace());
-                                }
-                            }
-                        }
-
+                        executeActions();
                         step++;
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -198,7 +169,6 @@ public class GameController {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     //executes actions on fields
-                    executeActions(currentPlayer);
 
                     // --> execute action on fields!
                     // --> derefter skal vi her tjekke for om spillerne er på checkpoints
@@ -220,29 +190,22 @@ public class GameController {
         }
     }
 
-    private void executeActions(Player player) {
-        if(!player.getSpace().getActions().isEmpty()) {
-            FieldAction[] actions = player.getSpace().getActions().toArray(new FieldAction[0]);
-            for(int i = 0; i < actions.length; i++) {
-                if(actions[i] instanceof ConveyorBelt) {
-                    try {
-                        moveToSpace(player, player.getSpace(), ((ConveyorBelt) actions[i]).getHeading());
-                    } catch (ImpossibleMoveException e) {
-
-                    }
+    private void executeActions() {
+        for (Player player : board.getPlayers()) {
+            for (FieldAction action : player.getSpace().getActions()) {
+                if (won)
+                    break;
+                if(action instanceof ConveyorBelt) {
+                    action.doAction(this, player.getSpace());
+                } if(action instanceof Checkpoint) {
+                    action.doAction(this, player.getSpace());
                 }
-
             }
         }
     }
 
-    // XXX: V2
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
-            // XXX This is a very simplistic way of dealing with some basic cards and
-            //     their execution. This should eventually be done in a more elegant way
-            //     (this concerns the way cards are modelled as well as the way they are executed).
-
             switch (command) {
                 case FORWARD:
                     this.moveForward(player);
@@ -257,13 +220,12 @@ public class GameController {
                     this.fastForward(player);
                     break;
                 default:
-                    // DO NOTHING (for now)
             }
         }
     }
 
      public void executeCommandOptionAndContinue(@NotNull Command option) {
-        // Det her er kopieret fra executeNextStep(); og det er rigtig dårlig stil
+        //this is copied from executeNextStep(), bad style
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
@@ -277,7 +239,7 @@ public class GameController {
                 } else {
 
 //                    --> execute action on fields!
-                    executeActions(currentPlayer);
+                    executeActions();
 //                    --> check checkpoints for alle spillere
 //                    checkCheckpoints();
                     step++;
@@ -299,18 +261,6 @@ public class GameController {
         }
     }
 
-
-    // TODO Assignment V2
-//    public void moveForward(@NotNull Player player) {
-//        Space space = player.getSpace();
-//        if (space != null){
-//            Heading heading = player.getHeading();
-//            Space space1 = board.getNeighbour(space, heading);
-//            if(space1 != null) {
-//                player.setSpace(space1);
-//            }
-//        }
-//    }
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -341,7 +291,6 @@ public class GameController {
         player.setSpace(space);
     }
 
-    // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
         for (int i = 0; i < 3; i++) {
             Space space = player.getSpace();
@@ -356,7 +305,6 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null){
@@ -364,7 +312,6 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null){
@@ -384,14 +331,6 @@ public class GameController {
         }
     }
 
-    /**
-     * A method called when no corresponding controller operation is implemented yet. This
-     * should eventually be removed.
-     */
-    public void notImplemented() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        assert false;
-    }
 
     /**
      * method to show that a player has won
