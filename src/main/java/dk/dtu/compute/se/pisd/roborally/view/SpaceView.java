@@ -37,6 +37,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -167,40 +168,39 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * Draw gears; used in the updateView to show gears. Gears are drawn with files clockwise.png and counterclockwise.png in resource folder
+     * @param gear
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     private void drawGear(Gear gear){
         String direction = gear.getDirection();
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.save();
 
         if (!space.getActions().isEmpty()) {
-            Image img;
-
+            String imagePath = null;
             if (direction.equals("clockwise")) {
-                img = new Image("C:\\Users\\mikke\\IdeaProjects\\02362projectInSoftwareDevelopment\\src\\main\\resources\\images\\clockwise.png");
+                imagePath = "/images/clockwise.png";
             } else if (direction.equals("counterclockwise")) {
-                img = new Image("C:\\Users\\mikke\\IdeaProjects\\02362projectInSoftwareDevelopment\\src\\main\\resources\\images\\counterclockwise.png");
-            } else {
-                return; // Invalid direction, exit the method
+                imagePath = "/images/counterclockwise.png";
             }
 
-            ImageView imageView = new ImageView(img);
-            imageView.setFitHeight(SPACE_HEIGHT);
-            imageView.setFitWidth(SPACE_WIDTH);
+            if (imagePath != null) {
+                InputStream imageStream = getClass().getResourceAsStream(imagePath);
+                Image img = new Image(imageStream);
+                ImageView imageView = new ImageView(img);
+                imageView.setFitHeight(SPACE_HEIGHT);
+                imageView.setFitWidth(SPACE_WIDTH);
 
-            Color bgColor;
-            if ((space.x + space.y) % 2 == 0) {
-                bgColor = Color.WHITE;
-            } else {
-                bgColor = Color.BLACK;
+                Color bgColor = ((space.x + space.y) % 2 == 0) ? Color.WHITE : Color.BLACK;
+                Rectangle bg = new Rectangle(SPACE_WIDTH, SPACE_HEIGHT, bgColor);
+
+                StackPane stack = new StackPane();
+                stack.getChildren().addAll(bg, imageView);
+                this.getChildren().add(stack);
             }
-
-            Rectangle bg = new Rectangle(SPACE_WIDTH, SPACE_HEIGHT, bgColor);
-            StackPane stack = new StackPane();
-            stack.getChildren().addAll(bg, imageView);
-            this.getChildren().add(imageView);
         }
     }
+
 
 
     private void drawCheckpoint(Checkpoint checkpoint){
