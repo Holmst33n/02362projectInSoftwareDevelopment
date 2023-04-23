@@ -113,9 +113,9 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * @author Johan Holmsteen S224568
+     * @author Ekki
+     * @author Johan Holmsteen s224568
      */
-
     @Override
     public void updateView(Subject subject) {
         this.getChildren().clear();
@@ -139,7 +139,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     /**
      * method to draw walls on the board, uses hashmap to decide which image(s) to show on the board.
-     * @author Johan Holmsteen
+     * @author Johan Holmsteen s224568
      * @author Mikkel Brunstedt Nørgaard, s224562
      */
     private void drawWalls() {
@@ -253,6 +253,13 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * method to easily draw an image from imagepath and scale
+     * @param imagePath
+     * @param scaleY
+     * @param scaleX
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     private void drawImage(String imagePath, int scaleY, int scaleX){
         InputStream imageStream = getClass().getResourceAsStream(imagePath);
         Image img = new Image(imageStream);
