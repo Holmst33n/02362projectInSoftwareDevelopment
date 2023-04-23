@@ -21,15 +21,23 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 
-import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.view.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+
+import java.net.URISyntaxException;
 
 /**
  * ...
@@ -120,7 +128,12 @@ public class SpaceView extends StackPane implements ViewObserver {
                 } if(action instanceof ConveyorBelt) {
                     drawConveyorBelt(space.getConveyorBelt());
                 } if(action instanceof Gear) {
-                    this.setStyle("-fx-background-color: yellow;");
+                    try {
+                        this.setStyle("-fx-background-color: white;");
+                        drawGear(space.getGear());
+                    } catch (URISyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             drawWalls();
@@ -159,16 +172,47 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    private void drawGear(Gear gear){
+    private void drawGear(Gear gear) throws URISyntaxException {
+        String direction = gear.getDirection();
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.save();
         if(!space.getActions().isEmpty()){
+            if(direction.equals("clockwise")) {
 
+                Image img = new Image("C:\\Users\\mikke\\IdeaProjects\\02362projectInSoftwareDevelopment\\src\\main\\resources\\images\\clockwise.png");
+                ImageView imageView = new ImageView(img);
+                imageView.setImage(img);
+                imageView.setFitHeight(SPACE_HEIGHT);
+                imageView.setFitWidth(SPACE_WIDTH);
+                imageView.setVisible(true);
+                Color bgColor;
+                if ((space.x + space.y) % 2 == 0) {
+                    bgColor = Color.WHITE;
+                } else {
+                    bgColor = Color.BLACK;
+                }
+                Rectangle bg = new Rectangle(SPACE_WIDTH, SPACE_HEIGHT, bgColor);
+                this.getChildren().addAll(bg, imageView);
+
+            } else if(direction.equals("counterclockwise")) {
+
+                Image img = new Image("C:\\Users\\mikke\\IdeaProjects\\02362projectInSoftwareDevelopment\\src\\main\\resources\\images\\counterclockwise.png");
+                ImageView imageView = new ImageView(img);
+                imageView.setImage(img);
+                imageView.setFitHeight(SPACE_HEIGHT);
+                imageView.setFitWidth(SPACE_WIDTH);
+                imageView.setVisible(true);
+                Color bgColor;
+                if ((space.x + space.y) % 2 == 0) {
+                    bgColor = Color.WHITE;
+                } else {
+                    bgColor = Color.BLACK;
+                }
+                Rectangle bg = new Rectangle(SPACE_WIDTH, SPACE_HEIGHT, bgColor);
+                this.getChildren().addAll(bg, imageView);
+            }
         }
-
-
-        this.getChildren().add(canvas);
     }
 
     private void drawCheckpoint(Checkpoint checkpoint){

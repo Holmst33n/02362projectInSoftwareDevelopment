@@ -21,8 +21,8 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 
-import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
-import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.view.observer.Observer;
+import dk.dtu.compute.se.pisd.roborally.view.observer.Subject;
 import javafx.application.Platform;
 
 /**

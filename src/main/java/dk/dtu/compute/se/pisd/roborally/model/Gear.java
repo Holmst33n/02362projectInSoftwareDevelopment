@@ -30,4 +30,8 @@ public class Gear implements FieldAction {
         }
         return true;
     }
+
+    public String getDirection(){
+        return this.direction;
+    }
 }
