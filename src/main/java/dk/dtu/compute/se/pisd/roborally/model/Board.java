@@ -57,7 +57,7 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
-    private int Counter;
+    private int counter;
 
     /**
      * Initializes the board, and makes specifik spaces checkpoints.
@@ -71,10 +71,10 @@ public class Board extends Subject {
         spaces = new Space[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                    Space space = new Space(this, x, y);
-                    spaces[x][y] = space;
-                }
+                Space space = new Space(this, x, y);
+                spaces[x][y] = space;
             }
+        }
         this.stepMode = false;
     }
 
@@ -241,13 +241,24 @@ public class Board extends Subject {
 
     //getter to get amount of turns
     public int getCounter() {
-        return Counter;
+        return counter;
     }
 
     //setter to set the amount of turns
     public void setCounter(int counter) {
-        Counter = counter;
+        this.counter = counter;
         notifyChange(); //notifies the view that there has been an update
     }
-    
+
+    public int getCheckpointAmount(){
+        int checkpointAmount = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (spaces[x][y].getCheckpoint() != null){
+                    checkpointAmount++;
+                }
+            }
+        }
+        return checkpointAmount;
+    }
 }

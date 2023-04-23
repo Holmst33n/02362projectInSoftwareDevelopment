@@ -41,7 +41,6 @@ public class Space extends Subject {
     public final int y;
     private List<Heading> walls = new ArrayList<>();
 
-    private boolean checkpoint;
     public Collection<FieldAction> actions = new ArrayList<>();
     private Player player;
 
@@ -69,24 +68,6 @@ public class Space extends Subject {
         this.x = x;
         this.y = y;
         player = null;
-    }
-
-    /**
-     * Sets checkpoint
-     * @param checkpoint
-     * @author Mikkel Brunstedt Nørgaard s224562
-     */
-    public void setCheckpoint(boolean checkpoint){
-        this.checkpoint = checkpoint;
-    }
-
-    /**
-     * Gets checkpoint
-     * @return checkpoint
-     * @author Mikkel Brunstedt Nørgaard s224562
-     */
-    public boolean isCheckpoint(){
-        return checkpoint;
     }
 
     public Player getPlayer() {

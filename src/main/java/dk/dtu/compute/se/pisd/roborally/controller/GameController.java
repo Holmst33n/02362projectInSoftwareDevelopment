@@ -331,7 +331,6 @@ public class GameController {
         }
     }
 
-
     /**
      * method to show that a player has won
      * is called if a player has reached all checkpoints in the correct order
@@ -340,8 +339,7 @@ public class GameController {
      */
     public void playerHasWon(Player player){
         String winmessage = player.getName()+" vandt.";
-        //System.out.println(winmessage);
-        //still need logic to show this winmessage properly. message is printed 3 times, to be solved.
+        System.out.println(winmessage);
+        //to be implemented: this message should be shown on the view, not in the terminal.
     }
-
 }

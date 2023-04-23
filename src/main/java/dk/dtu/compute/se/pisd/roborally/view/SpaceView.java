@@ -63,15 +63,13 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
-        if (space.isCheckpoint()) {
-            this.setStyle("-fx-background-color: blue;");
-        } else if (!space.isCheckpoint()) {
-            if ((space.x + space.y) % 2 == 0) {
-                this.setStyle("-fx-background-color: white;");
-            } else {
-                this.setStyle("-fx-background-color: black;");
-            }
+
+        if ((space.x + space.y) % 2 == 0) {
+            this.setStyle("-fx-background-color: white;");
+        } else {
+            this.setStyle("-fx-background-color: black;");
         }
+
 
 
         // updatePlayer();
@@ -109,15 +107,13 @@ public class SpaceView extends StackPane implements ViewObserver {
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         if (subject == this.space) {
-            if (space.isCheckpoint()) {
-                this.setStyle("-fx-background-color: blue;");
-            } else if (!space.isCheckpoint()) {
+
                 if ((space.x + space.y) % 2 == 0) {
                     this.setStyle("-fx-background-color: white;");
                 } else {
                     this.setStyle("-fx-background-color: black;");
                 }
-            }
+
             for(FieldAction action : space.getActions()){
                 if (action instanceof Checkpoint) {
                     drawCheckpoint(space.getCheckpoint());

@@ -21,7 +21,7 @@ public class Checkpoint implements FieldAction {
         Player player = space.getPlayer();
         if (player != null) {
             player.setCurrentCheckpoint(this.checkpointNumber);
-            if (player.getCurrentCheckpoint() >= space.getCheckpoint().getCheckpointNumber()) {
+            if (player.getCurrentCheckpoint() >= gameController.board.getCheckpointAmount()) {
                 gameController.playerHasWon(player);
             }
         }
