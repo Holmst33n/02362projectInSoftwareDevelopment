@@ -201,8 +201,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-
-
     private void drawCheckpoint(Checkpoint checkpoint){
         this.setStyle("-fx-background-color: blue;");
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);

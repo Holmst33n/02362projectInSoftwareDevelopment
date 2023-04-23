@@ -3,9 +3,7 @@
   "height": 8,
   "spaces": [
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -18,9 +16,7 @@
       "y": 0
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -33,9 +29,7 @@
       "y": 1
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -48,9 +42,7 @@
       "y": 2
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -177,9 +169,7 @@
       "y": 1
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -207,9 +197,7 @@
       "y": 1
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -252,9 +240,7 @@
       "y": 4
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -267,9 +253,7 @@
       "y": 5
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -282,9 +266,7 @@
       "y": 6
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -297,9 +279,7 @@
       "y": 7
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -325,9 +305,7 @@
       "y": 4
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -340,9 +318,7 @@
       "y": 5
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -355,9 +331,7 @@
       "y": 6
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -370,9 +344,7 @@
       "y": 6
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -385,9 +357,7 @@
       "y": 7
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -400,9 +370,7 @@
       "y": 0
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -415,9 +383,7 @@
       "y": 7
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -430,9 +396,7 @@
       "y": 6
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -445,8 +409,7 @@
       "y": 5
     },
     {
-      "walls": [
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -459,9 +422,7 @@
       "y": 4
     },
     {
-      "walls": [
-
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
@@ -474,8 +435,7 @@
       "y": 3
     },
     {
-      "walls": [
-      ],
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
