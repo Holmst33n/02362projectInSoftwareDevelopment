@@ -195,9 +195,7 @@ public class GameController {
             for (FieldAction action : player.getSpace().getActions()) {
                 if (won)
                     break;
-                if(action instanceof ConveyorBelt) {
-                    action.doAction(this, player.getSpace());
-                } if(action instanceof Checkpoint) {
+                else{
                     action.doAction(this, player.getSpace());
                 }
             }
@@ -340,6 +338,7 @@ public class GameController {
     public void playerHasWon(Player player){
         String winmessage = player.getName()+" vandt.";
         System.out.println(winmessage);
+        won = true;
         //to be implemented: this message should be shown on the view, not in the terminal.
     }
 }

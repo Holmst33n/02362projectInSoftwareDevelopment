@@ -117,8 +117,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             for(FieldAction action : space.getActions()){
                 if (action instanceof Checkpoint) {
                     drawCheckpoint(space.getCheckpoint());
-                } else if(action instanceof ConveyorBelt) {
+                } if(action instanceof ConveyorBelt) {
                     drawConveyorBelt(space.getConveyorBelt());
+                } if(action instanceof Gear) {
+                    this.setStyle("-fx-background-color: yellow;");
                 }
             }
             drawWalls();
@@ -155,6 +157,18 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
             this.getChildren().add(canvas);
         }
+    }
+
+    private void drawGear(Gear gear){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.save();
+        if(!space.getActions().isEmpty()){
+
+        }
+
+
+        this.getChildren().add(canvas);
     }
 
     private void drawCheckpoint(Checkpoint checkpoint){

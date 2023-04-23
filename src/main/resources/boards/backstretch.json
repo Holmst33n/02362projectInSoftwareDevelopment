@@ -552,7 +552,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.Gear",
           "INSTANCE": {
-            "direction": "clockwise"
+            "direction": "counterclockwise"
           }
         }
       ],

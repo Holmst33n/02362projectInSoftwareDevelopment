@@ -12,7 +12,7 @@ public class Gear implements FieldAction {
     private String direction;
 
     /**
-     * doAction method which is called every time each player has taken their turn
+     * doAction method which is called every time each player has taken their turn; turns player clockwise or anticlockwise
      * @param gameController
      * @param space
      * @author Mikkel Brunstedt Nørgaard s224562
@@ -21,11 +21,11 @@ public class Gear implements FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
         if (player != null) {
-            switch(direction){
-                case "clockwise":
-                    gameController.turnRight(player);
-                case "anticlockwise":
-                    gameController.turnLeft(player);
+            if(direction.equals("clockwise")) {
+                space.getPlayer().setHeading(player.getHeading().next());
+            }
+            else if (direction.equals("counterclockwise")){
+                space.getPlayer().setHeading(player.getHeading().prev());
             }
         }
         return true;
