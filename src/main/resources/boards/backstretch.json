@@ -499,7 +499,7 @@
           "INSTANCE": {
             "checkpointNumber": "2"
           }
-        }
+        },
       ],
       "x": 4,
       "y": 4
@@ -545,6 +545,19 @@
       "actions": [],
       "x": 0,
       "y": 5
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.Gear",
+          "INSTANCE": {
+            "direction": "clockwise"
+          }
+        }
+      ],
+      "x": 7,
+      "y": 0
     }
   ]
 }

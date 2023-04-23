@@ -7,9 +7,9 @@ import org.jetbrains.annotations.NotNull;
  * @author Mikkel Brunstedt Nørgaard s224562
  */
 
-public class Checkpoint implements FieldAction {
+public class Gear implements FieldAction {
 
-    private int checkpointNumber;
+    private String direction;
 
     /**
      * doAction method which is called every time each player has taken their turn
@@ -21,14 +21,13 @@ public class Checkpoint implements FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
         if (player != null) {
-            player.setCurrentCheckpoint(this.checkpointNumber);
-            if (player.getCurrentCheckpoint() >= gameController.board.getCheckpointAmount()) {
-                gameController.playerHasWon(player);
+            switch(direction){
+                case "clockwise":
+                    gameController.turnRight(player);
+                case "anticlockwise":
+                    gameController.turnLeft(player);
             }
         }
         return true;
-    }
-    public int getCheckpointNumber(){
-        return checkpointNumber;
     }
 }
