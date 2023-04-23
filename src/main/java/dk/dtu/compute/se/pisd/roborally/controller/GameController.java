@@ -36,8 +36,6 @@ public class GameController {
 
     final public Board board;
 
-    private boolean won = false;
-
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -193,7 +191,7 @@ public class GameController {
     private void executeActions() {
         for (Player player : board.getPlayers()) {
             for (FieldAction action : player.getSpace().getActions()) {
-                if (won)
+                if (player.hasWon())
                     break;
                 else{
                     action.doAction(this, player.getSpace());
@@ -338,7 +336,7 @@ public class GameController {
     public void playerHasWon(Player player){
         String winmessage = player.getName()+" vandt.";
         System.out.println(winmessage);
-        won = true;
+        player.setWon(true);
         //to be implemented: this message should be shown on the view, not in the terminal.
     }
 }

@@ -50,6 +50,8 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
+    private boolean won = false;
+
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
         this.name = name;
@@ -181,6 +183,14 @@ public class Player extends Subject {
 
     public void setCardField(CommandCardField card, int i) {
         this.cards[i] = card;
+    }
+
+    public boolean hasWon(){
+        return won;
+    }
+
+    public void setWon(Boolean bool){
+        won = bool;
     }
 
 

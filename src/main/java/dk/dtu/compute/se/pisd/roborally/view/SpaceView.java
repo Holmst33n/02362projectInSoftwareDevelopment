@@ -23,22 +23,11 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.roborally.view.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,24 +54,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     public SpaceView(@NotNull Space space) {
         this.space = space;
 
-        // XXX the following styling should better be done with styles
-        this.setPrefWidth(SPACE_WIDTH);
-        this.setMinWidth(SPACE_WIDTH);
-        this.setMaxWidth(SPACE_WIDTH);
-
-        this.setPrefHeight(SPACE_HEIGHT);
-        this.setMinHeight(SPACE_HEIGHT);
-        this.setMaxHeight(SPACE_HEIGHT);
-
-
-        if ((space.x + space.y) % 2 == 0) {
-            this.setStyle("-fx-background-color: white;");
-        } else {
-            this.setStyle("-fx-background-color: black;");
-        }
-
-
-
         // updatePlayer();
 
         // This space view should listen to changes of the space
@@ -97,10 +68,10 @@ public class SpaceView extends StackPane implements ViewObserver {
      */
     private void updatePlayer() {
         Player player = space.getPlayer();
-        String imagePath = "";
-        if(player != null){
+        String imagePath = "", imagePathWon = "";
+        if(player != null) {
             String playerName = player.getName();
-            switch(playerName) {
+            switch (playerName) {
                 case "Player 1":
                     imagePath = "/images/player1.png";
                     break;
@@ -126,7 +97,6 @@ public class SpaceView extends StackPane implements ViewObserver {
                     imagePath = "/images/player8.png";
                     break;
             }
-
             if(imagePath != null) {
                 InputStream imageStream = getClass().getResourceAsStream(imagePath);
                 Image img = new Image(imageStream);
