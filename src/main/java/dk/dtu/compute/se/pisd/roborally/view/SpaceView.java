@@ -39,6 +39,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ...
@@ -134,7 +136,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 StackPane stack = new StackPane();
                 stack.getChildren().addAll(imageView);
-                imageView.setRotate((90 * player.getHeading().ordinal()) % 360);
+                imageView.setRotate(((90 * player.getHeading().ordinal()) % 360)+180);
                 this.getChildren().add(stack);
             }
         }
@@ -165,35 +167,37 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    private void drawWalls(){
-        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        if(!space.getActions().isEmpty() || !space.getWalls().isEmpty()) {
-            if(!space.getWalls().isEmpty()){
-                gc.setStroke(Color.RED);
-                gc.setLineWidth(5);
-                gc.setLineCap(StrokeLineCap.ROUND);
-                Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+    /**
+     * method to draw walls on the board, uses hashmap to decide which image(s) to show on the board.
+     * @author Johan Holmsteen
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
+    private void drawWalls() {
+            Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
+            StackPane stack = new StackPane();
 
-                for(int i = 0; i <wallHeadings.length; i++) {
-                    switch (wallHeadings[i]) {
-                        case SOUTH:
-                            gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
-                            break;
-                        case WEST:
-                            gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
-                            break;
-                        case NORTH:
-                            gc.strokeLine(2, 2, SPACE_WIDTH-2, 2);
-                            break;
-                        case EAST:
-                            gc.strokeLine(SPACE_WIDTH-2, 2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
-                            break;
+            if (wallHeadings != null) {
+                Map<Heading, String> imagePathMap = new HashMap<>();
+                imagePathMap.put(Heading.SOUTH, "/images/wallsouth.png");
+                imagePathMap.put(Heading.WEST, "/images/wallwest.png");
+                imagePathMap.put(Heading.NORTH, "/images/wallnorth.png");
+                imagePathMap.put(Heading.EAST, "/images/walleast.png");
+
+                for (Heading heading : wallHeadings) {
+                    String imagePath = imagePathMap.get(heading);
+
+                    if (imagePath != null) {
+                        InputStream imageStream = getClass().getResourceAsStream(imagePath);
+                        Image img = new Image(imageStream);
+                        ImageView imageView = new ImageView(img);
+                        imageView.setFitHeight(SPACE_HEIGHT);
+                        imageView.setFitWidth(SPACE_WIDTH);
+
+                        stack.getChildren().addAll(imageView);
                     }
                 }
+                this.getChildren().add(stack);
             }
-            this.getChildren().add(canvas);
-        }
     }
 
     /**
