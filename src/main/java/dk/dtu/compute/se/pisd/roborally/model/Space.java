@@ -145,17 +145,19 @@ public class Space extends Subject {
         return conveyorBelt;
     }
 
-    public void setHasWalls(boolean hasWalls) {
-        this.hasWalls = hasWalls;
-    }
+    public Checkpoint getCheckpoint(){
 
-    public int getCheckpointNumber(Space space){
-        int checkpointNumber = 0;
-        for(FieldAction action : space.getActions()){
+        Checkpoint checkpoint = null;
+
+        for (FieldAction action : this.actions) {
             if(action instanceof Checkpoint){
-                checkpointNumber++;
+                checkpoint = (Checkpoint) action;
             }
         }
-        return checkpointNumber;
+        return checkpoint;
+    }
+
+    public void setHasWalls(boolean hasWalls) {
+        this.hasWalls = hasWalls;
     }
 }

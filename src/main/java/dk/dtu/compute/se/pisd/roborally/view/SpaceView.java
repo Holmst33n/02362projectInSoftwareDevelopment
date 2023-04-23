@@ -120,7 +120,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
             for(FieldAction action : space.getActions()){
                 if (action instanceof Checkpoint) {
-                    this.setStyle("-fx-background-color: blue;");
+                    drawCheckpoint(space.getCheckpoint());
                 } else if(action instanceof ConveyorBelt) {
                     drawConveyorBelt(space.getConveyorBelt());
                 }
@@ -161,6 +161,27 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    private void drawCheckpoint(Checkpoint checkpoint){
+        this.setStyle("-fx-background-color: blue;");
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.save();
+        int number = checkpoint.getCheckpointNumber();
+        if(!space.getActions().isEmpty()){
+            gc.setStroke(Color.WHITE);
+            gc.setLineWidth(2);
+            for(int i = 0; i <= number; i++) {
+                gc.strokeLine(3*(i+3), 9, 3*(i+3), 15);
+            }
+        this.getChildren().add(canvas);
+        }
+    }
+
+    /**
+     * Draws conveyor belt on the canvas
+     * @param conveyorBelt
+     * @author Joes Hasselriis Nicolaisen s??????
+     */
     private void drawConveyorBelt(ConveyorBelt conveyorBelt){
         Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
