@@ -502,7 +502,8 @@
       "walls": [
         "NORTH"
       ],
-      "actions": [],
+      "actions": [
+      ],
       "x": 0,
       "y": 5
     },
