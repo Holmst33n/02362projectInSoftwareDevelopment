@@ -545,18 +545,5 @@
       "x": 6,
       "y": 7
     },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
-          "INSTANCE": {
-            "heading": "WEST"
-          }
-        }
-      ],
-      "x": 6,
-      "y": 0
-    }
   ]
 }
