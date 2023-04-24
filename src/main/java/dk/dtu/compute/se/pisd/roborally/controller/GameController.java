@@ -291,12 +291,9 @@ public class GameController {
         for (int i = 0; i < 3; i++) {
             Space space = player.getSpace();
             if (space != null) {
-                Heading heading = player.getHeading();
-                Space target = board.getNeighbour(space, heading);
-                try {
-                    moveToSpace(player, target, heading);
-                } catch (ImpossibleMoveException e) {
-                }
+//                Heading heading = player.getHeading();
+//                Space target = board.getNeighbour(space, heading);
+                moveForward(player);
             }
         }
     }
