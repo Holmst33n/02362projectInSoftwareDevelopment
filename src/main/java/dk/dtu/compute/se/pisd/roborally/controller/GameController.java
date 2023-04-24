@@ -166,10 +166,7 @@ public class GameController {
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
-                    //executes actions on fields
-
-                    // --> execute action on fields!
-                    // --> derefter skal vi her tjekke for om spillerne er på checkpoints
+                    executeCheckpoints();
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -193,9 +190,21 @@ public class GameController {
             for (FieldAction action : player.getSpace().getActions()) {
                 if (player.hasWon())
                     break;
-                else{
+                else if (action instanceof Checkpoint)
+                    break;
+                else
                     action.doAction(this, player.getSpace());
-                }
+            }
+        }
+    }
+
+    private void executeCheckpoints() {
+        for (Player player : board.getPlayers()) {
+            for (FieldAction action : player.getSpace().getActions()) {
+                if (player.hasWon())
+                    break;
+                else if (action instanceof Checkpoint)
+                    action.doAction(this, player.getSpace());
             }
         }
     }
