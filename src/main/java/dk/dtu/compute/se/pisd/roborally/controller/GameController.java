@@ -368,4 +368,7 @@ public class GameController {
 
     public void moveCurrentPlayerToSpace(Space space) {
     }
+
+    public void moveCurrentPlayerToSpace(Space space) {
+    }
 }
