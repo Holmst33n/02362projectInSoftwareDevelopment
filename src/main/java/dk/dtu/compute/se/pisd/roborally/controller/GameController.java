@@ -43,6 +43,23 @@ public class GameController {
         this.board = board;
     }
 
+    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+        if(space.getPlayer() == null) {     //checks if a player is already on the space (defensive programming)
+            Player currentPlayer = board.getCurrentPlayer();    //sets currentPlayer
+            if(currentPlayer != null) {     //checks if the player exists (defensive programming)
+                space.setPlayer(currentPlayer);     //sets the currentPlayer on the space
+
+                int currentPlayerNumber = board.getPlayerNumber(currentPlayer);         //finds the player who has the turn
+                int nextPlayerNumber = (currentPlayerNumber + 1) % board.getPlayersNumber();    //changes nextPlayerNumber to be the next player in line
+
+                Player nextPlayer = board.getPlayer(nextPlayerNumber);      //sets next player depending on nextPlayerNumber
+                board.setCurrentPlayer(nextPlayer);     //hands the turn over to nextPlayer
+
+                board.setCounter(board.getCounter()+1);    //updates our counter once per turn;
+            }
+        }
+    }
+
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -364,11 +381,5 @@ public class GameController {
     public void startWonPhase(){
         board.setPhase(Phase.PLAYER_WON);
         board.setStep(0);
-    }
-
-    public void moveCurrentPlayerToSpace(Space space) {
-    }
-
-    public void moveCurrentPlayerToSpace(Space space) {
     }
 }

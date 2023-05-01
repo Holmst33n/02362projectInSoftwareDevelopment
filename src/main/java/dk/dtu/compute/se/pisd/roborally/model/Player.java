@@ -167,6 +167,7 @@ public class Player extends Subject {
 
     public void setWon(Boolean bool){
         won = bool;
+        board.setWon(bool);
     }
 
 

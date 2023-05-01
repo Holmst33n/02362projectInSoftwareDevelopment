@@ -62,6 +62,8 @@ public class Board extends Subject {
 
     private int counter;
 
+    private boolean won = false;
+
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -270,5 +272,13 @@ public class Board extends Subject {
             }
         }
         return checkpointAmount;
+    }
+
+    public void setWon(Boolean bool){
+        this.won = bool;
+    }
+
+    public boolean hasWon(){
+        return this.won;
     }
 }
