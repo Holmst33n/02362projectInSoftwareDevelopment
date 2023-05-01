@@ -75,42 +75,47 @@ public class SpaceView extends StackPane implements ViewObserver {
                 case "Player 1":
                     imagePath = "/images/player1.png";
                     break;
-                case "Player 2":
-                    imagePath = "/images/player2.png";
-                    break;
-                case "Player 3":
-                    imagePath = "/images/player3.png";
-                    break;
-                case "Player 4":
+               case "Player 2":
+                   imagePath = "/images/player2.png";
+                   break;
+               case "Player 3":
+                   imagePath = "/images/player3.png";
+                   break;
+               case "Player 4":
                     imagePath = "/images/player4.png";
                     break;
-                case "Player 5":
+               case "Player 5":
                     imagePath = "/images/player5.png";
                     break;
-                case "Player 6":
+               case "Player 6":
                     imagePath = "/images/player6.png";
                     break;
-                case "Player 7":
+               case "Player 7":
                     imagePath = "/images/player7.png";
                     break;
-                case "Player 8":
+               case "Player 8":
                     imagePath = "/images/player8.png";
                     break;
-            }
-            if(imagePath != null) {
-                InputStream imageStream = getClass().getResourceAsStream(imagePath);
-                Image img = new Image(imageStream);
-                ImageView imageView = new ImageView(img);
-                imageView.setFitHeight(SPACE_HEIGHT * 0.75);
-                imageView.setFitWidth(SPACE_WIDTH * 0.75);
+                }
+                if(player.hasWon()){
+                    imagePath = "/images/player1won.png";
+                    System.out.println("siii");
+                }
+                if(imagePath != null) {
+                    InputStream imageStream = getClass().getResourceAsStream(imagePath);
+                    Image img = new Image(imageStream);
+                    ImageView imageView = new ImageView(img);
+                    imageView.setFitHeight(SPACE_HEIGHT * 0.75);
+                    imageView.setFitWidth(SPACE_WIDTH * 0.75);
 
-                StackPane stack = new StackPane();
-                stack.getChildren().addAll(imageView);
-                imageView.setRotate(((90 * player.getHeading().ordinal()) % 360)+180);
-                this.getChildren().add(stack);
+                    StackPane stack = new StackPane();
+                    stack.getChildren().addAll(imageView);
+                    imageView.setRotate(((90 * player.getHeading().ordinal()) % 360)+180);
+                    this.getChildren().add(stack);
+                }
             }
         }
-    }
+
 
     /**
      * @author Ekki

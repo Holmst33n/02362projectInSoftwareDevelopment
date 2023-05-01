@@ -233,7 +233,11 @@ public class Board extends Subject {
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public String getStatusMessage() {
-        String message = "Phase: " + getPhase().name() + ", Player = " + getCurrentPlayer().getName() + ", Turns = " + getCounter() + "\n";
+        String message = "Phase: " + getPhase().name() + ", Player = " + getCurrentPlayer().getName() + ", Turns = " + getCounter();
+        if(getCurrentPlayer().hasWon()){
+            message = message + "              "+ getCurrentPlayer().getName().toUpperCase() + " HAS WON THE GAME";
+        }
+        message = message + "\n";
         for(Player player : players){       //for loop to display them in a nicer way than in one long line
             message = message + player.getName() + "'s checkpoints: " + player.getCurrentCheckpoint();
             if(getPlayerNumber(player) % 2 == 0){
