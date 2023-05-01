@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS CommandCards (
  gameID int NOT NULL,
  playerID tinyint NOT NULL,
 
- commandcardID varchar(255),
+ commandcardID tinyint,
  type varchar(31) NOT NULL,
  number int NOT NULL,
 

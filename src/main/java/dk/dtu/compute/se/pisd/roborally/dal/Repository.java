@@ -321,7 +321,7 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 			rs.updateInt(COMMANDCARD_TYPE, 0);
 			rs.updateInt(COMMANDCARD_NUMBER, j);
 			if (player.getProgramField(j).getCard() != null) {
-				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getProgramField(j).getCard().command.ordinal()+1);
+				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getProgramField(j).getCard().command.ordinal());
 			}
 //			else {
 //				rs.updateInt(COMMANDCARD_COMMANDCARDID, null);
@@ -336,7 +336,7 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 			rs.updateInt(COMMANDCARD_TYPE, 1);
 			rs.updateInt(COMMANDCARD_NUMBER, j);
 			if (player.getCardField(j).getCard() != null) {
-				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getCardField(j).getCard().command.ordinal()+1);
+				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getCardField(j).getCard().command.ordinal());
 			}
 //			else {
 //				rs.updateInt(COMMANDCARD_COMMANDCARDID, null);
@@ -354,18 +354,18 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	ResultSet rs = ps.executeQuery();
 	while (rs.next()) {
 			int playerID = rs.getInt(COMMANDCARD_PLAYERID);
-			int commandID = rs.getInt(COMMANDCARD_COMMANDCARDID);
 			int type = rs.getInt(COMMANDCARD_TYPE);
 			int number = rs.getInt(COMMANDCARD_NUMBER);
-			if (commandID != 0) {
-				Command command = Command.values()[commandID-1];
+			Object obj = rs.getObject(COMMANDCARD_COMMANDCARDID);
+			if(obj instanceof Integer) {
+				Command command = Command.values()[(Integer) obj];
 				CommandCard commandCard = new CommandCard(command);
-				CommandCardField commmandCardField = new CommandCardField(game.getPlayer(playerID));
-				commmandCardField.setCard(commandCard);
+				CommandCardField commandCardField = new CommandCardField(game.getPlayer(playerID));
+				commandCardField.setCard(commandCard);
 				if(type == 0){
-					game.getPlayer(playerID).setProgramField(commmandCardField, number);
-				}else{
-					game.getPlayer(playerID).setCardField(commmandCardField, number);
+					game.getPlayer(playerID).setProgramField(commandCardField, number);
+				} else {
+					game.getPlayer(playerID).setCardField(commandCardField, number);
 				}
 			}
 
