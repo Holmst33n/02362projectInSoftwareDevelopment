@@ -220,6 +220,10 @@ public class PlayerView extends Tab implements ViewObserver {
                         optionButton.setDisable(false);
                         playerInteractionPanel.getChildren().add(optionButton);
                     }
+                    ImageView playerImage = new ImageView(player.getImage());
+                    playerImage.setFitHeight(75);
+                    playerImage.setPreserveRatio(true);
+                    playerInteractionPanel.getChildren().add(playerImage);
 
                     /*
                     Button optionButton = new Button("Option1");
