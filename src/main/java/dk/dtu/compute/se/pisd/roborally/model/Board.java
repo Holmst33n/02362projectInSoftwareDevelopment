@@ -60,7 +60,7 @@ public class Board extends Subject {
     private int counter;
 
     /**
-     * Initializes the board, and makes specifik spaces checkpoints.
+     * Initializes the board, and makes specific spaces checkpoints.
      * @author Mikkel Brunstedt Nørgaard s224562
      * @author Johan Holmsteen s224568
      */
@@ -233,11 +233,19 @@ public class Board extends Subject {
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public String getStatusMessage() {
-        return "Phase: " + getPhase().name() +
-                ", Player = " + getCurrentPlayer().getName() +
-                ", Turns = " + getCounter() + //shows our turn-counter in the bottom of the game window
-                ", Player " + getCurrentPlayer().getName() + "'s checkpoints: " + getCurrentPlayer().getCurrentCheckpoint(); //shows how many checkpoints the current player has visited
+        String message = "Phase: " + getPhase().name() + ", Player = " + getCurrentPlayer().getName() + ", Turns = " + getCounter() + "\n";
+        for(Player player : players){       //for loop to display them in a nicer way than in one long line
+            message = message + player.getName() + "'s checkpoints: " + player.getCurrentCheckpoint();
+            if(getPlayerNumber(player) % 2 == 0){
+                message = message + "   |   ";
+            }
+            if(getPlayerNumber(player) % 2 != 0){
+                message = message + "\n";
+            }
+        }
+        return message;
     }
+
 
     //getter to get amount of turns
     public int getCounter() {
