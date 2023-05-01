@@ -33,6 +33,9 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Johan Holmsteen, s224565
+ * @author Mikkel Noergaard, s224562
+ * @author Joes Nicolaisen, s224564
  *
  */
 public class Board extends Subject {
@@ -59,11 +62,6 @@ public class Board extends Subject {
 
     private int counter;
 
-    /**
-     * Initializes the board, and makes specific spaces checkpoints.
-     * @author Mikkel Brunstedt Nørgaard s224562
-     * @author Johan Holmsteen s224568
-     */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -188,6 +186,9 @@ public class Board extends Subject {
      * (no walls or obstacles in either of the involved spaces); otherwise,
      * null will be returned.
      *
+     * @author Johan Holmsteen, s224565
+     * @author Joes Nicolaisen, s224564
+     *
      * @param space the space for which the neighbour should be computed
      * @param heading the heading of the neighbour
      * @return the space in the given direction; null if there is no (reachable) neighbour
@@ -209,7 +210,7 @@ public class Board extends Subject {
                 x = (x + 1) % width;
                 break;
         }
-        Space tempSpace = getSpace(x,y);
+        Space tempSpace = getSpace(x,y); // tempSpace is the space where the player would like to move to
         if(!space.getWalls().isEmpty()) {
             space.setHasWalls(true);
         }

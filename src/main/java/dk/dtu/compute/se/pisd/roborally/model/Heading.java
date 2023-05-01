@@ -25,6 +25,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Johan Holmsteen, s224565
+ * @author Joes Nicolaisen, s224564
  *
  */
 public enum Heading {
@@ -41,7 +43,7 @@ public enum Heading {
         return values()[(this.ordinal() + values().length - 1) % values().length];
     }
 
-    public Heading opposite() {
+    public Heading opposite() { // Returns the opposite heading of a given heading
         return values()[(this.ordinal() + 2) % values().length];}
 
 }
