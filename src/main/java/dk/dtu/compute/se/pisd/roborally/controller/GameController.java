@@ -151,7 +151,10 @@ public class GameController {
                     }
                     executeCommand(currentPlayer, command);
                 }
-                if (board.getPhase() == Phase.ACTIVATION) {
+                if(currentPlayer.hasWon()){
+                    startWonPhase();
+                }
+                else if (board.getPhase() == Phase.ACTIVATION) {
                     if (board.getPlayerNumber(currentPlayer) + 1 < board.getPlayersNumber()) {
                         board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
                     } else {
@@ -337,13 +340,11 @@ public class GameController {
     /**
      * method to show that a player has won
      * is called if a player has reached all checkpoints in the correct order
-     * @param player
      * @author Mikkel Brunstedt Nørgaard s224562
      */
-    public void playerHasWon(Player player){
-        String winmessage = player.getName()+" vandt.";
-        System.out.println(winmessage);
-        player.setWon(true);
-        //to be implemented: this message should be shown on the view, not in the terminal.
+
+    public void startWonPhase(){
+        board.setPhase(Phase.PLAYER_WON);
+        board.setStep(0);
     }
 }

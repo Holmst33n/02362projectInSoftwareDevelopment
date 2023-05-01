@@ -23,7 +23,7 @@ public class Checkpoint implements FieldAction {
         if (player != null) {
             player.setCurrentCheckpoint(this.checkpointNumber);
             if (player.getCurrentCheckpoint() >= gameController.board.getCheckpointAmount()) {
-                gameController.playerHasWon(player);
+                player.setWon(true);
             }
         }
         return true;
