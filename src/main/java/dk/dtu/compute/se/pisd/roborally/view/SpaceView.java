@@ -39,8 +39,8 @@ import java.util.Map;
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
-    final public static int SPACE_HEIGHT = 30; // 60; // 75;
-    final public static int SPACE_WIDTH = 30;  // 60; // 75;
+    final public static int SPACE_HEIGHT = 50; // 60; // 75;
+    final public static int SPACE_WIDTH = 50;  // 60; // 75;
 
     public final Space space;
 
