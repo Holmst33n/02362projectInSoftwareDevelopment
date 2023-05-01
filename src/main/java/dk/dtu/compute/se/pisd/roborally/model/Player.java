@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.roborally.view.observer.Subject;
+import javafx.scene.image.Image;
 import org.jetbrains.annotations.NotNull;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -194,4 +195,7 @@ public class Player extends Subject {
     }
 
 
+    public String getImage() {
+        return "/images/player" + (board.getPlayerNumber(this)+1) + ".png";
+    }
 }
