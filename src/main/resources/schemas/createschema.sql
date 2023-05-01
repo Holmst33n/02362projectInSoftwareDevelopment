@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Game (
   gameID int NOT NULL UNIQUE AUTO_INCREMENT,
   
   name varchar(255),
-
+    boardname varchar(255),
   phase tinyint,
   step tinyint,
   currentPlayer tinyint NULL,

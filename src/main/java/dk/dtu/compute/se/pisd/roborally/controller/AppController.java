@@ -49,6 +49,8 @@ import java.util.Optional;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Johan Holmsteen, s224568
+ * @author Joes Nicolaisen, s224564
  *
  */
 public class AppController implements Observer {
@@ -61,6 +63,11 @@ public class AppController implements Observer {
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
+
+    /**
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Johan Holmsteen, s224568
+     */
 
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
@@ -77,8 +84,7 @@ public class AppController implements Observer {
                 }
             }
 
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
+            // Below the board is loaded from the json file the player chooses
 
             File folder = new File("src/main/resources/boards");
             File[] listOfFiles = folder.listFiles();
@@ -107,8 +113,7 @@ public class AppController implements Observer {
                     player.setSpace(board.getSpace(i % board.width, i));
                 }
 
-                // XXX: V2
-                // board.setCurrentPlayer(board.getPlayer(0));
+                // board.setCurrentPlayer(board.getPlayer(0)); <-- Ekkart?
                 gameController.startProgrammingPhase();
 
                 roboRally.createBoardView(gameController);
@@ -116,6 +121,10 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * @author Joes Nicolaisen, s224564
+     * @author Johan Holmsteen, s224568
+     */
     public void saveGame() {
         if(gameController.board.getGameId() == null) {
             RepositoryAccess.getRepository().createGameInDB(gameController.board);
@@ -124,6 +133,10 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * @author Joes Nicolaisen, s224564
+     * @author Johan Holmsteen, s224568
+     */
     public void loadGame() {
         List<GameInDB> savedGames = RepositoryAccess.getRepository().getGames();
         ChoiceDialog<GameInDB> dialog = new ChoiceDialog<>(null, savedGames);
@@ -188,7 +201,7 @@ public class AppController implements Observer {
 
     @Override
     public void update(Subject subject) {
-        // XXX do nothing for now
+        // XXX do nothing for now <-- Ekkart?
     }
 
 }
