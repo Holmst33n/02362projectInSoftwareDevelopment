@@ -39,17 +39,18 @@ public class Space extends Subject {
 
     public final int x;
     public final int y;
-    private List<Heading> walls = new ArrayList<>();
+
+    public List<Heading> walls = new ArrayList<>();
 
     public Collection<FieldAction> actions = new ArrayList<>();
     private Player player;
+
+    private List<Heading> wallHeading;
 
     public List<Heading> getWallHeading() {
         wallHeading = walls;
         return wallHeading;
     }
-
-    private List<Heading> wallHeading;
 
     public boolean isHasWalls() {
         return hasWalls;
@@ -68,6 +69,7 @@ public class Space extends Subject {
         this.x = x;
         this.y = y;
         player = null;
+        this.wallHeading = new ArrayList<>();
     }
 
     public Player getPlayer() {

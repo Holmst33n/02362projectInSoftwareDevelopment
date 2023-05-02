@@ -9,6 +9,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Testing of gameController
+ * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Mikkel Brunstedt Nørgaard, s224562
+ */
 class GameControllerTest {
 
     private final int TEST_WIDTH = 8;
@@ -60,6 +65,10 @@ class GameControllerTest {
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
     }
 
+    /**
+     * Test to check if a player can turn right
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     @Test
     void turnRight(){
         Board board = gameController.board;
@@ -71,6 +80,10 @@ class GameControllerTest {
         Assertions.assertEquals(firstHeading.next(), nextHeading, "Player " + current.getName() + " should be turned right!");
     }
 
+    /**
+     * Test to check if a player can turn left
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     @Test
     void turnLeft(){
         Board board = gameController.board;
@@ -82,6 +95,10 @@ class GameControllerTest {
         Assertions.assertEquals(firstHeading.prev(), nextHeading, "Player " + current.getName() + " should be turned right!");
     }
 
+    /**
+     * Test to check if a player can push another player
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
     @Test
     void playerPush(){
         Board board = gameController.board;
@@ -102,4 +119,22 @@ class GameControllerTest {
 
     }
 
+    /**
+     * Test to check if a player is stopped by a wall when trying to move through it
+     * @author Mikkel Brunstedt Nørgaard, s224562
+     */
+    @Test
+    void wallStop(){
+        Board board = gameController.board;
+        Player player = board.getCurrentPlayer();
+        player.setSpace(board.getSpace(7, 0));
+        player.setHeading(Heading.SOUTH);
+        Space space = player.getSpace();
+        space.walls.add(Heading.SOUTH);
+
+        gameController.fastForward(player);
+        gameController.moveForward(player);
+
+        Assertions.assertEquals(space, player.getSpace(), "Player " + player.getName() + " should be on " + space);
+    }
 }
