@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class CheckpointTest {
     @Test
-    public void testCheckpointFunctionality() {
+    void checkpoint() {
         int checkpointNumber = 1;
         Board board = new Board(8, 8, "defaultboard");
         GameController gameController = new GameController(board);
