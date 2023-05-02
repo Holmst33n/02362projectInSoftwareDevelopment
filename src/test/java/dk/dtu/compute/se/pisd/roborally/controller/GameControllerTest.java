@@ -94,6 +94,25 @@ class GameControllerTest {
 
         Assertions.assertEquals(firstHeading.prev(), nextHeading, "Player " + current.getName() + " should be turned right!");
     }
+    /**
+     * Test to check if a player can fast-forward
+     * @author Joes Hasselriis Nicolaisen, s224564
+     */
+    @Test
+    void fastForward(){
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        Space space = board.getSpace(2,5);
+        current.setSpace(space);
+        current.setHeading(Heading.EAST);
+        gameController.fastForward(current);
+
+        Assertions.assertEquals(current, board.getSpace(5, 5).getPlayer(), "Player " + current.getName() + " should beSpace (5,5)!");
+        Assertions.assertEquals(Heading.EAST, current.getHeading(), "Player 0 should be heading EAST!");
+        Assertions.assertNull(board.getSpace(2, 5).getPlayer(), "Space (2,5) should be empty!");
+    }
+
 
     /**
      * Test to check if a player can push another player
