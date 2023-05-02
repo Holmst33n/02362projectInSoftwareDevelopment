@@ -82,5 +82,24 @@ class GameControllerTest {
         Assertions.assertEquals(firstHeading.prev(), nextHeading, "Player " + current.getName() + " should be turned right!");
     }
 
+    @Test
+    void push(){
+        Board board = gameController.board;
+        Player player1 = new Player(board, "blue", "Player 1");
+        Player player2 = new Player(board, "red", "player 2");
+
+        Space space1 = board.getSpace(7, 1);
+        Space space2 = board.getSpace(7, 2);
+
+        player1.setSpace(board.getSpace(7, 0));
+        player1.setHeading(Heading.SOUTH);
+        player2.setSpace(board.getSpace(7, 1));
+
+        gameController.moveForward(player1);
+
+        Assertions.assertEquals(space1, player1.getSpace(), "Player " + player1.getName() + " should be on space " + space1);
+        Assertions.assertEquals(space2, player2.getSpace(), "Player " + player2.getName() + " should be on space " + space2);
+
+    }
 
 }
