@@ -113,7 +113,6 @@ public class AppController implements Observer {
                     player.setSpace(board.getSpace(i % board.width, i));
                 }
 
-                // board.setCurrentPlayer(board.getPlayer(0)); <-- Ekkart?
                 gameController.startProgrammingPhase();
 
                 roboRally.createBoardView(gameController);
@@ -201,7 +200,7 @@ public class AppController implements Observer {
 
     @Override
     public void update(Subject subject) {
-        // XXX do nothing for now <-- Ekkart?
+        // XXX do nothing for now
     }
 
 }

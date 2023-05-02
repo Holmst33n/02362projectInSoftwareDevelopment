@@ -78,10 +78,6 @@ class Repository implements IRepository {
 	private static final String COMMANDCARD_NUMBER = "Number";
 
 
-
-
-
-
 	private Connector connector;
 	
 	Repository(Connector connector){
