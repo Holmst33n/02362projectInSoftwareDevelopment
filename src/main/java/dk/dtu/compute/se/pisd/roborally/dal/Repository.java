@@ -33,6 +33,8 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Joes Nicolaisen, s224564
+ * @author Johan Holmsteen, s224565
  *
  */
 class Repository implements IRepository {
@@ -46,6 +48,8 @@ class Repository implements IRepository {
 	private static final String GAME_PHASE = "phase";
 
 	private static final String GAME_STEP = "step";
+
+	private static final String GAME_BOARDNAME = "boardName";
 	
 	private static final String PLAYER_PLAYERID = "playerID";
 	
@@ -64,9 +68,13 @@ class Repository implements IRepository {
 	private static final String PLAYER_CHECKPOINT_NUMBER = "checkpointNumber";
 
 	private static final String COMMANDCARD_GAMEID = "gameID";
+
 	private static final String COMMANDCARD_PLAYERID = "playerID";
+
 	private static final String COMMANDCARD_COMMANDCARDID = "commandcardID";
+
 	private static final String COMMANDCARD_TYPE = "Type";
+
 	private static final String COMMANDCARD_NUMBER = "Number";
 
 
@@ -80,6 +88,14 @@ class Repository implements IRepository {
 		this.connector = connector;
 	}
 
+	/**
+	 * ...
+	 *
+	 * @author Ekkart Kindler, ekki@dtu.dk
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 	@Override
 	public boolean createGameInDB(Board game) {
 		if (game.getGameId() == null) {
@@ -88,20 +104,11 @@ class Repository implements IRepository {
 				connection.setAutoCommit(false);
 
 				PreparedStatement ps = getInsertGameStatementRGK();
-				// TODO: the name should eventually set by the user
-				//       for the game and should be then used 
-				//       game.getName();
-				ps.setString(1, "Date: " +  new Date()); // instead of name
-				ps.setNull(2, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
-				ps.setInt(3, game.getPhase().ordinal());
-				ps.setInt(4, game.getStep());
-
-				// If you have a foreign key constraint for current players,
-				// the check would need to be temporarily disabled, since
-				// MySQL does not have a per transaction validation, but
-				// validates on a per row basis.
-				// Statement statement = connection.createStatement();
-				// statement.execute("SET foreign_key_checks = 0");
+				ps.setString(1, "Date: " +  new Date());
+				ps.setString(2, game.getBoardName());
+				ps.setNull(3, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
+				ps.setInt(4, game.getPhase().ordinal());
+				ps.setInt(5, game.getStep());
 				
 				int affectedRows = ps.executeUpdate();
 				ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -109,21 +116,10 @@ class Repository implements IRepository {
 					game.setGameId(generatedKeys.getInt(1));
 				}
 				generatedKeys.close();
-				
-				// Enable foreign key constraint check again:
-				// statement.execute("SET foreign_key_checks = 1");
-				// statement.close();
 
 				createPlayersInDB(game);
 				createCommandCardsInDB(game);
-				/* TOODO this method needs to be implemented first
-				createCardFieldsInDB(game);
-				 */
 
-				// since current player is a foreign key, it can oly be
-				// inserted after the players are created, since MySQL does
-				// not have a per transaction validation, but validates on
-				// a per row basis.
 				ps = getSelectGameStatementU();
 				ps.setInt(1, game.getGameId());
 
@@ -157,7 +153,15 @@ class Repository implements IRepository {
 		}
 		return false;
 	}
-		
+
+	/**
+	 * ...
+	 *
+	 * @author Ekkart Kindler, ekki@dtu.dk
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 	@Override
 	public boolean updateGameInDB(Board game) {
 		assert game.getGameId() != null;
@@ -204,7 +208,15 @@ class Repository implements IRepository {
 
 		return false;
 	}
-	
+
+	/**
+	 * ...
+	 *
+	 * @author Ekkart Kindler, ekki@dtu.dk
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 	@Override
 	public Board loadGameFromDB(int id) {
 		Board game;
@@ -218,18 +230,11 @@ class Repository implements IRepository {
 			ResultSet rs = ps.executeQuery();
 			int playerNo = -1;
 			if (rs.next()) {
-				// TODO the width and height could eventually come from the database
-				// int width = AppController.BOARD_WIDTH;
-				// int height = AppController.BOARD_HEIGHT;
-				// game = new Board(width,height);
-				// TODO and we should also store the used game board in the database
-				//      for now, we use the default game board
-				game = LoadBoard.loadBoard(null);
+				game = LoadBoard.loadBoard(rs.getString(GAME_BOARDNAME));
 				if (game == null) {
 					return null;
 				}
 				playerNo = rs.getInt(GAME_CURRENTPLAYER);
-				// TODO currently we do not set the games name (needs to be added)
 				game.setPhase(Phase.values()[rs.getInt(GAME_PHASE)]);
 				game.setStep(rs.getInt(GAME_STEP));
 			} else {
@@ -247,11 +252,6 @@ class Repository implements IRepository {
 				// TODO  error handling
 				return null;
 			}
-
-			/* TOODO this method needs to be implemented first
-			loadCardFieldsFromDB(game);
-			*/
-
 			return game;
 		} catch (SQLException e) {
 			// TODO error handling
@@ -307,6 +307,13 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
+	/**
+	 * ...
+	 *
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 private void createCommandCardsInDB(Board game) throws SQLException {
 	PreparedStatement ps = getSelectCommandCardsStatementU();
 	ps.setInt(1, game.getGameId());
@@ -347,6 +354,13 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 	rs.close();
 }
 
+	/**
+	 * ...
+	 *
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 private void loadCommandCardsFromDB(Board game) throws SQLException {
 	PreparedStatement ps = getSelectCommandCardsStatement();
 	ps.setInt(1, game.getGameId());
@@ -426,7 +440,7 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	}
 
 	private static final String SQL_INSERT_GAME =
-			"INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
+			"INSERT INTO Game(name, boardName, currentPlayer, phase, step) VALUES (?, ?, ?, ?, ?)";
 
 	private PreparedStatement insert_game_stmt = null;
 
@@ -492,6 +506,13 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 
 	private PreparedStatement select_commandcards_stmt = null;
 
+	/**
+	 * ...
+	 *
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 	private PreparedStatement getSelectCommandCardsStatementU() {
 		if (select_commandcards_stmt == null) {
 			Connection connection = connector.getConnection();
@@ -550,6 +571,13 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 
 	private PreparedStatement select_commandcard_stmt  = null;
 
+	/**
+	 * ...
+	 *
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224565
+	 *
+	 */
 	private PreparedStatement getSelectCommandCardsStatement() {
 		if (select_commandcard_stmt == null) {
 			Connection connection = connector.getConnection();

@@ -6,7 +6,7 @@ import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
  * This class acts as a factory to create our board
  *
  * @author Johan Holmsteen, s224568
- * @author Joes Nicolaisen, s22456?
+ * @author Joes Nicolaisen, s224564
  *
  */
 

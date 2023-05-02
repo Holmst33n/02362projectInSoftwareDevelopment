@@ -30,6 +30,9 @@ import org.jetbrains.annotations.NotNull;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Johan Holmsteen, s224568
+ * @author Joes Nicolaisen, s224564
+ * @author Mikkel Noergaard, s224562
  *
  */
 public class GameController {
@@ -40,14 +43,6 @@ public class GameController {
         this.board = board;
     }
 
-    /**
-     * This is just some dummy controller operation to make a simple move to see something
-     * happening on the board. This method should eventually be deleted!
-     *
-     * @param space the space to which the current player should move
-     */
-
-    //DOES NOT WORK AS INTENDED YET
     public void moveCurrentPlayerToSpace(@NotNull Space space)  {
         if(space.getPlayer() == null) {     //checks if a player is already on the space (defensive programming)
             Player currentPlayer = board.getCurrentPlayer();    //sets currentPlayer
@@ -137,6 +132,10 @@ public class GameController {
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
+    /**
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Mikkel Noergaard, s224562
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -151,7 +150,10 @@ public class GameController {
                     }
                     executeCommand(currentPlayer, command);
                 }
-                if (board.getPhase() == Phase.ACTIVATION) {
+                if(currentPlayer.hasWon()){
+                    startWonPhase();
+                }
+                else if (board.getPhase() == Phase.ACTIVATION) {
                     if (board.getPlayerNumber(currentPlayer) + 1 < board.getPlayersNumber()) {
                         board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
                     } else {
@@ -186,6 +188,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author Mikkel Noergaard, s224562
+     */
     private void executeActions() {
         for (Player player : board.getPlayers()) {
             for (FieldAction action : player.getSpace().getActions()) {
@@ -199,6 +204,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author Mikkel Noergaard, s224562
+     */
     private void executeCheckpoints() {
         for (Player player : board.getPlayers()) {
             for (FieldAction action : player.getSpace().getActions()) {
@@ -231,23 +239,18 @@ public class GameController {
     }
 
      public void executeCommandOptionAndContinue(@NotNull Command option) {
-        //this is copied from executeNextStep(), bad style
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
-                // CommandCard card = currentPlayer.getProgramField(step).getCard();
                     board.setPhase(Phase.ACTIVATION);
                     executeCommand(currentPlayer, option);
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
-
-//                    --> execute action on fields!
                     executeActions();
-//                    --> check checkpoints for alle spillere
-//                    checkCheckpoints();
+                    executeCheckpoints();
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
@@ -267,6 +270,13 @@ public class GameController {
         }
     }
 
+    /**
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Johan Holmsteen, s224568
+     * @author Joes Nicolaisen, s224564
+     * @author Mikkel Noergaard, s224562
+     *
+     */
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -283,6 +293,14 @@ public class GameController {
         }
     }
 
+    /**
+     *
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Johan Holmsteen, s224568
+     * @author Joes Nicolaisen, s224564
+     * @author Mikkel Noergaard, s224562
+     *
+     */
     public void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
 
         Player other = space.getPlayer();
@@ -297,17 +315,29 @@ public class GameController {
         player.setSpace(space);
     }
 
+
+    /**
+     *
+     * @author Mikkel Noergaard, s224562
+     *
+     */
     public void fastForward(@NotNull Player player) {
         for (int i = 0; i < 3; i++) {
             Space space = player.getSpace();
             if (space != null) {
-//                Heading heading = player.getHeading();
-//                Space target = board.getNeighbour(space, heading);
                 moveForward(player);
             }
         }
     }
 
+    /**
+     *
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Johan Holmsteen, s224568
+     * @author Joes Nicolaisen, s224564
+     * @author Mikkel Noergaard, s224562
+     *
+     */
     public void turnRight(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null){
@@ -315,6 +345,14 @@ public class GameController {
         }
     }
 
+    /**
+     *
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Johan Holmsteen, s224568
+     * @author Joes Nicolaisen, s224564
+     * @author Mikkel Noergaard, s224562
+     *
+     */
     public void turnLeft(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null){
@@ -337,13 +375,11 @@ public class GameController {
     /**
      * method to show that a player has won
      * is called if a player has reached all checkpoints in the correct order
-     * @param player
      * @author Mikkel Brunstedt Nørgaard s224562
      */
-    public void playerHasWon(Player player){
-        String winmessage = player.getName()+" vandt.";
-        System.out.println(winmessage);
-        player.setWon(true);
-        //to be implemented: this message should be shown on the view, not in the terminal.
+
+    public void startWonPhase(){
+        board.setPhase(Phase.PLAYER_WON);
+        board.setStep(0);
     }
 }

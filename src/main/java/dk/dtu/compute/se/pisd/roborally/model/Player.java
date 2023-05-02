@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.roborally.view.observer.Subject;
+import javafx.scene.image.Image;
 import org.jetbrains.annotations.NotNull;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
@@ -30,6 +31,9 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Johan Holmsteen, s224565
+ * @author Mikkel Noergaard, s224562
+ * @author Joes Nicolaisen, s224564
  *
  */
 public class Player extends Subject {
@@ -96,27 +100,8 @@ public class Player extends Subject {
         return name;
     }
 
-    //setName could be used if players wanted to name their robots, rather than them being called "Player 1", "Player 2" etc.
-    public void setName(String name) {
-        if (name != null && !name.equals(this.name)) {
-            this.name = name;
-            notifyChange();
-            if (space != null) {
-                space.playerChanged();
-            }
-        }
-    }
-
     public String getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-        notifyChange();
-        if (space != null) {
-            space.playerChanged();
-        }
     }
 
     public Space getSpace() {
@@ -168,14 +153,6 @@ public class Player extends Subject {
         return cards;
     }
 
-    public void setProgram(CommandCardField[] program) {
-        this.program = program;
-    }
-
-    public void setCards(CommandCardField[] cards) {
-        this.cards = cards;
-    }
-
     public void setProgramField(CommandCardField card, int i) {
         this.program[i] = card;
 
@@ -191,7 +168,11 @@ public class Player extends Subject {
 
     public void setWon(Boolean bool){
         won = bool;
+        board.setWon(bool);
     }
 
 
+    public String getImage() {
+        return "/images/player" + (board.getPlayerNumber(this)+1) + ".png";
+    }
 }

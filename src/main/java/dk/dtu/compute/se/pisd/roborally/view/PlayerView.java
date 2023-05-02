@@ -28,6 +28,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
@@ -64,6 +65,12 @@ public class PlayerView extends Tab implements ViewObserver {
 
     private GameController gameController;
 
+    /**
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Joes Nicolaisen, s224564
+     * @param gameController
+     * @param player
+     */
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
         this.setStyle("-fx-text-base-color: " + player.getColor() + ";");
@@ -101,6 +108,10 @@ public class PlayerView extends Tab implements ViewObserver {
         buttonPanel.setAlignment(Pos.CENTER_LEFT);
         buttonPanel.setSpacing(3.0);
         // programPane.add(buttonPanel, Player.NO_REGISTERS, 0); done in update now
+        ImageView playerImage = new ImageView(player.getImage());
+        playerImage.setFitHeight(75);
+        playerImage.setPreserveRatio(true);
+        buttonPanel.getChildren().add(playerImage);
 
         playerInteractionPanel = new VBox();
         playerInteractionPanel.setAlignment(Pos.CENTER_LEFT);
@@ -209,6 +220,10 @@ public class PlayerView extends Tab implements ViewObserver {
                         optionButton.setDisable(false);
                         playerInteractionPanel.getChildren().add(optionButton);
                     }
+                    ImageView playerImage = new ImageView(player.getImage());
+                    playerImage.setFitHeight(75);
+                    playerImage.setPreserveRatio(true);
+                    playerInteractionPanel.getChildren().add(playerImage);
 
                     /*
                     Button optionButton = new Button("Option1");
