@@ -191,7 +191,7 @@ public class GameController {
     /**
      * @author Mikkel Noergaard, s224562
      */
-    private void executeActions() {
+    public void executeActions() {
         for (Player player : board.getPlayers()) {
             for (FieldAction action : player.getSpace().getActions()) {
                 if (player.hasWon())
@@ -207,7 +207,7 @@ public class GameController {
     /**
      * @author Mikkel Noergaard, s224562
      */
-    private void executeCheckpoints() {
+    public void executeCheckpoints() {
         for (Player player : board.getPlayers()) {
             for (FieldAction action : player.getSpace().getActions()) {
                 if (player.hasWon())
