@@ -92,7 +92,7 @@ class GameControllerTest {
         gameController.turnLeft(current);
         Heading nextHeading = current.getHeading();
 
-        Assertions.assertEquals(firstHeading.prev(), nextHeading, "Player " + current.getName() + " should be turned right!");
+        Assertions.assertEquals(firstHeading.prev(), nextHeading, "Player " + current.getName() + " should be turned left!");
     }
 
     /**
