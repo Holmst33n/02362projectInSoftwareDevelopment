@@ -60,6 +60,27 @@ class GameControllerTest {
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
     }
 
+    @Test
+    void turnRight(){
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+        Heading firstHeading = current.getHeading();
+        gameController.turnRight(current);
+        Heading nextHeading = current.getHeading();
+
+        Assertions.assertEquals(firstHeading.next(), nextHeading, "Player " + current.getName() + " should be turned right!");
+    }
+
+    @Test
+    void turnLeft(){
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+        Heading firstHeading = current.getHeading();
+        gameController.turnLeft(current);
+        Heading nextHeading = current.getHeading();
+
+        Assertions.assertEquals(firstHeading.prev(), nextHeading, "Player " + current.getName() + " should be turned right!");
+    }
 
 
 }
