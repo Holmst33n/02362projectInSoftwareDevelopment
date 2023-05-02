@@ -293,6 +293,21 @@ public class GameController {
         }
     }
 
+    public void moveForwardConveyorBelt(@NotNull Player player, @NotNull Heading heading) {
+        if (player.board == board) {
+            Space space = player.getSpace();
+
+            Space target = board.getNeighbour(space, heading);
+            if (target != null) {
+                try {
+                    moveToSpace(player, target, heading);
+                } catch (ImpossibleMoveException e) {
+
+                }
+            }
+        }
+    }
+
     /**
      *
      * @author Ekkart Kindler, ekki@dtu.dk

@@ -45,14 +45,7 @@ public class ConveyorBelt implements FieldAction {
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
-        Space nextSpace = space.board.getNeighbour(space, this.heading);
-
-        if(nextSpace.getPlayer() != null) {
-            return true;
-            //here we can implement that a player can move another player while being pushed by a conveyor belt
-        } else {
-            player.setSpace(nextSpace);
-            return true;
-        }
+        gameController.moveForwardConveyorBelt(player, this.heading);
+        return true;
     }
 }
