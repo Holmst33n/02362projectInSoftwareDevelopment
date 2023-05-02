@@ -34,4 +34,8 @@ public class Gear implements FieldAction {
     public String getDirection(){
         return this.direction;
     }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
 }
