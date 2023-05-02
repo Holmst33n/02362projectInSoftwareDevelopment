@@ -429,11 +429,42 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 			// TODO error handling
 			// TODO take care of case when number of players changes, etc
 			rs.updateRow();
+			updateCommandCardsInDB(game);
 		}
 		rs.close();
 		
 		// TODO error handling/consistency check: check whether all players were updated
 	}
+
+	private void updateCommandCardsInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectCommandCardsStatementU();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
+
+		while(rs.next()) {
+			Player player = game.getPlayer(rs.getInt(PLAYER_PLAYERID));
+			int type = rs.getInt(COMMANDCARD_TYPE);
+			int number = rs.getInt(COMMANDCARD_NUMBER);
+			CommandCardField field;
+			if (type == 0) {
+				field = player.getProgramField(number);
+
+			} else {
+				field = player.getCardField(number);
+			}
+
+			CommandCard card = field.getCard();
+			if(card == null) {
+				rs.updateNull(COMMANDCARD_COMMANDCARDID);
+			} else {
+				rs.updateInt(COMMANDCARD_COMMANDCARDID, card.command.ordinal());
+			}
+
+			rs.updateRow();
+		}
+		rs.close();
+	}
+
 
 	private static final String SQL_INSERT_GAME =
 			"INSERT INTO Game(name, boardName, currentPlayer, phase, step) VALUES (?, ?, ?, ?, ?)";
@@ -457,9 +488,9 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 
 	private static final String SQL_SELECT_GAME =
 			"SELECT * FROM Game WHERE gameID = ?";
-	
+
 	private PreparedStatement select_game_stmt = null;
-	
+
 	private PreparedStatement getSelectGameStatementU() {
 		if (select_game_stmt == null) {
 			Connection connection = connector.getConnection();
