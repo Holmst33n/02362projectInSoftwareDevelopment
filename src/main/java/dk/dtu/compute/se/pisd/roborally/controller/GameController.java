@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224568
  * @author Joes Nicolaisen, s224564
- * @author Mikkel Noergaard, s224562
+ * @author Mikkel Brunstedt Nørgaard s224562
  *
  */
 public class GameController {
@@ -134,7 +134,7 @@ public class GameController {
 
     /**
      * @author Ekkart Kindler, ekki@dtu.dk
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
@@ -189,7 +189,7 @@ public class GameController {
     }
 
     /**
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void executeActions() {
         for (Player player : board.getPlayers()) {
@@ -205,7 +205,7 @@ public class GameController {
     }
 
     /**
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void executeCheckpoints() {
         for (Player player : board.getPlayers()) {
@@ -274,7 +274,7 @@ public class GameController {
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      *
      */
     public void moveForward(@NotNull Player player) {
@@ -313,7 +313,7 @@ public class GameController {
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      *
      */
     public void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
@@ -333,7 +333,7 @@ public class GameController {
 
     /**
      *
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      *
      */
     public void fastForward(@NotNull Player player) {
@@ -350,7 +350,7 @@ public class GameController {
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      *
      */
     public void turnRight(@NotNull Player player) {
@@ -365,7 +365,7 @@ public class GameController {
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
-     * @author Mikkel Noergaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      *
      */
     public void turnLeft(@NotNull Player player) {

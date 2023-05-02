@@ -34,7 +34,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224565
- * @author Mikkel Noergaard, s224562
+ * @author Mikkel Brunstedt Nørgaard s224562
  * @author Joes Nicolaisen, s224564
  *
  */
