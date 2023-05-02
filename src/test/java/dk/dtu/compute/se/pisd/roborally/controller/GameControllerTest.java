@@ -83,7 +83,7 @@ class GameControllerTest {
     }
 
     @Test
-    void push(){
+    void playerPush(){
         Board board = gameController.board;
         Player player1 = new Player(board, "blue", "Player 1");
         Player player2 = new Player(board, "red", "player 2");
