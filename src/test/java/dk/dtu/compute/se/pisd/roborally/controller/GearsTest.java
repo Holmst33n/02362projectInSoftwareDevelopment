@@ -17,7 +17,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.NORTH;
 public class GearsTest {
 
     @Test
-    void testGearFunctionality() {
+    void gearFunctionality() {
         Board board = new Board(8, 8, "testbboard");
         GameController gameController = new GameController(board);
 
