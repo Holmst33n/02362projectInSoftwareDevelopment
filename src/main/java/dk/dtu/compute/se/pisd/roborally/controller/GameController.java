@@ -133,6 +133,7 @@ public class GameController {
     }
 
     /**
+     * executes every step in the activation phase: moves robots depending on command cards, and then executes actions and checkpoints.
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Mikkel Brunstedt Nørgaard s224562
      */
@@ -189,6 +190,7 @@ public class GameController {
     }
 
     /**
+     * executes the actions on the board; conveyorbelts and gears
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void executeActions() {
@@ -205,6 +207,7 @@ public class GameController {
     }
 
     /**
+     * executes the checkpoints on the board
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void executeCheckpoints() {
@@ -293,6 +296,14 @@ public class GameController {
         }
     }
 
+    /**
+     * moves the player forward on the conveyorbelt; very similar to moveForward, but
+     * takes an extra parameter (heading) from the conveyorbelt to move the player
+     * in the direction of the conveyorbelt
+     * @param player
+     * @param heading
+     * @author Mikkel Brunstedt Nørgaard s224562
+     */
     public void moveForwardConveyorBelt(@NotNull Player player, @NotNull Heading heading) {
         if (player.board == board) {
             Space space = player.getSpace();
@@ -309,12 +320,13 @@ public class GameController {
     }
 
     /**
-     *
+     * @param player
+     * @param space
+     * @param heading
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
      * @author Mikkel Brunstedt Nørgaard s224562
-     *
      */
     public void moveToSpace(@NotNull Player player,@NotNull Space space,@NotNull Heading heading) throws ImpossibleMoveException {
 
@@ -332,9 +344,9 @@ public class GameController {
 
 
     /**
-     *
+     * moves the player forward 3 times via moveForward method
+     * @param player
      * @author Mikkel Brunstedt Nørgaard s224562
-     *
      */
     public void fastForward(@NotNull Player player) {
         for (int i = 0; i < 3; i++) {
@@ -346,7 +358,8 @@ public class GameController {
     }
 
     /**
-     *
+     * turns player right
+     * @param player
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
@@ -361,7 +374,8 @@ public class GameController {
     }
 
     /**
-     *
+     * turns player left
+     * @param player
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564

@@ -39,7 +39,9 @@ public class CheckpointTest {
         gameController.executeCheckpoints();
 
 
-        assertEquals(checkpointNumber, player1.getCurrentCheckpoint(), "Player1's checkpoint should be incremented");
-        assertEquals(0, player2.getCurrentCheckpoint(), "Player2's checkpoint should not be incremented");
+        assertEquals(checkpointNumber, player1.getCurrentCheckpoint(),
+                "Player1's checkpoint should be incremented");
+        assertEquals(0, player2.getCurrentCheckpoint(),
+                "Player2's checkpoint should not be incremented");
     }
 }

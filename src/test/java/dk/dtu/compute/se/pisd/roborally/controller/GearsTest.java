@@ -18,7 +18,7 @@ public class GearsTest {
 
     @Test
     void gear() {
-        Board board = new Board(8, 8, "testbboard");
+        Board board = new Board(8, 8, "testboard");
         GameController gameController = new GameController(board);
 
         Player player1 = new Player(board,"white", "player1");

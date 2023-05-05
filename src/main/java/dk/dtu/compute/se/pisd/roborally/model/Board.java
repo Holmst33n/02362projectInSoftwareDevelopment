@@ -233,6 +233,7 @@ public class Board extends Subject {
     /**
      * Status message in the bottom of the game to display turns taken, which player has the turn and checkpoints passed.
      * @return String
+     * @author Ekkart Kindler, ekki@dtu.dk
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public String getStatusMessage() {
@@ -262,6 +263,11 @@ public class Board extends Subject {
         notifyChange(); //notifies the view that there has been an update
     }
 
+    /**
+     * gets the total amount of checkpoints on the board, used to check if a player has won
+     * @return checkpointAmount
+     * @author Mikkel Brunstedt Nørgaard s224562
+     */
     public int getCheckpointAmount(){
         int checkpointAmount = 0;
         for (int x = 0; x < width; x++) {

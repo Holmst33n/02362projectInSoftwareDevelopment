@@ -145,7 +145,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * method to draw walls on the board, uses hashmap to decide which image(s) to show on the board.
      * @author Johan Holmsteen s224568
-     * @author Mikkel Brunstedt Nørgaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawWalls() {
         Heading[] wallHeadings = space.getWalls().toArray(new Heading[0]);
@@ -178,7 +178,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * Draw gears; used in the updateView to show gears. Gears are drawn with files clockwise.png and counterclockwise.png in resource folder
      * @param gear
-     * @author Mikkel Brunstedt Nørgaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawGear(Gear gear){
         String direction = gear.getDirection();
@@ -198,7 +198,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * Draw gears; used in the updateView to show checkpoints.
      * @param checkpoint
-     * @author Mikkel Brunstedt Nørgaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawCheckpoint(Checkpoint checkpoint){
         String imagePath = "";
@@ -240,7 +240,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * Draws conveyor belt on the canvas
      * @param conveyorBelt
-     * @author Joes Hasselriis Nicolaisen s??????
+     * @author Joes Nicolaisen s224564
      */
     private void drawConveyorBelt(ConveyorBelt conveyorBelt){
         String imagePath = "/images/conveyor.JPG";
@@ -263,7 +263,7 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @param imagePath
      * @param scaleY
      * @param scaleX
-     * @author Mikkel Brunstedt Nørgaard, s224562
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawImage(String imagePath, int scaleY, int scaleX){
         InputStream imageStream = getClass().getResourceAsStream(imagePath);

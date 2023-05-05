@@ -76,7 +76,7 @@ public class Player extends Subject {
 
     /**
      * getter and setter to see which checkpoint a player is currently at.
-     * @return
+     * @return currentCheckpoint
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public int getCurrentCheckpoint() {
@@ -171,7 +171,12 @@ public class Player extends Subject {
         board.setWon(bool);
     }
 
-
+    /**
+     * method to get the image that matches the player, which is then displayed
+     * in the view when it's the given players turn
+     * @return string
+     * @author Joes Nicolaisen s224564
+     */
     public String getImage() {
         return "/images/player" + (board.getPlayerNumber(this)+1) + ".png";
     }

@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Testing of gameController
  * @author Ekkart Kindler, ekki@dtu.dk
- * @author Mikkel Brunstedt Nørgaard, s224562
+ * @author Mikkel Brunstedt Nørgaard s224562
+ * @author Joes Hasselriis Nicolaisen s224564
  */
 class GameControllerTest {
 

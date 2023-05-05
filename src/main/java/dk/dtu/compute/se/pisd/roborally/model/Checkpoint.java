@@ -4,6 +4,8 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * ...
+ *
  * @author Mikkel Brunstedt Nørgaard s224562
  */
 

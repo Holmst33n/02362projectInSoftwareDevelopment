@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @author Mikkel Brunstedt Nørgaard s224562
  */
 public class ConveyorBelt implements FieldAction {
 
@@ -42,6 +42,13 @@ public class ConveyorBelt implements FieldAction {
         this.heading = heading;
     }
 
+    /**
+     * doAction method which is called every time each player has taken their turn,
+     * moves player forward in the direction of the conveyorbelt
+     * @param gameController
+     * @param space
+     * @author Mikkel Brunstedt Nørgaard s224562
+     */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         Player player = space.getPlayer();
