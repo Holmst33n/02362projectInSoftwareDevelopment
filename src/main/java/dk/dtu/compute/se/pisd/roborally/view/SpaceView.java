@@ -129,12 +129,12 @@ public class SpaceView extends StackPane implements ViewObserver {
             drawImage(imagePath, 1, 1);
 
             for(FieldAction action : space.getActions()){
-                if (action instanceof Checkpoint) {
-                    drawCheckpoint(space.getCheckpoint());
-                } if(action instanceof ConveyorBelt) {
+                if(action instanceof ConveyorBelt) {
                     drawConveyorBelt(space.getConveyorBelt());
                 } if(action instanceof Gear) {
                     drawGear(space.getGear());
+                } if (action instanceof Checkpoint) {
+                    drawCheckpoint(space.getCheckpoint());
                 }
             }
             drawWalls();
