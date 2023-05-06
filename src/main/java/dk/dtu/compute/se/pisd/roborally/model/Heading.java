@@ -25,7 +25,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- * @author Johan Holmsteen, s224565
+ * @author Johan Holmsteen, s224568
  * @author Joes Nicolaisen, s224564
  *
  */

@@ -31,7 +31,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- * @author Johan Holmsteen, s224565
+ * @author Johan Holmsteen, s224568
  * @author Mikkel Brunstedt Nørgaard s224562
  * @author Joes Nicolaisen, s224564
  *

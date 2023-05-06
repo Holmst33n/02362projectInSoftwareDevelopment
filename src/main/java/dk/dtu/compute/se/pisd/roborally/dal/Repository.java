@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Joes Nicolaisen, s224564
- * @author Johan Holmsteen, s224565
+ * @author Johan Holmsteen, s224568
  *
  */
 class Repository implements IRepository {
@@ -89,7 +89,7 @@ class Repository implements IRepository {
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 	@Override
@@ -155,7 +155,7 @@ class Repository implements IRepository {
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 	@Override
@@ -210,7 +210,7 @@ class Repository implements IRepository {
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 	@Override
@@ -307,7 +307,7 @@ class Repository implements IRepository {
 	 * ...
 	 *
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 private void createCommandCardsInDB(Board game) throws SQLException {
@@ -354,7 +354,7 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 	 * ...
 	 *
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 private void loadCommandCardsFromDB(Board game) throws SQLException {
@@ -537,7 +537,7 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	 * ...
 	 *
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 	private PreparedStatement getSelectCommandCardsStatementU() {
@@ -602,7 +602,7 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	 * ...
 	 *
 	 * @author Joes Nicolaisen, s224564
-	 * @author Johan Holmsteen, s224565
+	 * @author Johan Holmsteen, s224568
 	 *
 	 */
 	private PreparedStatement getSelectCommandCardsStatement() {

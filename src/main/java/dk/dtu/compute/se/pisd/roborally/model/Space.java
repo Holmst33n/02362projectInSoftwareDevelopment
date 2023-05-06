@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * ...
  * @author Ekkart Kindler, ekki@dtu.dk
- * @author Johan Holmsteen, s224565
+ * @author Johan Holmsteen, s224568
  * @author Mikkel Brunstedt Nørgaard s224562
  *
  */

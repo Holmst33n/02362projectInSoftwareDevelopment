@@ -33,7 +33,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- * @author Johan Holmsteen, s224565
+ * @author Johan Holmsteen, s224568
  * @author Mikkel Brunstedt Nørgaard s224562
  * @author Joes Nicolaisen, s224564
  *
@@ -188,7 +188,7 @@ public class Board extends Subject {
      * (no walls or obstacles in either of the involved spaces); otherwise,
      * null will be returned.
      *
-     * @author Johan Holmsteen, s224565
+     * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
      *
      * @param space the space for which the neighbour should be computed
