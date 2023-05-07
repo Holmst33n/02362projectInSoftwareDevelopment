@@ -32,7 +32,7 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 /**
  * ...
  *
- * The class that all games are be created from.
+ * The class that all game boards are created as.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224568
@@ -234,7 +234,7 @@ public class Board extends Subject {
 
     /**
      * Status message in the bottom of the game to display turns taken, which player has the turn and checkpoints passed.
-     * @return String
+     * @return String containing the status message.
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Mikkel Brunstedt Nørgaard s224562
      */
@@ -267,7 +267,7 @@ public class Board extends Subject {
 
     /**
      * gets the total amount of checkpoints on the board, used to check if a player has won
-     * @return checkpointAmount
+     * @return an integer indicating the amount of checkpoints a player has reached
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public int getCheckpointAmount(){

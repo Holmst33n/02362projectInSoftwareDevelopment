@@ -24,6 +24,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 /**
  * ...
  *
+ * An enumeration representing different phases in the game.
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */

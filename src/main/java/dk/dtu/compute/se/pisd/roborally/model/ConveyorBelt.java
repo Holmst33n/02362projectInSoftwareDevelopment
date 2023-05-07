@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * ...
  *
- * Implementation of the convayorbelt active space
+ * Implementation of the conveyor belt space
  *
  *
  * @author Ekkart Kindler, ekki@dtu.dk
@@ -47,9 +47,11 @@ public class ConveyorBelt implements FieldAction {
 
     /**
      * doAction method which is called every time each player has taken their turn,
-     * moves player forward in the direction of the conveyorbelt
-     * @param gameController
-     * @param space
+     * moves player forward in the direction of the conveyor belt
+     * @param gameController the game controller object controlling the game
+     * @param space The space on which the action is performed.
+     * @return true if the action was successful
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     @Override

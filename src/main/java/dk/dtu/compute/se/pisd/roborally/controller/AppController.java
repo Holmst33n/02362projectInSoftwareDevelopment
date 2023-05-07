@@ -65,7 +65,8 @@ public class AppController implements Observer {
     }
 
     /**
-     * The player is introduced to the gameboard available in resources/boards as .json files
+     * The player is introduced to the game boards available in resources/boards as a .json file
+     * After the player picks a board, a new game is started with the chosen game board.
      *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568

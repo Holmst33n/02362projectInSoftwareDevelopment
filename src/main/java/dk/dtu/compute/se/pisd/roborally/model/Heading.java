@@ -24,6 +24,10 @@ package dk.dtu.compute.se.pisd.roborally.model;
 /**
  * ...
  *
+ * The enumetation represents the directions a player can face on a game board.
+ * This enumeration provides methods to get the next, previous, and opposite
+ * direction of a given direction.
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224568
  * @author Joes Nicolaisen, s224564

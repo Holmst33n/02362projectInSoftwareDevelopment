@@ -4,7 +4,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 
 /**
  * Simple interface that can support an action on a field (Space).
- * This can eg. be the Conveyor Belts that move the players.
+ * This can e.g. be the Conveyor Belts that move the players.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  */

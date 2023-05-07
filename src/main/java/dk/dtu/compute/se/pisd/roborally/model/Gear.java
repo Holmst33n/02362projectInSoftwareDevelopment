@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  *
- * Implementation of the active space Gear
+ * Implementation of the space Gear
  *
  * @author Mikkel Brunstedt Nørgaard s224562
  */
@@ -15,9 +15,12 @@ public class Gear implements FieldAction {
     private String direction;
 
     /**
-     * doAction method which is called every time each player has taken their turn; turns player clockwise or anticlockwise
-     * @param gameController
-     * @param space
+     * doAction method which is called every time each player has taken their turn.
+     * Turns player clockwise or anticlockwise
+     * @param gameController the game controller object controlling the game
+     * @param space The space on which the action is performed.
+     * @return true if the action was successful
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     @Override

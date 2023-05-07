@@ -29,6 +29,11 @@ import java.util.List;
 
 /**
  * ...
+ *
+ * Represents a tile (space) on the game board which can hold a player,
+ * various field actions and walls.
+ *
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224568
  * @author Mikkel Brunstedt Nørgaard s224562

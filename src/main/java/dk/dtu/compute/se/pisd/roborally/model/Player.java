@@ -30,6 +30,8 @@ import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 /**
  * ...
  *
+ * The player class represents the robots on the game board.
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224568
  * @author Mikkel Brunstedt Nørgaard s224562
@@ -137,27 +139,57 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Getter for a specific programming card that a player has in its register
+     * @param i the card's  placement in the programming card array
+     * @return the chosen program card
+     * @author Joes Nicolaisen, s224564
+     * @author Johan Holmsteen, s224568
+     */
     public CommandCardField getProgramField(int i) {
         return program[i];
     }
 
+    /**
+     * Getter for a specific hand card that a player has in its hand
+     * @param i the card's placement in the hand card array
+     * @return the chosen hand card
+     * @author Joes Nicolaisen, s224564
+     * @author Johan Holmsteen, s224568
+     */
     public CommandCardField getCardField(int i) {
         return cards[i];
     }
+
 
     public CommandCardField[] getProgram() {
         return program;
     }
 
+
     public CommandCardField[] getCards() {
         return cards;
     }
 
+    /**
+     * Setter a specific programming card that a player has in its register
+     * @param card the command card that is to be inserted into the register
+     * @param i the card's  placement in the programming card array
+     * @author Joes Nicolaisen, s224564
+     * @author Johan Holmsteen, s224568
+     */
     public void setProgramField(CommandCardField card, int i) {
         this.program[i] = card;
 
     }
 
+    /**
+     * Setter a specific hand card that a player has in its hand
+     * @param card the hand card that is to be inserted into its hand
+     * @param i the card's  placement in the hand card array
+     * @author Joes Nicolaisen, s224564
+     * @author Johan Holmsteen, s224568
+     */
     public void setCardField(CommandCardField card, int i) {
         this.cards[i] = card;
     }
@@ -172,9 +204,8 @@ public class Player extends Subject {
     }
 
     /**
-     * method to get the image that matches the player, which is then displayed
-     * in the view when it's the given players turn
-     * @return string
+     * Getter for the image of a players robot on the board.
+     * @return A string of the image path for the player robot.
      * @author Joes Nicolaisen s224564
      */
     public String getImage() {

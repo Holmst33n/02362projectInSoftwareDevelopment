@@ -33,6 +33,7 @@ import java.util.Map;
 
 /**
  * ...
+ * The class provides a visual representation of the space and updates its view whenever the model changes.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Mikkel Brunstedt Nørgaard s224562
@@ -46,14 +47,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 50;  // 60; // 75;
 
     public final Space space;
-
-    /**
-     * Initializes the spaces. Gives them the color blue if the space is a checkpoint; if not, they are
-     * colored black and white in a checkerboard pattern.
-     *
-     * @param space
-     * @author Mikkel Brunstedt Nørgaard s224562
-     */
     public SpaceView(@NotNull Space space) {
         this.space = space;
 
@@ -65,8 +58,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Updates the player view; shows an image instead of the simple colored triange. Depending on player number, an image is picked.
-     * @author Ekki
+     * Updates the player view; shows an image instead of the simple colored triange.
+     * Depending on player number, an image is picked.
+     *
+     * @author Ekkart Kindler, ekki@dtu.dk
      * @author Mikkel Brunstedt Nørgaard, s224562
      */
     private void updatePlayer() {
@@ -121,8 +116,15 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     /**
-     * @author Ekki
+     *
+     * Updates the view whenever the space is changed.
+     *
+     * @param subject the subject being observed
+     *
+     * @author Ekkart Kindler, ekki@dtu.dk
+     * @author Mikkel Brunstedt Nørgaard s224562
      * @author Johan Holmsteen s224568
+     * @author Joes Nicolaisen s224564
      */
     @Override
     public void updateView(Subject subject) {
@@ -146,7 +148,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * method to draw walls on the board, uses hashmap to decide which image(s) to show on the board.
+     * method to draw walls on the board, uses hashmap to decide what image(s) to show on the board.
      * @author Johan Holmsteen s224568
      * @author Mikkel Brunstedt Nørgaard s224562
      */
@@ -179,8 +181,11 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Draw gears; used in the updateView to show gears. Gears are drawn with files clockwise.png and counterclockwise.png in resource folder
-     * @param gear
+     * Draws gears; used in the updateView to show gears. Gears are drawn
+     * with files clockwise.png and counterclockwise.png in resource folder
+     *
+     * @param gear the Gear object to be drawn on the screen
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawGear(Gear gear){
@@ -199,8 +204,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Draw gears; used in the updateView to show checkpoints.
-     * @param checkpoint
+     * Draws checkpoints; used in the updateView to show checkpoints.
+     * The image path for the checkpoint is determined based on the checkpoint number.
+     * @param checkpoint the Checkpoint object to be drawn on the screen
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawCheckpoint(Checkpoint checkpoint){
@@ -241,9 +248,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Draws conveyor belt on the canvas
-     * @param conveyorBelt
-     * @author Joes Nicolaisen s224564
+     * Draws conveyor belts; used in the updateView to show conveyor belts.
+     * @param conveyorBelt the conveyor belt object to be drawn on the screen
+     *
+     * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawConveyorBelt(ConveyorBelt conveyorBelt){
         String imagePath = "/images/conveyor.JPG";
@@ -262,10 +270,12 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * method to easily draw an image from imagepath and scale
-     * @param imagePath
-     * @param scaleY
-     * @param scaleX
+     * Draws an image onto the space. The image is loaded from the file specified
+     * by the given image path and then scaled to fit the specified height and width.
+     *
+     * @param imagePath the path to the image file
+     * @param scaleY the scaling factor for the image's height
+     * @param scaleX the scaling factor for the image's width
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     private void drawImage(String imagePath, int scaleY, int scaleX){

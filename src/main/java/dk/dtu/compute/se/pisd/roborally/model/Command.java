@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * ...
  *
- * What each commandCard can do
+ * The class indicates what each commandCard can do
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Mikkel Brunstedt Nørgaard s224562

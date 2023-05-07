@@ -91,7 +91,10 @@ class Repository implements IRepository {
 	/**
 	 * ...
 	 *
-	 * Used to create the current game in the database.
+	 * Creates a new game record in the database for the specified game object.
+	 *
+	 * @param game the game object to create a new record for
+	 * @return true if the game record was created successfully, false otherwise
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -129,8 +132,6 @@ class Repository implements IRepository {
 				if (rs.next()) {
 					rs.updateInt(GAME_CURRENTPLAYER, game.getPlayerNumber(game.getCurrentPlayer()));
 					rs.updateRow();
-				} else {
-					// TODO error handling
 				}
 				rs.close();
 
@@ -138,7 +139,6 @@ class Repository implements IRepository {
 				connection.setAutoCommit(true);
 				return true;
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 				System.err.println("Some DB error");
 				
@@ -146,7 +146,6 @@ class Repository implements IRepository {
 					connection.rollback();
 					connection.setAutoCommit(true);
 				} catch (SQLException e1) {
-					// TODO error handling
 					e1.printStackTrace();
 				}
 			}
@@ -159,7 +158,10 @@ class Repository implements IRepository {
 	/**
 	 * ...
 	 *
-	 * Used instead of createGameInDB(), when the gameID is already present in the database
+	 * Updates the specified game in the database with the current game information.
+	 *
+	 * @param game the Board object representing the current game to be updated in the database.
+	 * @return true if the game was successfully updated in the database, false otherwise.
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -183,8 +185,6 @@ class Repository implements IRepository {
 				rs.updateInt(GAME_PHASE, game.getPhase().ordinal());
 				rs.updateInt(GAME_STEP, game.getStep());
 				rs.updateRow();
-			} else {
-				// TODO error handling
 			}
 			rs.close();
 
@@ -194,7 +194,6 @@ class Repository implements IRepository {
             connection.setAutoCommit(true);
 			return true;
 		} catch (SQLException e) {
-			// TODO error handling
 			e.printStackTrace();
 			System.err.println("Some DB error");
 			
@@ -202,7 +201,6 @@ class Repository implements IRepository {
 				connection.rollback();
 				connection.setAutoCommit(true);
 			} catch (SQLException e1) {
-				// TODO error handling
 				e1.printStackTrace();
 			}
 		}
@@ -213,7 +211,10 @@ class Repository implements IRepository {
 	/**
 	 * ...
 	 *
-	 * Loads a game from the database
+	 * Loads a game from the database with the specified gameID and returns it as a Board object.
+	 *
+	 * @param id the ID of the game to load
+	 * @return the loaded game as a Board object or null if an error occurs
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -224,9 +225,6 @@ class Repository implements IRepository {
 	public Board loadGameFromDB(int id) {
 		Board game;
 		try {
-			// TODO here, we could actually use a simpler statement
-			//      which is not updatable, but reuse the one from
-			//      above for the pupose
 			PreparedStatement ps = getSelectGameStatementU();
 			ps.setInt(1, id);
 			
@@ -241,7 +239,6 @@ class Repository implements IRepository {
 				game.setPhase(Phase.values()[rs.getInt(GAME_PHASE)]);
 				game.setStep(rs.getInt(GAME_STEP));
 			} else {
-				// TODO error handling
 				return null;
 			}
 			rs.close();
@@ -252,12 +249,10 @@ class Repository implements IRepository {
 			if (playerNo >= 0 && playerNo < game.getPlayersNumber()) {
 				game.setCurrentPlayer(game.getPlayer(playerNo));
 			} else {
-				// TODO  error handling
 				return null;
 			}
 			return game;
 		} catch (SQLException e) {
-			// TODO error handling
 			e.printStackTrace();
 			System.err.println("Some DB error");
 		}
@@ -266,10 +261,6 @@ class Repository implements IRepository {
 	
 	@Override
 	public List<GameInDB> getGames() {
-		// TODO when there many games in the DB, fetching all available games
-		//      from the DB is a bit extreme; eventually there should a
-		//      methods that can filter the returned games in order to
-		//      reduce the number of the returned games.
 		List<GameInDB> result = new ArrayList<>();
 		try {
 			PreparedStatement ps = getSelectGameIdsStatement();
@@ -281,14 +272,12 @@ class Repository implements IRepository {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			// TODO proper error handling
 			e.printStackTrace();
 		}
 		return result;		
 	}
 
 	private void createPlayersInDB(Board game) throws SQLException {
-		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
 		
@@ -313,7 +302,10 @@ class Repository implements IRepository {
 	/**
 	 * ...
 	 *
-	 * Creates the commandCards for each player in the database
+	 * Creates and stores the command cards for each player in the database.
+	 *
+	 * @param game The Board object representing the current game.
+	 * @throws SQLException if there is an error accessing the database
 	 *
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
@@ -335,9 +327,6 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 			if (player.getProgramField(j).getCard() != null) {
 				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getProgramField(j).getCard().command.ordinal());
 			}
-//			else {
-//				rs.updateInt(COMMANDCARD_COMMANDCARDID, null);
-//			}
 			rs.insertRow();
 		}
 
@@ -350,9 +339,6 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 			if (player.getCardField(j).getCard() != null) {
 				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getCardField(j).getCard().command.ordinal());
 			}
-//			else {
-//				rs.updateInt(COMMANDCARD_COMMANDCARDID, null);
-//			}
 			rs.insertRow();
 		}
 	}
@@ -362,7 +348,11 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 	/**
 	 * ...
 	 *
-	 * Loads the commandCards for each player of a single game. Writes them to each players arrays
+	 * Loads the commandCards for each player of a single game. Writes them
+	 * to each player's command card arrays
+	 *
+	 * @param game The Board object representing the current game.
+	 * @throws SQLException if there is an error executing the SQL statement.
 	 *
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
@@ -396,8 +386,11 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	/**
 	 * ...
 	 *
-	 * Loads each player from a specific game, from the database.
+	 * Loads each player from a specific game from the database.
 	 * Proceeds to run loadCommandCardsFromDB
+	 *
+	 * @param game the game board to load the players into
+	 * @throws SQLException if there is an error executing the SQL query or accessing the database
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -413,7 +406,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 		while (rs.next()) {
 			int playerId = rs.getInt(PLAYER_PLAYERID);
 			if (i++ == playerId) {
-				// TODO this should be more defensive
 				String name = rs.getString(PLAYER_NAME);
 				String colour = rs.getString(PLAYER_COLOUR);
 				Player player = new Player(game, colour ,name);
@@ -427,7 +419,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 				player.setCurrentCheckpointDB(checkpointNumber);
 
 			} else {
-				// TODO error handling
 				System.err.println("Game in DB does not have a player with id " + i +"!");
 			}
 		}
@@ -439,7 +430,10 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	 * ...
 	 *
 	 * Used when saving a game, that is already present in the database.
-	 * Updates each player to the databse and the proceeds to run updateCommandCardsInDB()
+	 * Updates each player to the database and the proceeds to run updateCommandCardsInDB()
+	 *
+	 * @param game the Board object representing the game state.
+	 * @throws SQLException if there is an error while updating the player records in the database.
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -453,27 +447,27 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			int playerId = rs.getInt(PLAYER_PLAYERID);
-			// TODO should be more defensive
 			Player player = game.getPlayer(playerId);
 			// rs.updateString(PLAYER_NAME, player.getName()); // not needed: player's names does not change
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
-			// TODO error handling
-			// TODO take care of case when number of players changes, etc
 			rs.updateRow();
 			updateCommandCardsInDB(game);
 		}
 		rs.close();
 		
-		// TODO error handling/consistency check: check whether all players were updated
 	}
 
 	/**
 	 * ...
 	 *
 	 * Used when saving a game, that is already present in the database.
-	 * Updates each players commandCards
+	 * Updates the command cards in the database for a given game.
+	 *
+	 * @param game the Board object representing the game state.
+	 * @throws SQLException if there is an error while updating the command
+	 * card records in the database.
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -523,7 +517,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 						SQL_INSERT_GAME,
 						Statement.RETURN_GENERATED_KEYS);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}
@@ -544,7 +537,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 						ResultSet.TYPE_FORWARD_ONLY,
 					    ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}
@@ -565,7 +557,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 						ResultSet.TYPE_FORWARD_ONLY,
 						ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}
@@ -580,9 +571,14 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	/**
 	 * ...
 	 *
+	 * Returns a prepared statement to select command cards from the database.
+	 * The method makes sure that the resulting result set from the prepared statement is
+	 * updatable.
+	 *
+	 * @throws SQLException if there is an error while establishing a connection to the
+	 * database or initializing the prepared statement.
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
-	 *
 	 */
 	private PreparedStatement getSelectCommandCardsStatementU() {
 		if (select_commandcards_stmt == null) {
@@ -593,7 +589,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 						ResultSet.TYPE_FORWARD_ONLY,
 						ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}
@@ -614,7 +609,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 				select_players_asc_stmt = connection.prepareStatement(
 						SQL_SELECT_PLAYERS_ASC);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}
@@ -633,7 +627,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 				select_games_stmt = connection.prepareStatement(
 						SQL_SELECT_GAMES);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}
@@ -645,9 +638,12 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 	/**
 	 * ...
 	 *
+	 * Returns a prepared statement to select command cards from the database.
+	 *
+	 * @throws SQLException if there is an error while establishing a connection
+	 * to the database or initializing the prepared statement.
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
-	 *
 	 */
 	private PreparedStatement getSelectCommandCardsStatement() {
 		if (select_commandcard_stmt == null) {
@@ -656,7 +652,6 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 				select_commandcard_stmt = connection.prepareStatement(
 						SQL_SELECT_COMMANDCARDS);
 			} catch (SQLException e) {
-				// TODO error handling
 				e.printStackTrace();
 			}
 		}

@@ -277,7 +277,11 @@ public class GameController {
     }
 
     /**
-     * Moves the player forwards, makes use of moveToSpace
+     * Moves the player one space forward in the direction of their
+     * heading on the game board. If the space is not a valid move
+     * or the player is not on the same board, the move is not executed.
+     *
+     * @param player the player to move
      *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
@@ -302,12 +306,13 @@ public class GameController {
 
     /**
      *
-     *moves the player forward on the conveyorbelt; very similar to moveForward, but
-     *takes an extra parameter (heading) from the conveyorbelt to move the player
-     *in the direction of the conveyorbelt
+     * Moves the player forward on the conveyorbelt; very similar to moveForward, but
+     * takes an extra parameter (heading) from the conveyorbelt to move the player
+     * in the direction of the conveyorbelt
      *
-     * @param player
-     * @param heading
+     * @param player the player to move
+     * @param heading the direction to move the player
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void moveForwardConveyorBelt(@NotNull Player player, @NotNull Heading heading) {
@@ -327,9 +332,15 @@ public class GameController {
 
     /**
      *
-     * @param player
-     * @param space
-     * @param heading
+     * Moves the player to a space in a given heading.
+     * If there is another player on the space, the method
+     * will recursively push that player in the direction of the heading.
+     *
+     * @param player the player to be moved
+     * @param space the target space for the player to be moved to
+     * @param heading the heading direction in which the player will move
+     * @throws ImpossibleMoveException if the movement is impossible (e.g.
+     * if a wall blocks the movement)
      *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
@@ -354,7 +365,7 @@ public class GameController {
     /**
      * moves the player forward 3 times via moveForward method
      *
-     * @param player
+     * @param player the player to be moved
      *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
@@ -370,7 +381,7 @@ public class GameController {
     /**
      * turns player right
      *
-     * @param player
+     * @param player the player to be turned
      *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
@@ -387,7 +398,7 @@ public class GameController {
     /**
      * turns player left
      *
-     * @param player
+     * @param player the player to be turned
      *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
@@ -414,8 +425,8 @@ public class GameController {
     }
 
     /**
-     * method to show that a player has won
-     * is called if a player has reached all checkpoints in the correct order
+     * Method to show that a player has won.
+     * Is called if a player has reached all checkpoints in the correct order
      *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
