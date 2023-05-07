@@ -89,8 +89,6 @@ public class Player extends Subject {
         //check if the current checkpoint is supposed to be after the last checkpoint the player was on
         if(checkpointNumber == (this.currentCheckpoint)) {
             this.currentCheckpoint++;
-            //remove this printline when message is shown in the view instead
-            System.out.println(space.getPlayer().getName() + " has reached checkpoint " + currentCheckpoint);
         }
     }
 
