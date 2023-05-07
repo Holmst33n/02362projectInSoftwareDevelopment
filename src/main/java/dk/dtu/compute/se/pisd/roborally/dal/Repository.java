@@ -79,6 +79,8 @@ class Repository implements IRepository {
 
 	private static final String COMMANDCARD_NUMBER = "Number";
 
+	private static final int PROGRAMMING_CARD = 0;
+	private static final int HAND_CARD = 1;
 
 	private Connector connector;
 	
@@ -328,7 +330,7 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 			rs.moveToInsertRow();
 			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
 			rs.updateInt(COMMANDCARD_PLAYERID, i);
-			rs.updateInt(COMMANDCARD_TYPE, 0);
+			rs.updateInt(COMMANDCARD_TYPE, PROGRAMMING_CARD);
 			rs.updateInt(COMMANDCARD_NUMBER, j);
 			if (player.getProgramField(j).getCard() != null) {
 				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getProgramField(j).getCard().command.ordinal());
@@ -343,7 +345,7 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 			rs.moveToInsertRow();
 			rs.updateInt(COMMANDCARD_GAMEID, game.getGameId());
 			rs.updateInt(COMMANDCARD_PLAYERID, i);
-			rs.updateInt(COMMANDCARD_TYPE, 1);
+			rs.updateInt(COMMANDCARD_TYPE, HAND_CARD);
 			rs.updateInt(COMMANDCARD_NUMBER, j);
 			if (player.getCardField(j).getCard() != null) {
 				rs.updateInt(COMMANDCARD_COMMANDCARDID, player.getCardField(j).getCard().command.ordinal());
@@ -381,7 +383,7 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 				CommandCard commandCard = new CommandCard(command);
 				CommandCardField commandCardField = new CommandCardField(game.getPlayer(playerID));
 				commandCardField.setCard(commandCard);
-				if(type == 0){
+				if(type == PROGRAMMING_CARD){
 					game.getPlayer(playerID).setProgramField(commandCardField, number);
 				} else {
 					game.getPlayer(playerID).setCardField(commandCardField, number);
@@ -488,7 +490,7 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 			int type = rs.getInt(COMMANDCARD_TYPE);
 			int number = rs.getInt(COMMANDCARD_NUMBER);
 			CommandCardField field;
-			if (type == 0) {
+			if (type == PROGRAMMING_CARD) {
 				field = player.getProgramField(number);
 
 			} else {
