@@ -7,7 +7,7 @@ Roborally
 Installation:
 -------------
 
-1. Clone the repository or download the game.
+1. Open the project in IntelliJ.
 2. Compile the game.
 3. Make sure you have MariaDB installed and running on your computer; see
 https://mariadb.com/kb/en/getting-installing-and-upgrading-mariadb/
@@ -32,11 +32,13 @@ https://www.fgbradleys.com/rules/rules4/Robo%20Rally%20-%20rules.pdf
 4. The game can be saved and loaded later. In the File menu, you can choose
 to either stop, save or exit the game.
 
+
 Noteworthy:
 -----------
 
 The scale of the game window can be changed in the "SpaceView" in the view
 package in the in the project. Change SPACE_WIDTH and SPACE_HEIGHT.
+
 
 Credits:
 --------
