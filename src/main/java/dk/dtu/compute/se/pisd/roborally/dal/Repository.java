@@ -32,6 +32,8 @@ import java.util.List;
 /**
  * ...
  *
+ * In here we have all methods to interact with the database.
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Joes Nicolaisen, s224564
  * @author Johan Holmsteen, s224568
@@ -86,6 +88,8 @@ class Repository implements IRepository {
 
 	/**
 	 * ...
+	 *
+	 * Used to create the current game in the database.
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -153,6 +157,8 @@ class Repository implements IRepository {
 	/**
 	 * ...
 	 *
+	 * Used instead of createGameInDB(), when the gameID is already present in the database
+	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
@@ -181,9 +187,6 @@ class Repository implements IRepository {
 			rs.close();
 
 			updatePlayersInDB(game);
-			/* TOODO this method needs to be implemented first
-			updateCardFieldsInDB(game);
-			*/
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -207,6 +210,8 @@ class Repository implements IRepository {
 
 	/**
 	 * ...
+	 *
+	 * Loads a game from the database
 	 *
 	 * @author Ekkart Kindler, ekki@dtu.dk
 	 * @author Joes Nicolaisen, s224564
@@ -306,6 +311,8 @@ class Repository implements IRepository {
 	/**
 	 * ...
 	 *
+	 * Creates the commandCards for each player in the database
+	 *
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
 	 *
@@ -353,6 +360,8 @@ private void createCommandCardsInDB(Board game) throws SQLException {
 	/**
 	 * ...
 	 *
+	 * Loads the commandCards for each player of a single game. Writes them to each players arrays
+	 *
 	 * @author Joes Nicolaisen, s224564
 	 * @author Johan Holmsteen, s224568
 	 *
@@ -382,6 +391,17 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 		}
 	}
 
+	/**
+	 * ...
+	 *
+	 * Loads each player from a specific game, from the database.
+	 * Proceeds to run loadCommandCardsFromDB
+	 *
+	 * @author Ekkart Kindler, ekki@dtu.dk
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224568
+	 *
+	 */
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -412,7 +432,18 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 		loadCommandCardsFromDB(game);
 		rs.close();
 	}
-	
+
+	/**
+	 * ...
+	 *
+	 * Used when saving a game, that is already present in the database.
+	 * Updates each player to the databse and the proceeds to run updateCommandCardsInDB()
+	 *
+	 * @author Ekkart Kindler, ekki@dtu.dk
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224568
+	 *
+	 */
 	private void updatePlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
 		ps.setInt(1, game.getGameId());
@@ -436,6 +467,17 @@ private void loadCommandCardsFromDB(Board game) throws SQLException {
 		// TODO error handling/consistency check: check whether all players were updated
 	}
 
+	/**
+	 * ...
+	 *
+	 * Used when saving a game, that is already present in the database.
+	 * Updates each players commandCards
+	 *
+	 * @author Ekkart Kindler, ekki@dtu.dk
+	 * @author Joes Nicolaisen, s224564
+	 * @author Johan Holmsteen, s224568
+	 *
+	 */
 	private void updateCommandCardsInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCommandCardsStatementU();
 		ps.setInt(1, game.getGameId());

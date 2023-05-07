@@ -65,6 +65,8 @@ public class AppController implements Observer {
     }
 
     /**
+     * The player is introduced to the gameboard available in resources/boards as .json files
+     *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      */
@@ -121,6 +123,8 @@ public class AppController implements Observer {
     }
 
     /**
+     * Saves the game, in its current state to the database.
+     *
      * @author Joes Nicolaisen, s224564
      * @author Johan Holmsteen, s224568
      */
@@ -133,6 +137,8 @@ public class AppController implements Observer {
     }
 
     /**
+     * Opens up a list of games previously saved to the game database
+     *
      * @author Joes Nicolaisen, s224564
      * @author Johan Holmsteen, s224568
      */

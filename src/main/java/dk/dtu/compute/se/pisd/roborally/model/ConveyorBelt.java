@@ -27,6 +27,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * ...
  *
+ * Implementation of the convayorbelt active space
+ *
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Mikkel Brunstedt Nørgaard s224562
  */

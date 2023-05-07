@@ -35,6 +35,9 @@ import java.util.Map;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @author Mikkel Brunstedt Nørgaard s224562
+ * @author Johan Holmsteen s224568
+ * @author Joes Nicolaisen s224564
  *
  */
 public class SpaceView extends StackPane implements ViewObserver {

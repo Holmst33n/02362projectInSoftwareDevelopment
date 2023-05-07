@@ -4,6 +4,9 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ *
+ * Implementation of the active space Gear
+ *
  * @author Mikkel Brunstedt Nørgaard s224562
  */
 

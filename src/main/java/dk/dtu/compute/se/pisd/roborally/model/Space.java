@@ -59,12 +59,6 @@ public class Space extends Subject {
 
     private boolean hasWalls;
 
-    /**
-     * @author Johan Holmsteen, s224568
-     * @param board
-     * @param x
-     * @param y
-     */
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;

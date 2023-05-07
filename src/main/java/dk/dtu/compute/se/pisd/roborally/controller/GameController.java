@@ -133,7 +133,8 @@ public class GameController {
     }
 
     /**
-     * executes every step in the activation phase: moves robots depending on command cards, and then executes actions and checkpoints.
+     * Executes every step in the activation phase: moves robots depending on command cards, and then executes actions and checkpoints.
+     *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Mikkel Brunstedt Nørgaard s224562
      */
@@ -190,7 +191,8 @@ public class GameController {
     }
 
     /**
-     * executes the actions on the board; conveyorbelts and gears
+     * Executes the actions on the board; conveyorbelts and gears
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void executeActions() {
@@ -208,6 +210,7 @@ public class GameController {
 
     /**
      * executes the checkpoints on the board
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void executeCheckpoints() {
@@ -274,11 +277,12 @@ public class GameController {
     }
 
     /**
+     * Moves the player forwards, makes use of moveToSpace
+     *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
      * @author Mikkel Brunstedt Nørgaard s224562
-     *
      */
     public void moveForward(@NotNull Player player) {
         if (player.board == board) {
@@ -297,9 +301,11 @@ public class GameController {
     }
 
     /**
-     * moves the player forward on the conveyorbelt; very similar to moveForward, but
-     * takes an extra parameter (heading) from the conveyorbelt to move the player
-     * in the direction of the conveyorbelt
+     *
+     *moves the player forward on the conveyorbelt; very similar to moveForward, but
+     *takes an extra parameter (heading) from the conveyorbelt to move the player
+     *in the direction of the conveyorbelt
+     *
      * @param player
      * @param heading
      * @author Mikkel Brunstedt Nørgaard s224562
@@ -320,9 +326,11 @@ public class GameController {
     }
 
     /**
+     *
      * @param player
      * @param space
      * @param heading
+     *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
@@ -345,7 +353,9 @@ public class GameController {
 
     /**
      * moves the player forward 3 times via moveForward method
+     *
      * @param player
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
     public void fastForward(@NotNull Player player) {
@@ -359,12 +369,13 @@ public class GameController {
 
     /**
      * turns player right
+     *
      * @param player
+     *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
      * @author Mikkel Brunstedt Nørgaard s224562
-     *
      */
     public void turnRight(@NotNull Player player) {
         Space space = player.getSpace();
@@ -375,12 +386,13 @@ public class GameController {
 
     /**
      * turns player left
+     *
      * @param player
+     *
      * @author Ekkart Kindler, ekki@dtu.dk
      * @author Johan Holmsteen, s224568
      * @author Joes Nicolaisen, s224564
      * @author Mikkel Brunstedt Nørgaard s224562
-     *
      */
     public void turnLeft(@NotNull Player player) {
         Space space = player.getSpace();
@@ -404,6 +416,7 @@ public class GameController {
     /**
      * method to show that a player has won
      * is called if a player has reached all checkpoints in the correct order
+     *
      * @author Mikkel Brunstedt Nørgaard s224562
      */
 

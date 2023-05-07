@@ -32,6 +32,8 @@ import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 /**
  * ...
  *
+ * The class that all games are be created from.
+ *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @author Johan Holmsteen, s224568
  * @author Mikkel Brunstedt Nørgaard s224562
