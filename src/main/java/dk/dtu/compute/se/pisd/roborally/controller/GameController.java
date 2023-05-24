@@ -152,9 +152,6 @@ public class GameController {
                     }
                     executeCommand(currentPlayer, command);
                 }
-                if(currentPlayer.hasWon()){
-                    startWonPhase();
-                }
                 else if (board.getPhase() == Phase.ACTIVATION) {
                     if (board.getPlayerNumber(currentPlayer) + 1 < board.getPlayersNumber()) {
                         board.setCurrentPlayer(board.getPlayer(board.getPlayerNumber(currentPlayer) + 1));
@@ -171,6 +168,9 @@ public class GameController {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     executeCheckpoints();
+                    if(currentPlayer.hasWon()){
+                        startWonPhase();
+                    }
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -249,14 +249,15 @@ public class GameController {
         if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
             int step = board.getStep();
             if (step >= 0 && step < Player.NO_REGISTERS) {
-                    board.setPhase(Phase.ACTIVATION);
                     executeCommand(currentPlayer, option);
+                    board.setPhase(Phase.ACTIVATION);
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     executeActions();
                     executeCheckpoints();
+                    board.setPhase(Phase.ACTIVATION);
                     step++;
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
